@@ -1,0 +1,36 @@
+my-social-app/
+│
+├─ index.html
+├─ package.json
+├─ vite.config.js
+├─ node_modules/
+│
+└─ src/
+   ├─ main.js                # entry point (imports and runs app)
+   │
+   ├─ utils/                 # reusable helpers
+   │   └─ storage.js         # localStorage functions (saveUser, getUser, etc.)
+   │
+   ├─ features/              # main app features
+   │   ├─ auth/              # login & signup
+   │   │   ├─ auth.view.js   # rendering login/signup forms
+   │   │   ├─ auth.controller.js # logic: validate, switch forms, login, signup
+   │   │   └─ auth.css
+   │   │
+   │   ├─ feed/              # posts + comments
+   │   │   ├─ feed.view.js
+   │   │   └─ feed.controller.js
+   │   │
+   │   ├─ form/              # post form (new post)
+   │   │   └─ form.controller.js
+   │   │
+   │   └─ profile/           # user profile page
+   │       ├─ profile.view.js
+   │       └─ profile.controller.js
+   │
+   ├─ styles/                # global styling
+   │   └─ global.css
+   │
+   └─ assets/                # images, icons
+       └─ images/
+           └─ login-bg.png
