@@ -1,6 +1,6 @@
 import "../src/styles/global.css";
 import { initAuth } from "./features/auth/auth.controller.js";
-import { initHome } from "./features/home/home.controller.js";
+import { initApp } from "./app.js"; // ✅ import initApp
 
 const app = document.getElementById("app");
 
@@ -9,13 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentUser = JSON.parse(localStorage.getItem("myapp_currentUser"));
 
   if (currentUser) {
-    initHome(app); // show home page
+    initApp(app); // ✅ full shell with nav + sidebar
   } else {
     initAuth(app); // show login/signup form
   }
 });
 
-
-// Handle login/logout SPA-style
-window.addEventListener("user:login", () => initHome(app));
+// SPA login/logout handlers
+window.addEventListener("user:login", () => initApp(app));
 window.addEventListener("user:logout", () => initAuth(app));
