@@ -46,3 +46,14 @@ export function getCurrentUser() {
 export function removeCurrentUser() {
   localStorage.removeItem(CURRENT_KEY);
 }
+
+// Update user data in users array and current session
+export function updateUser(updatedUser) {
+  const users = getUsers();
+  const index = users.findIndex(u => u.id === updatedUser.id);
+  if (index !== -1) {
+    users[index] = updatedUser;
+    saveUsers(users);
+  }
+  setCurrentUser(updatedUser);
+}

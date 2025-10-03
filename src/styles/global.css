@@ -1062,7 +1062,7 @@ button.primary:hover {
   background-color: var(--color-accent);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 5px;
   padding: 6px 12px;
   font-weight: 600;
   cursor: pointer;
@@ -1121,9 +1121,9 @@ button.primary:hover {
   display: flex;
   flex-direction: column;
   max-width: 900px;
-  margin: 0 auto 2rem auto;
+  margin: auto;
   background: var(--color-card-bg);
-  border-radius: 16px;
+  /* border-radius: 16px; */
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   font-family: 'Poppins', 'Inter', sans-serif;
@@ -1133,8 +1133,9 @@ button.primary:hover {
 /* Header area */
 .profile-header {
   position: relative;
-  height: 240px;
+  height: 320px;
   overflow: hidden;
+  backgound: red;
 }
 
 /* Cover color behind bottom half of header */
@@ -1143,8 +1144,8 @@ button.primary:hover {
   top: 0;
   left: 0;
   right: 0;
-  height: 100%;
-  background: linear-gradient(135deg, #6b7a68 0%, #4a3f36 100%);
+  height: 80%;
+  background: linear-gradient(135deg, #d1ddf1 0%, #96add4 100%);
   filter: brightness(0.8);
   z-index: 0;
   display: block;
@@ -1153,9 +1154,8 @@ button.primary:hover {
 /* Avatar styling with placeholder */
 .profile-avatar {
   position: absolute;
-  top: 180px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 200px;
+  left: 2rem;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -1163,20 +1163,24 @@ button.primary:hover {
   object-fit: cover;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   background: url('/assets/images/profile-placeholder.png') center center/cover no-repeat;
-  z-index: 2;
+  z-index: 25;
 }
 
 /* Profile details below header */
 .profile-details {
+  margin-top: -10px;
   padding: 1rem 2rem;
-  text-align: center;
+  text-align: left;
   background: var(--color-card-bg);
+  position: relative;
+  z-index: 10;
 }
 
 .profile-details h2 {
   font-weight: 700;
   font-size: 28px;
   margin-bottom: 0.25rem;
+ 
 }
 
 .profile-details .profile-bio {
@@ -1186,8 +1190,6 @@ button.primary:hover {
   margin-bottom: 1rem;
   max-width: 500px;
   word-wrap: break-word;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .profile-details .edit-profile-btn {
@@ -1284,4 +1286,190 @@ button.primary:hover {
   .profile-stats {
     gap: 1.5rem;
   }
+}
+
+/* =======================
+   Interest Badge Styles
+   ======================= */
+.interest-badge {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 4px 4px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.interest-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.no-interests {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Editable interest badges for profile edit */
+.interest-badge-edit {
+  display: inline-block;
+  background: var(--color-input-bg);
+  color: var(--color-text-primary);
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 6px 6px 0 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+  border: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.interest-badge-edit:hover,
+.interest-badge-edit:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.interest-badge-edit.selected {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.5);
+  border-color: var(--color-accent);
+}
+
+/* Profile Edit Form Container */
+.edit-profile-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: var(--color-card-bg);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* Form Labels */
+.edit-profile-form label {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 0.6rem;
+  display: block;
+  color: var(--color-text-primary);
+}
+
+/* Textarea */
+.edit-profile-form textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-divider);
+  background: var(--color-input-bg);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.06);
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-text-primary);
+}
+
+.edit-profile-form textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(107, 122, 104, 0.4);
+  outline: none;
+}
+
+/* File input wrapper */
+.edit-profile-form input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-divider);
+  background: var(--color-input-bg);
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-profile-form input[type="file"]:hover,
+.edit-profile-form input[type="file"]:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(107, 122, 104, 0.4);
+  outline: none;
+}
+
+/* Color picker */
+.edit-profile-form input[type="color"] {
+  width: 60px;
+  height: 36px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.edit-profile-form input[type="color"]:hover,
+.edit-profile-form input[type="color"]:focus {
+  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.4);
+  outline: none;
+}
+
+/* Interests container */
+.interests-badges-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+.edit-profile-form button {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  min-width: 120px;
+  margin-top: 1rem;
+}
+
+.edit-profile-form button[type="submit"] {
+  background-color: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.6);
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #556b4a;
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.8);
+}
+
+.edit-profile-form button[type="button"] {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  margin-left: 1rem;
+}
+
+.edit-profile-form button[type="button"]:hover {
+  background-color: var(--color-input-focus);
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }

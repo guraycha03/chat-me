@@ -1,9 +1,6 @@
 // src/features/people/people.view.js
-import { renderMessages } from "../messages/messages.view.js";
-// choose one data source:
+import { renderProfile } from "../profile/profile.view.js";
 import { mockPeople } from "../../data/people.mock.js";
-// or: import { generateFakeUsers } from "../../services/people.service.js";
-// or: import { fetchRandomUsers } from "../../services/people.service.js";
 
 export async function renderPeople(container) {
   container.innerHTML = `
@@ -19,44 +16,47 @@ export async function renderPeople(container) {
     </div>
   `;
 
-  // load users (choose strategy)
-  // let users = generateFakeUsers(30);
-  // let users = await fetchRandomUsers(30);
   let users = mockPeople;
 
-  // persist small cache so chat page can use
   localStorage.setItem("app_people_cache", JSON.stringify(users));
 
   const listEl = container.querySelector("#people-list");
   const searchInput = container.querySelector("#people-search");
 
-    function renderList(items) {
-      listEl.innerHTML = items.map(u => `
-        <div class="people-item" data-id="${u.id}">
-          <div class="avatar-wrap">
-            <img src="${u.avatar}" alt="${u.name}" />
-            ${u.online ? '<span class="online-dot"></span>' : ''}
-          </div>
-          <div class="people-info">
-            <div class="people-name">${u.name}</div>
-          </div>
-          <div class="people-actions">
-            <button class="btn-add-friend" title="Add Friend">Add Friend</button>
-            <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
-          </div>
+  function renderList(items) {
+    listEl.innerHTML = items.map(u => `
+      <div class="people-item" data-id="${u.id}">
+        <div class="avatar-wrap">
+          <img src="${u.avatar}" alt="${u.name}" />
+          ${u.online ? '<span class="online-dot"></span>' : ''}
         </div>
-      `).join("");
+        <div class="people-info">
+          <div class="people-name">${u.name}</div>
+        </div>
+        <div class="people-actions">
+          <button class="btn-add-friend" title="Add Friend">Add Friend</button>
+          <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
+        </div>
+      </div>
+    `).join("");
 
     // wire each item
     listEl.querySelectorAll(".people-item").forEach(el => {
       el.addEventListener("click", (e) => {
         const id = el.dataset.id;
-        openChatWith(id);
+        const person = users.find(u => u.id === id);
+        if (person) {
+          renderProfile(document.getElementById("page-content"), person);
+        }
       });
       const chatBtn = el.querySelector(".btn-chat");
       chatBtn?.addEventListener("click", (ev) => {
         ev.stopPropagation();
-        openChatWith(el.dataset.id);
+        const id = el.dataset.id;
+        const person = users.find(u => u.id === id);
+        if (person) {
+          renderProfile(document.getElementById("page-content"), person);
+        }
       });
       const addFriendBtn = el.querySelector(".btn-add-friend");
       addFriendBtn?.addEventListener("click", (ev) => {
@@ -67,16 +67,6 @@ export async function renderPeople(container) {
 
     // re-create icons
     if (window.createIcons) createIcons({ icons }); // if you use lucide createIcons globally
-  }
-
-  function openChatWith(userId) {
-    // you can fetch the user from cache and then open message view
-    const person = users.find(u => u.id === userId);
-    // store selected user for messages page or call a render with args
-    localStorage.setItem("active_chat_user", JSON.stringify(person));
-    // if renderMessages accepts container and optional person, call it:
-    renderMessages(document.getElementById("page-content"), person);
-    // also set bottom nav active if needed (you may dispatch an event)
   }
 
   renderList(users);
