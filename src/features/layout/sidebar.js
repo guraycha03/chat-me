@@ -19,7 +19,7 @@ export function createSidebar(container, pageContentEl, renderers) {
         <button class="menu-item" id="nav-home">Home</button>
         <button class="menu-item" id="nav-people">People</button>
         <button class="menu-item" id="nav-messages">Messages</button>
-        <button class="menu-item" id="nav-notifications">Alerts</button>
+        <button class="menu-item" id="nav-notifications">Notifications</button>
         <div class="divider"></div> <button class="menu-item" id="nav-profile">Profile</button>
         <button class="menu-item" id="nav-settings">Settings & Privacy</button>
         <button class="menu-item" id="nav-help">Help & Support</button>

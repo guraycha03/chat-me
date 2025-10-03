@@ -5,6 +5,7 @@ import { renderPeople } from "../people/people.view.js";
 import { renderMessages } from "../messages/messages.view.js";
 import { renderNotifications } from "../notifications/notifications.view.js";
 import { createIcons, icons } from "lucide";
+import { showNotice } from "../../utils/notification.js";
 
 // keep track of current active tab globally
 let currentActive = "home";
@@ -32,7 +33,7 @@ export function createBottomNav(container, pageContentEl) {
     </button>
     <button id="bottom-notifications" class="bottom-nav-item" aria-label="Notifications">
       <i data-lucide="bell"></i>
-      <small>Alerts</small>
+      <small>Notifications</small>
     </button>
 
     <div class="nav-indicator"></div>
@@ -90,7 +91,7 @@ export function createBottomNav(container, pageContentEl) {
   
   // Mobile Create Button Action (can be a quick action or modal)
   document.getElementById("bottom-create").addEventListener("click", () => {
-      alert("Create button clicked! (Mobile Bottom Nav)");
+      showNotice("Create button clicked! (Mobile Bottom Nav)");
   });
 
 

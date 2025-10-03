@@ -1,0 +1,4 @@
+- [x] Update sidebar.js: Change menu item text from "Alerts" to "Notifications"
+- [ ] Update bottomnav.js: Import showNotice from utils/notification.js
+- [ ] Update bottomnav.js: Change "Alerts" to "Notifications" in the small text
+- [ ] Update bottomnav.js: Replace alert() with showNotice() for create button

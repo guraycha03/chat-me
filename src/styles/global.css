@@ -36,6 +36,7 @@
   box-sizing: border-box;
   margin: 0; padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* outline: 1px solid rgb(147, 163, 155); */
 }
 
 /* =======================
@@ -66,6 +67,8 @@ body::-webkit-scrollbar,
 
 html, body, #app {
   width: 100%;
+  position: relative;
+  overflow-x: hidden;
   min-height: 100%;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -94,10 +97,9 @@ img {
   flex-direction: row;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
-  /* Push sidebar to the right */
-  justify-content: flex-end;
+  overflow-x: hidden;  /* prevent horizontal scroll */
 }
+
 
 
 .app-wrapper, .main-content, #sidebar {
@@ -266,9 +268,15 @@ img {
     right: -100%;
     width: 80%;
     max-width: 320px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     .app-wrapper {
     justify-content: flex-start; /* content flows normally on small screens */
   }
+  }
+
+  #sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
   }
   
   #sidebar.open {
@@ -306,14 +314,20 @@ img {
     flex: 0 0 35%; /* sidebar takes ~35% of width */
     max-width: 400px;
     height: 100vh;
+    right: auto !important;
     overflow-y: auto;
     box-shadow: -4px 0 20px rgba(0,0,0,0.08);
-    order: 1; 
+    order: 1;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+
+  #sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
   }
 
   .main-content {
     flex: 1; /* take remaining space */
-    max-width: calc(100% - 35%);
     height: 100vh;
     overflow-y: auto;
     margin: 0; /* remove old margin */
@@ -334,9 +348,7 @@ img {
     max-width: 400px;
   }
 
-  .main-content {
-    max-width: calc(100% - 35%);
-  }
+
 }
 
 
