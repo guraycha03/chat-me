@@ -2,7 +2,6 @@
    Root / Global Styles & Scrollbar
    ======================= */
 
-   /* Add this at the very top of your CSS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Poppins:wght@600;700;800&display=swap');
 
    
@@ -23,13 +22,6 @@
   --color-accent: #6b7a68;   /* dusty green */
 }
 
-
-/* ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-button { display: none; }
-::-webkit-scrollbar-track { background: #e6e3dd; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #b89572; border-radius: 10px; border: 2px solid #e6e3dd; }
-::-webkit-scrollbar-thumb:hover { background: #9e7556; } */
-
 * {
   /* scrollbar-width: thin;
   scrollbar-color: #b89572 #e6e3dd; */
@@ -39,9 +31,6 @@
   /* outline: 1px solid rgb(147, 163, 155); */
 }
 
-/* =======================
-   Global / Base Styles
-   ======================= */
 
 
 /* =======================
@@ -1068,34 +1057,231 @@ button.primary:hover {
 .people-actions { margin-left:auto; }
 .btn-chat { background:none; border:none; padding:6px; border-radius:8px; }
 
+/* Add Friend button style */
+.btn-add-friend {
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 8px;
+}
+
+.btn-add-friend:hover {
+  background-color: #556b4a; /* slightly darker green */
+}
+
+/* Remove bio from people-info by hiding it */
+.people-info .people-bio {
+  display: none;
+}
+
+/* Premium modern search bar */
+.people-top .search-wrap {
+  background: var(--color-input-bg);
+  border-radius: 999px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.people-top .search-wrap:focus-within {
+  box-shadow: 0 0 8px 2px var(--color-accent);
+}
+
+.people-top .search-wrap i {
+  stroke: var(--color-accent);
+  width: 20px;
+  height: 20px;
+}
+
+.people-top .search-wrap input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  width: 100%;
+  padding: 6px 0;
+}
+
+
 /* =======================
-   Profile Page Styles
+   Profile Page Styles - Twitter/X style
    ======================= */
 
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.profile-card {
-  background-color: var(--color-card-bg);
-  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  background: var(--color-card-bg);
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: var(--color-text-primary);
+}
+
+/* Header area */
+.profile-header {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+/* Cover color behind bottom half of header */
+.cover-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #6b7a68 0%, #4a3f36 100%);
+  filter: brightness(0.8);
+  z-index: 0;
+  display: block;
+}
+
+/* Avatar styling with placeholder */
+.profile-avatar {
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: url('/assets/images/profile-placeholder.png') center center/cover no-repeat;
+  z-index: 2;
+}
+
+/* Profile details below header */
+.profile-details {
+  padding: 1rem 2rem;
   text-align: center;
-  max-width: 400px;
-  margin: 2rem auto;
+  background: var(--color-card-bg);
 }
 
-.profile-card h2 {
+.profile-details h2 {
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 0.25rem;
+}
+
+.profile-details .profile-bio {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
+  max-width: 500px;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.profile-card p {
+.profile-details .edit-profile-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.profile-details .edit-profile-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Main content below header */
+.profile-main {
+  padding: 2rem;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Stats section */
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-text-primary);
+  flex-wrap: wrap;
+}
+
+.profile-stats div {
+  text-align: center;
+}
+
+/* Posts grid */
+.profile-posts h3 {
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.post-placeholder {
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
 }
 
+.post-placeholder:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
 
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .profile-wrapper {
+    margin: 1rem;
+  }
 
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
 
+  .profile-info h2 {
+    font-size: 24px;
+  }
+
+  .profile-bio {
+    font-size: 14px;
+    max-width: 300px;
+  }
+
+  .profile-stats {
+    gap: 1.5rem;
+  }
+}

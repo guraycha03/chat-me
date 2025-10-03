@@ -5,6 +5,7 @@ import { renderHome } from "./features/home/home.view.js";
 import { renderPeople } from "./features/people/people.view.js";
 import { renderMessages } from "./features/messages/messages.view.js";
 import { renderNotifications } from "./features/notifications/notifications.view.js";
+import { renderProfile } from "./features/profile/profile.view.js";
 import { createIcons, icons } from "lucide";
 
 
@@ -38,7 +39,7 @@ export function initApp(container) {
   createIcons({ icons, attrs: { 'stroke-width': 2 } });
   
   // Initialize sidebar with responsive logic AND ALL navigation items
-  createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications }); 
+  createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications, renderProfile }); 
 
   // Function to toggle bottom nav display based on screen size
   const toggleBottomNav = () => {

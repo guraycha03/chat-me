@@ -110,6 +110,10 @@ export function createSidebar(container, pageContentEl, renderers) {
     renderers.renderNotifications(pageContentEl);
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
+  document.getElementById("nav-profile").addEventListener("click", () => {
+    renderers.renderProfile(pageContentEl);
+    if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
+  });
 
   // Example logout listener
   document.getElementById("nav-logout").addEventListener("click", () => {

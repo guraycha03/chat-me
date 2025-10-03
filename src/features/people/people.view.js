@@ -13,7 +13,6 @@ export async function renderPeople(container) {
           <i data-lucide="search"></i>
           <input id="people-search" placeholder="Search people" />
         </div>
-        <button id="people-new" class="primary">New Message</button>
       </div>
 
       <div id="people-list" class="people-list"></div>
@@ -30,24 +29,23 @@ export async function renderPeople(container) {
 
   const listEl = container.querySelector("#people-list");
   const searchInput = container.querySelector("#people-search");
-  const newBtn = container.querySelector("#people-new");
 
-  function renderList(items) {
-    listEl.innerHTML = items.map(u => `
-      <div class="people-item" data-id="${u.id}">
-        <div class="avatar-wrap">
-          <img src="${u.avatar}" alt="${u.name}" />
-          ${u.online ? '<span class="online-dot"></span>' : ''}
+    function renderList(items) {
+      listEl.innerHTML = items.map(u => `
+        <div class="people-item" data-id="${u.id}">
+          <div class="avatar-wrap">
+            <img src="${u.avatar}" alt="${u.name}" />
+            ${u.online ? '<span class="online-dot"></span>' : ''}
+          </div>
+          <div class="people-info">
+            <div class="people-name">${u.name}</div>
+          </div>
+          <div class="people-actions">
+            <button class="btn-add-friend" title="Add Friend">Add Friend</button>
+            <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
+          </div>
         </div>
-        <div class="people-info">
-          <div class="people-name">${u.name}</div>
-          <div class="people-bio">${u.bio || ''}</div>
-        </div>
-        <div class="people-actions">
-          <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
-        </div>
-      </div>
-    `).join("");
+      `).join("");
 
     // wire each item
     listEl.querySelectorAll(".people-item").forEach(el => {
@@ -59,6 +57,11 @@ export async function renderPeople(container) {
       chatBtn?.addEventListener("click", (ev) => {
         ev.stopPropagation();
         openChatWith(el.dataset.id);
+      });
+      const addFriendBtn = el.querySelector(".btn-add-friend");
+      addFriendBtn?.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        alert(`Friend request sent to ${el.querySelector('.people-name').textContent}`);
       });
     });
 
@@ -81,17 +84,6 @@ export async function renderPeople(container) {
   searchInput.addEventListener("input", (e) => {
     const q = e.target.value.trim().toLowerCase();
     if (!q) return renderList(users);
-    renderList(users.filter(u => u.name.toLowerCase().includes(q) || (u.bio||'').toLowerCase().includes(q)));
-  });
-
-  newBtn.addEventListener("click", () => {
-    // open a quick composer (simple)
-    const name = prompt("Who do you want to message? (name)");
-    if (!name) return;
-    const temp = { id: `tmp_${Date.now()}`, name, avatar: `https://i.pravatar.cc/100?u=${Date.now()}`, bio: "", online: false };
-    users.unshift(temp);
-    renderList(users);
-    localStorage.setItem("app_people_cache", JSON.stringify(users));
-    openChatWith(temp.id);
+    renderList(users.filter(u => u.name.toLowerCase().includes(q)));
   });
 }
