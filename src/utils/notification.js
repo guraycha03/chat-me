@@ -4,7 +4,8 @@ export function showNotice(message, duration = 2000) {
     notice = document.createElement("div");
     notice.id = "notice";
     notice.className = "notice";
-    document.body.appendChild(notice);
+    const appWrapper = document.querySelector('.app-wrapper') || document.body;
+    appWrapper.appendChild(notice);
   }
 
   notice.textContent = message;

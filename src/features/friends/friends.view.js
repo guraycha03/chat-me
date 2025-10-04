@@ -1,6 +1,7 @@
 // src/features/friends/friends.view.js
 import { navigate } from "../../utils/navigationState.js";
 import { mockFriends } from "../../data/friends.mock.js";
+import { showNotice } from "../../utils/notification.js";
 
 export async function renderFriends(container) {
   container.innerHTML = `
@@ -18,10 +19,13 @@ export async function renderFriends(container) {
 
   let users = mockFriends;
 
-  // Initialize friendRequested state if not present
-  users.forEach(u => { u.friendRequested = u.friendRequested ?? false; });
-
-  localStorage.setItem("app_friends_cache", JSON.stringify(users));
+  // Load from cache or initialize
+  const cached = localStorage.getItem("app_friends_cache");
+  if (cached) {
+    users = JSON.parse(cached);
+  } else {
+    users.forEach(u => { u.friendRequested = u.friendRequested ?? false; });
+  }
 
   const listEl = container.querySelector("#friends-list");
   const searchInput = container.querySelector("#friends-search");
@@ -44,7 +48,7 @@ export async function renderFriends(container) {
     `).join("");
 
     // wire each item
-    listEl.querySelectorAll(".friend-item").forEach(el => {
+    listEl.querySelectorAll(".people-item").forEach(el => {
       el.addEventListener("click", (e) => {
         const id = el.dataset.id;
         const friend = users.find(u => u.id === id);
@@ -71,12 +75,12 @@ export async function renderFriends(container) {
             friend.friendRequested = false;
             addFriendBtn.textContent = "Add Friend";
             addFriendBtn.title = "Add Friend";
-            alert(`Friend request cancelled for ${friend.name}`);
+            showNotice(`Friend request cancelled for ${friend.name}`);
           } else {
             friend.friendRequested = true;
             addFriendBtn.textContent = "Cancel";
             addFriendBtn.title = "Cancel Friend Request";
-            alert(`Friend request sent to ${friend.name}`);
+            showNotice(`Friend request sent to ${friend.name}`);
           }
           localStorage.setItem("app_friends_cache", JSON.stringify(users));
         }

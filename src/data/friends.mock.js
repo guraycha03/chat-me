@@ -93,7 +93,7 @@ export const mockFriends = [
 {
   id: "u4",
   name: "Lucas Chen",
-  avatar: "/assets/images/users/avery.png",
+  avatar: "/assets/images/users/lucas-chen.jpeg",
   bio: "i really like tacos 🌮",
   online: false,
   birthday: "1996-12-22",
@@ -162,33 +162,10 @@ export const mockFriends = [
     },
   ],
 },
-{
-  id: "u7",
-  name: "Maya Crochet",
-  avatar: "/assets/images/users/maya-crochet.jpeg",
-  bio: "i put pineapple on pizza and i stand by it 🍍",
-  online: true,
-  birthday: "2006-01-19",
-  followers: 4820,
-  following: 980,
-  interests: ["cooking", "traveling", "memes"],
-  stories: [
-    "/assets/images/stories/maya-1.png"
-  ],
-  posts: [
-    {
-      id: "p1",
-      type: "image",
-      description: "homemade pizza night 🍕",
-      image: "https://picsum.photos/400/300?random=17",
-      date: "2025-10-03",
-      likes: 310,
-    },
-  ],
-},
+
 {
   id: "u8",
-  name: "Jaehyun Kim",
+  name: "Jake Lee",
   avatar: "/assets/images/users/kim.png",
   bio: "…",
   online: true,
@@ -214,7 +191,7 @@ export const mockFriends = [
 {
   id: "u9",
   name: "Gracie Alvarez",
-  avatar: "/assets/images/users/avery.png",
+  avatar: "/assets/images/users/gracie-alvarez.png",
   bio: "coffee, coding, chaos",
   online: false,
   birthday: "1999-03-11",
@@ -238,7 +215,7 @@ export const mockFriends = [
 {
   id: "u10",
   name: "Rowan Davis",
-  avatar: "/assets/images/users/avery.png",
+  avatar: "/assets/images/users/rowan-davis.jpeg",
   bio: "ask me about my cat or don’t. your choice 😼",
   online: true,
   birthday: "2001-06-30",
@@ -263,7 +240,7 @@ export const mockFriends = [
   id: "u11",
   name: "Cha",
   avatar: "/assets/images/users/cha.jpeg",
-  bio: "🏃‍♀️ morning runs, bad coffee, better vibes",
+  bio: " > . <",
   online: true,
   birthday: "2001-07-09",
   followers: 3520,
@@ -291,7 +268,3 @@ export const mockFriends = [
 
 
 
-// make browser remember not just the pages i have on bottom nav , but also other navigations like profile page, when i visit account, etc
-
-
-// make it that when i click users or people it lead me to their profile page
