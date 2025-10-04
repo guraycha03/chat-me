@@ -1,8 +1,6 @@
-# TODO: Separate Designs for Text and Image Posts
+# TODO: Reposition UI Elements in Profile View
 
-## Tasks
-- [x] Modify composer in feed.controller.js to add file input for image upload
-- [x] Update post creation logic to include image (base64) if selected
-- [x] Update renderFeed function to conditionally render image in posts
-- [x] Add CSS styles for .post-card with image in global.css
-- [ ] Test image upload and post display
+- [x] Modify `profile-details` in `renderView` to add followers/following counts below username
+- [x] Move bio paragraph below followers/following in `profile-details`
+- [x] Remove followers/following from `profile-stats`, leaving only posts
+- [ ] Test the layout changes by running the app and checking profile display

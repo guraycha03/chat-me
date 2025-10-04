@@ -11,12 +11,8 @@ export function setCurrentActive(id) {
 }
 
 export function navigate(page, params = {}) {
-  const state = { page, ...params };
-  const hash = `#${page}${params.userId ? `/${params.userId}` : ''}`;
-  history.pushState(state, '', hash);
-  if (['home', 'people', 'messages', 'notifications'].includes(page)) {
-    setCurrentActive(page);
-  }
+  setCurrentActive(page);
+  const detail = { page, ...params };
   // Dispatch event for rendering
-  window.dispatchEvent(new CustomEvent('navigate', { detail: state }));
+  window.dispatchEvent(new CustomEvent('navigate', { detail }));
 }

@@ -48,11 +48,11 @@ export function createBottomNav(container, pageContentEl) {
   function moveIndicator(item) {
     const navRect = nav.getBoundingClientRect();
     const itemRect = item.getBoundingClientRect();
-    const offsetLeft = itemRect.left - navRect.left;
-    const offsetWidth = itemRect.width;
+    // Calculate the center of the item and offset for the indicator's fixed width
+    const itemCenter = (itemRect.left - navRect.left) + (itemRect.width / 2);
+    const indicatorOffset = 48 / 2; // 48 is the indicator's fixed width from CSS
 
-    indicator.style.width = `${offsetWidth}px`;
-    indicator.style.transform = `translateX(${offsetLeft}px)`;
+    indicator.style.transform = `translateX(${itemCenter - indicatorOffset}px)`;
   }
 
   // Function to update active state
@@ -85,20 +85,17 @@ export function createBottomNav(container, pageContentEl) {
     updateActiveState(e.detail.active);
   });
 
-  // Navigation actions (using pageContentEl)
-  document.getElementById("bottom-home").addEventListener("click", () => {
-    renderHome(pageContentEl);
-  });
-  document.getElementById("bottom-people").addEventListener("click", () => {
-    renderPeople(pageContentEl);
-  });
-  document.getElementById("bottom-messages").addEventListener("click", () => {
-    renderMessages(pageContentEl);
-  });
-  document.getElementById("bottom-notifications").addEventListener("click", () => {
-    renderNotifications(pageContentEl);
-  });
-  
+  // Centralize navigation by dispatching events
+  function dispatchNavigation(page) {
+    const event = new CustomEvent('navigate', { detail: { page } });
+    window.dispatchEvent(event);
+  }
+
+  document.getElementById("bottom-home").addEventListener("click", () => dispatchNavigation('home'));
+  document.getElementById("bottom-people").addEventListener("click", () => dispatchNavigation('people'));
+  document.getElementById("bottom-messages").addEventListener("click", () => dispatchNavigation('messages'));
+  document.getElementById("bottom-notifications").addEventListener("click", () => dispatchNavigation('notifications'));
+
   // Mobile Create Button Action (can be a quick action or modal)
   document.getElementById("bottom-create").addEventListener("click", () => {
       showNotice("Create button clicked! (Mobile Bottom Nav)");

@@ -7,6 +7,7 @@ import { renderNotifications } from "./features/notifications/notifications.view
 import { renderProfile } from "./features/profile/profile.view.js";
 import { createIcons, icons } from "lucide";
 import { currentActive } from "./utils/navigationState.js";
+import { createBackButton, removeBackButton } from "./features/components/backButton.js";
 import { mockPeople } from "./data/people.mock.js";
 
 
@@ -22,6 +23,7 @@ export function initApp(container) {
           </div>
           <div class="burger-menu" id="burger-menu">&#9776;</div>
         </header>
+        <div id="global-nav-bar"></div>
         <main id="page-content"></main>
         <div id="bottom-nav"></div>
       </div>
@@ -34,6 +36,7 @@ export function initApp(container) {
   const sidebarEl = document.getElementById("sidebar");
   const bottomNavEl = document.getElementById("bottom-nav");
   const pageContentEl = document.getElementById("page-content");
+  const globalNavBarEl = document.getElementById("global-nav-bar");
   const fabBtn = document.getElementById("floating-create-btn");
 
   // Initialize Lucide icons for the FAB
@@ -41,6 +44,20 @@ export function initApp(container) {
 
   // Initialize sidebar with responsive logic AND ALL navigation items
   createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications, renderProfile });
+
+  // --- Back Button Management ---
+  function manageBackButton(show, text = 'Back') {
+    if (show) {
+      createBackButton(globalNavBarEl, text, () => history.back());
+    } else {
+      removeBackButton(globalNavBarEl);
+    }
+  }
+
+  // Listen for explicit back button management requests from components
+  window.addEventListener('manageBackButton', (e) => {
+    manageBackButton(e.detail.show, e.detail.text);
+  });
 
   // Function to toggle bottom nav display based on screen size
   const toggleBottomNav = () => {
@@ -63,57 +80,63 @@ export function initApp(container) {
   toggleBottomNav();
   window.addEventListener('resize', toggleBottomNav);
 
+  // --- Centralized Page Rendering Function ---
+  function renderPage(page, userId) {
+    switch (page) {
+      case "home": renderHome(pageContentEl); manageBackButton(false); break;
+      case "people": renderPeople(pageContentEl); manageBackButton(false); break;
+      case "messages": renderMessages(pageContentEl); manageBackButton(false); break;
+      case "notifications": renderNotifications(pageContentEl); manageBackButton(false); break;
+      case "profile":
+        const person = userId ? mockPeople.find(u => u.id === userId) : null;
+        renderProfile(pageContentEl, person);
+        manageBackButton(!!userId, 'Profile');
+        break;
+      default: renderHome(pageContentEl); manageBackButton(false); break;
+    }
+  }
+
   // Initial page render based on saved currentActive state
   switch (currentActive) {
     case "home":
       renderHome(pageContentEl);
+      manageBackButton(false);
       break;
     case "people":
       renderPeople(pageContentEl);
+      manageBackButton(false);
       break;
     case "messages":
       renderMessages(pageContentEl);
+      manageBackButton(false);
       break;
     case "notifications":
       renderNotifications(pageContentEl);
+      manageBackButton(false);
       break;
     case "profile":
       renderProfile(pageContentEl);
+      manageBackButton(false);
       break;
     default:
       renderHome(pageContentEl);
+      manageBackButton(false);
   }
 
-  // Add global navigate event listener to handle SPA navigation with params
+  // --- SPA Routing ---
   window.addEventListener('navigate', (e) => {
     const { page, userId } = e.detail;
-    switch (page) {
-      case 'home':
-        renderHome(pageContentEl);
-        break;
-      case 'people':
-        renderPeople(pageContentEl);
-        break;
-      case 'messages':
-        renderMessages(pageContentEl);
-        break;
-      case 'notifications':
-        renderNotifications(pageContentEl);
-        break;
-      case 'profile':
-        if (userId) {
-          const person = mockPeople.find(u => u.id === userId);
-          if (person) {
-            renderProfile(pageContentEl, person);
-          } else {
-            renderProfile(pageContentEl); // fallback to current user profile
-          }
-        } else {
-          renderProfile(pageContentEl);
-        }
-        break;
-      default:
-        renderHome(pageContentEl);
+    const url = userId ? `?page=${page}&userId=${userId}` : `?page=${page}`;
+    
+    // Add a new state to the browser's history
+    history.pushState({ page, userId }, '', url);
+    renderPage(page, userId);
+  });
+
+  // Listen for browser back/forward button clicks
+  window.addEventListener('popstate', (e) => {
+    if (e.state) {
+      renderPage(e.state.page, e.state.userId);
     }
   });
 }

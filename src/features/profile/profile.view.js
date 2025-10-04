@@ -1,13 +1,13 @@
 import { predefinedInterests } from "../../data/interests.js";
 import { updateUser, getCurrentUser } from "../../utils/storage.js";
 import { createElement } from "../../utils/DOM.js";
-import { createBackButton } from "../components/backButton.js";
 import { renderInterestBadges } from "../components/interestBadge.js";
 
 export function renderProfile(container, person) {
   let userData = person;
   let posts = [];
 
+  const globalNavBarEl = document.getElementById("global-nav-bar");
   if (!person) {
     // For current user profile
     userData = getCurrentUser();
@@ -45,6 +45,10 @@ export function renderProfile(container, person) {
 
         <div class="profile-details">
           <h2 id="username">${userData.name}</h2>
+          <div class="profile-follow-stats">
+            <div><strong>${followersCount}</strong> Followers</div>
+            <div><strong>${followingCount}</strong> Following</div>
+          </div>
           <p class="profile-bio">${userData.bio}</p>
           <p><strong>Interests:</strong> ${renderInterestBadges(userData.interests)}</p>
           ${userData.id === getCurrentUser()?.id ? '<button class="edit-profile-btn">Edit Profile</button>' : ''}
@@ -53,8 +57,6 @@ export function renderProfile(container, person) {
         <main class="profile-main">
           <div class="profile-stats">
             <div><strong>${postsCount}</strong> Posts</div>
-            <div><strong>${followersCount}</strong> Followers</div>
-            <div><strong>${followingCount}</strong> Following</div>
           </div>
           <section class="profile-posts">
             <h3>Posts</h3>
@@ -78,18 +80,15 @@ export function renderProfile(container, person) {
       coverPhoto.style.background = userData.coverColor || "linear-gradient(135deg, #d1ddf1 0%, #96add4 100%)";
     }
 
-    // Add back button using reusable component
-    const header = container.querySelector(".profile-header");
-    createBackButton(header, () => {
-      // Go back in history
-      history.back();
-    });
-
     // Add event listener for Edit Profile button
     const editBtn = container.querySelector(".edit-profile-btn");
     if (editBtn) {
       editBtn.addEventListener("click", () => {
         isEditing = true;
+        // Show back button for the edit form
+        const event = new CustomEvent('manageBackButton', { detail: { show: true, text: 'Edit Profile' } });
+        window.dispatchEvent(event);
+
         renderEditForm();
       });
     }
@@ -121,7 +120,7 @@ export function renderProfile(container, person) {
 
     predefinedInterests.forEach(interest => {
       const badge = createElement("span", {
-        className: "interest-badge-edit" + (userData.interests.includes(interest) ? " selected" : ""),
+        className: `interest-badge interest-badge--editable ${userData.interests.includes(interest) ? "selected" : ""}`,
         innerText: interest,
         tabIndex: 0,
         role: "button",
@@ -129,15 +128,10 @@ export function renderProfile(container, person) {
       });
 
       badge.addEventListener("click", () => {
-        if (userData.interests.includes(interest)) {
-          userData.interests = userData.interests.filter(i => i !== interest);
-          badge.classList.remove("selected");
-          badge.setAttribute("aria-pressed", "false");
-        } else {
-          userData.interests.push(interest);
-          badge.classList.add("selected");
-          badge.setAttribute("aria-pressed", "true");
-        }
+        const isSelected = badge.classList.toggle("selected");
+        badge.setAttribute("aria-pressed", isSelected);
+        userData.interests = Array.from(interestsContainer.querySelectorAll('.interest-badge.selected'))
+                                  .map(b => b.innerText);
       });
 
       interestsContainer.appendChild(badge);
@@ -173,6 +167,11 @@ export function renderProfile(container, person) {
     cancelBtn.addEventListener("click", (e) => {
       e.preventDefault();
       isEditing = false;
+
+      // Hide back button when cancelling edit
+      const event = new CustomEvent('manageBackButton', { detail: { show: false } });
+      window.dispatchEvent(event);
+
       renderView();
     });
 
@@ -188,10 +187,14 @@ export function renderProfile(container, person) {
       updateUser(userData);
 
       isEditing = false;
+
+      // Hide back button after saving
+      const event = new CustomEvent('manageBackButton', { detail: { show: false } });
+      window.dispatchEvent(event);
+
       renderView();
     });
   }
 
   renderView();
 }
-

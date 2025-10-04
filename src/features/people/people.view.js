@@ -18,6 +18,9 @@ export async function renderPeople(container) {
 
   let users = mockPeople;
 
+  // Initialize friendRequested state if not present
+  users.forEach(u => { u.friendRequested = u.friendRequested ?? false; });
+
   localStorage.setItem("app_people_cache", JSON.stringify(users));
 
   const listEl = container.querySelector("#people-list");
@@ -34,7 +37,7 @@ export async function renderPeople(container) {
           <div class="people-name">${u.name}</div>
         </div>
         <div class="people-actions">
-          <button class="btn-add-friend" title="Add Friend">Add Friend</button>
+          <button class="btn-add-friend ${u.friendRequested ? 'cancel' : ''}" title="${u.friendRequested ? 'Cancel Friend Request' : 'Add Friend'}">${u.friendRequested ? 'Cancel' : 'Add Friend'}</button>
           <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
         </div>
       </div>
@@ -61,7 +64,22 @@ export async function renderPeople(container) {
       const addFriendBtn = el.querySelector(".btn-add-friend");
       addFriendBtn?.addEventListener("click", (ev) => {
         ev.stopPropagation();
-        alert(`Friend request sent to ${el.querySelector('.people-name').textContent}`);
+        const id = el.dataset.id;
+        const person = users.find(u => u.id === id);
+        if (person) {
+          if (person.friendRequested) {
+            person.friendRequested = false;
+            addFriendBtn.textContent = "Add Friend";
+            addFriendBtn.title = "Add Friend";
+            alert(`Friend request cancelled for ${person.name}`);
+          } else {
+            person.friendRequested = true;
+            addFriendBtn.textContent = "Cancel";
+            addFriendBtn.title = "Cancel Friend Request";
+            alert(`Friend request sent to ${person.name}`);
+          }
+          localStorage.setItem("app_people_cache", JSON.stringify(users));
+        }
       });
     });
 
