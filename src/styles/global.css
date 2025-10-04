@@ -933,6 +933,7 @@ button.primary:hover {
   flex-direction: column;
   height: 100vh;
   background: var(--color-bg);
+ 
 }
 
 /* Header */
@@ -1093,7 +1094,7 @@ button.primary:hover {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;

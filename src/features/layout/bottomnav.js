@@ -50,7 +50,7 @@ export function createBottomNav(container, pageContentEl) {
     const itemRect = item.getBoundingClientRect();
     // Calculate the center of the item and offset for the indicator's fixed width
     const itemCenter = (itemRect.left - navRect.left) + (itemRect.width / 2);
-    const indicatorOffset = 48 / 2; // 48 is the indicator's fixed width from CSS
+    const indicatorOffset = 56 / 2; // 56 is the indicator's new fixed width from CSS
 
     indicator.style.transform = `translateX(${itemCenter - indicatorOffset}px)`;
   }
