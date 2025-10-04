@@ -1,4 +1,4 @@
-// src/features/layout/bottomnav.js
+ // src/features/layout/bottomnav.js
 import { renderHome } from "../home/home.view.js";
 import { renderProfile } from "../profile/profile.view.js";
 import { renderPeople } from "../people/people.view.js";
@@ -50,7 +50,7 @@ export function createBottomNav(container, pageContentEl) {
     const itemRect = item.getBoundingClientRect();
     // Calculate the center of the item and offset for the indicator's fixed width
     const itemCenter = (itemRect.left - navRect.left) + (itemRect.width / 2);
-    const indicatorOffset = 56 / 2; // 56 is the indicator's new fixed width from CSS
+    const indicatorOffset = 60 / 2; // 60 is the indicator's new fixed width from CSS
 
     indicator.style.transform = `translateX(${itemCenter - indicatorOffset}px)`;
   }

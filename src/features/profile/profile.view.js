@@ -50,7 +50,7 @@ export function renderProfile(container, person) {
             <div><strong>${followingCount}</strong> Following</div>
           </div>
           <p class="profile-bio">${userData.bio}</p>
-          <p><strong>Interests:</strong> ${renderInterestBadges(userData.interests)}</p>
+          <p>${renderInterestBadges(userData.interests)}</p>
           ${userData.id === getCurrentUser()?.id ? '<button class="edit-profile-btn">Edit Profile</button>' : ''}
         </div>
 

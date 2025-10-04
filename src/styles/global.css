@@ -799,20 +799,15 @@ button.primary:hover {
 
 .nav-indicator {
   position: absolute;
-  bottom: 12px;
+  bottom: 5px;
   left: 0; /* Will be controlled by transform */
-  width: 48px;        /* Fixed width for a square shape */
-  height: 48px;       /* Fixed height for a square shape */
-  background: var(--color-card-bg);
-  border-radius: 16px; /* A slightly tighter corner for a cleaner look */
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+  width: 60px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 0;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: 0; /* Ensure it's behind the icons */
-
-  /* ✨ Neumorphic shadow with glow */
-  box-shadow:
-    -4px -4px 8px rgba(255, 255, 255, 0.7),
-     4px  4px 10px rgba(0, 0, 0, 0.1),
-     0 0 20px rgba(107, 122, 104, 0.3); /* subtle glow */
+  box-shadow: none;
 }
 
 
@@ -1367,7 +1362,7 @@ button.primary:hover {
   border-radius: 24px; /* Adopted from editable badge */
   font-size: 14px; /* Adjusted for consistency */
   font-weight: 600;
-  margin: 4px; /* Adjusted for a slightly tighter grid */
+  margin: 8px 8px 8px 0; /* Increased margins for more spacing: top, right, bottom, left */
   letter-spacing: 0.2px;
   transition: all 0.3s cubic-bezier(.4,0,.2,1); /* Adopted from editable badge */
   user-select: none; /* Adopted from editable badge */
@@ -1376,6 +1371,11 @@ button.primary:hover {
   color: var(--color-text-primary); /* Adopted from editable badge */
   box-shadow: 0 2px 6px rgba(0,0,0,0.12); /* Unified shadow */
   cursor: default; /* Default cursor, overridden by --editable */
+}
+.interests-container {
+  margin-top: 0.5rem;
+  margin-left: 0; /* Align left with other profile info */
+  line-height: 1.5; /* Add line height for better vertical spacing between wrapped lines */
 }
 
 .interest-badge:hover {
@@ -1389,10 +1389,13 @@ button.primary:hover {
 /* Profile Edit Form Container */
 .edit-profile-form {
   max-width: 600px;
+  max-width: 700px;
   margin: 2rem auto;
   background: var(--color-card-bg); 
   padding: 2rem 3rem;
   border-radius: 20px;
+  padding: 2.5rem 3rem;
+  border-radius: 24px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
   font-family: 'Poppins', 'Inter', sans-serif;
   color: var(--color-text-primary);
@@ -1401,11 +1404,28 @@ button.primary:hover {
   gap: 1.8rem;
 }
 
+/* Form Section for grouping */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Form Header */
+.edit-profile-form h2 {
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
 /* Form Labels */
 .edit-profile-form label {
   font-weight: 700;
   font-size: 16px;
   margin-bottom: 0.6rem;
+  margin-bottom: 0;
   display: block;
   color: var(--color-text-primary);
 }
@@ -1416,6 +1436,7 @@ button.primary:hover {
   font-size: 16px;
   padding: 14px 16px;
   border-radius: 16px;
+  border-radius: 12px;
   border: 1.5px solid var(--color-divider);
   background: var(--color-input-bg);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.06);
@@ -1428,17 +1449,37 @@ button.primary:hover {
 .edit-profile-form textarea:focus {
   border-color: var(--color-accent);
   box-shadow: 0 0 8px rgba(107, 122, 104, 0.4);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.3);
   outline: none;
 }
 
 /* File input wrapper */
+.file-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--color-input-bg);
+  border-radius: 12px;
+  border: 1.5px solid var(--color-divider);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.file-input-wrapper:hover,
+.file-input-wrapper:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.3);
+}
+
 .edit-profile-form input[type="file"] {
   display: block;
+  opacity: 0;
+  position: absolute;
   width: 100%;
   padding: 10px 12px;
   border-radius: 16px;
   border: 1.5px solid var(--color-divider);
   background: var(--color-input-bg);
+  height: 100%;
   cursor: pointer;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1450,14 +1491,31 @@ button.primary:hover {
   outline: none;
 }
 
+.file-input-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  width: 100%;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  pointer-events: none; /* Let clicks pass through to the input */
+}
+
+.file-input-label i {
+  stroke: var(--color-accent);
+}
+
 /* Color picker */
 .edit-profile-form input[type="color"] {
   width: 60px;
   height: 36px;
+  height: 48px;
   border: none;
   padding: 0;
   cursor: pointer;
   border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: box-shadow 0.3s ease;
 }
@@ -1474,6 +1532,16 @@ button.primary:hover {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 0.5rem;
+}
+
+/* Button container */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--color-divider);
+  padding-top: 1.5rem;
 }
 
 /* Buttons */
@@ -1494,17 +1562,26 @@ button.primary:hover {
 }
 
 .edit-profile-form button[type="submit"] {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
   background-color: var(--color-accent);
   color: #fff;
   box-shadow: 0 6px 16px rgba(107, 122, 104, 0.6);
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
 }
 
 .edit-profile-form button[type="submit"]:hover {
   background-color: #556b4a;
   box-shadow: 0 8px 20px rgba(107, 122, 104, 0.8);
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.6);
+  transform: translateY(-2px);
 }
 
 .edit-profile-form button[type="button"] {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
   background-color: var(--color-input-bg);
   color: var(--color-text-primary);
   box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
@@ -1514,6 +1591,13 @@ button.primary:hover {
 .edit-profile-form button[type="button"]:hover {
   background-color: var(--color-input-focus);
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 600px) {
+  .edit-profile-form {
+    padding: 2rem 1.5rem;
+  }
 }
 
 /* =======================

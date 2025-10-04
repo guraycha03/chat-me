@@ -1,6 +1,4 @@
-# TODO: Reposition UI Elements in Profile View
-
-- [x] Modify `profile-details` in `renderView` to add followers/following counts below username
-- [x] Move bio paragraph below followers/following in `profile-details`
-- [x] Remove followers/following from `profile-stats`, leaving only posts
-- [ ] Test the layout changes by running the app and checking profile display
+- [x] Update .nav-indicator CSS in global.css to change from square to thin horizontal line (underline style) under the icon
+- [x] Update indicatorOffset in bottomnav.js from 28 to 16 for proper centering
+- [x] Make the underline longer to cover the whole "notification" word and position it lower
+- [ ] Test the changes by running the app to ensure the underline animates correctly on navigation
