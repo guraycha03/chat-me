@@ -1,29 +1,72 @@
 // src/data/interests.js
 export const predefinedInterests = [
+  // Lifestyle & Hobbies
   "gardening",
   "photography",
+  "street photography",
   "journaling",
   "traveling",
+  "solo travel",
   "cooking",
-  "running",
+  "baking",
   "fitness",
+  "yoga",
+  "running",
+  "cycling",
+  "hiking",
   "coffee",
+  "tea lover",
   "foodie",
-  "street photography",
-  "reading",
+  "street food",
+
+  // Pop Culture & Entertainment
   "anime",
-  "late-night snacking",
-  "music",
-  "basketball",
-  "coding",
-  "memes",
-  "minimalism",
-  "art",
-  "tech",
-  "indie music",
-  "cats",
+  "k-pop",
+  "gaming",
+  "board games",
   "movies",
+  "indie films",
+  "tv series",
+  "memes",
+  "comics",
+  "dancing",
+  "cosplay",
+
+  // Music & Arts
+  "music",
+  "indie music",
+  "lofi beats",
+  "concerts",
+  "art",
+  "digital art",
+  "painting",
+  "minimalism",
+  "writing",
+  "poetry",
+
+  // Tech & Learning
+  "coding",
+  "tech",
+  "startups",
+  "science",
+  "DIY projects",
+
+  // Sports & Outdoors
+  "basketball",
+  "soccer",
+  "swimming",
+  "skateboarding",
+  "camping",
+
+  // Personal & Fun
+  "cats",
+  "dogs",
+  "pets",
   "sleeping",
-  "eating",
-  "pets"
+  "self-care",
+  "astrology",
+  "fashion",
+  "thrifting",
+  "travel photography",
+  "sunset watching"
 ];

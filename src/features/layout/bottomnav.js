@@ -6,9 +6,7 @@ import { renderMessages } from "../messages/messages.view.js";
 import { renderNotifications } from "../notifications/notifications.view.js";
 import { createIcons, icons } from "lucide";
 import { showNotice } from "../../utils/notification.js";
-
-// keep track of current active tab globally
-let currentActive = "home";
+import { currentActive, setCurrentActive } from "../../utils/navigationState.js";
 
 export function createBottomNav(container, pageContentEl) {
   // Clear container to prevent duplicate nav bars on resize
@@ -57,22 +55,34 @@ export function createBottomNav(container, pageContentEl) {
     indicator.style.transform = `translateX(${offsetLeft}px)`;
   }
 
-  // Restore correct active state and attach click handlers
+  // Function to update active state
+  function updateActiveState(activeId) {
+    navItems.forEach(btn => {
+      const id = btn.id.replace("bottom-", "");
+      if (id === activeId) {
+        btn.classList.add("active");
+        moveIndicator(btn);
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+  }
+
+  // Restore correct active state
+  updateActiveState(currentActive);
+
+  // Attach click handlers
   navItems.forEach(item => {
     const id = item.id.replace("bottom-", "");
-    
-    if (id === currentActive) {
-      item.classList.add("active");
-      moveIndicator(item);
-    }
 
     item.addEventListener("click", () => {
-      navItems.forEach(btn => btn.classList.remove("active"));
-      item.classList.add("active");
-      moveIndicator(item);
-
-      currentActive = id; // save active tab
+      setCurrentActive(id);
     });
+  });
+
+  // Listen for active nav changes from other components
+  window.addEventListener('activeNavChanged', (e) => {
+    updateActiveState(e.detail.active);
   });
 
   // Navigation actions (using pageContentEl)

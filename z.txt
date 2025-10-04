@@ -34,3 +34,21 @@ my-social-app/
    └─ assets/                # images, icons
        └─ images/
            └─ login-bg.png
+
+
+
+design my edit profile page into more modern and interactive and engaging. make it rich in ui and ux, responsive and look premium
+
+
+show a background the same size as my background on profile page so users can see what it will look like as they change bg color
+
+also the profile image, make it circular like letting user see what it will actually appear
+
+also on interest
+
+make it an input where users can search and the interest badges will appear as its matching the letter being typed and users can now click on the inerest and it will add on there interest after saving all the changes
+
+
+
+
+

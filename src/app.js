@@ -7,6 +7,7 @@ import { renderMessages } from "./features/messages/messages.view.js";
 import { renderNotifications } from "./features/notifications/notifications.view.js";
 import { renderProfile } from "./features/profile/profile.view.js";
 import { createIcons, icons } from "lucide";
+import { currentActive } from "./utils/navigationState.js";
 
 
 export function initApp(container) {
@@ -62,6 +63,24 @@ export function initApp(container) {
   toggleBottomNav();
   window.addEventListener('resize', toggleBottomNav);
 
-  // Initial page render
-  renderHome(pageContentEl);
+  // Initial page render based on saved currentActive state
+  switch (currentActive) {
+    case "home":
+      renderHome(pageContentEl);
+      break;
+    case "people":
+      renderPeople(pageContentEl);
+      break;
+    case "messages":
+      renderMessages(pageContentEl);
+      break;
+    case "notifications":
+      renderNotifications(pageContentEl);
+      break;
+    case "profile":
+      renderProfile(pageContentEl);
+      break;
+    default:
+      renderHome(pageContentEl);
+  }
 }

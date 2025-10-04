@@ -1,15 +1,14 @@
-// src/data/people.mock.js
 export const mockPeople = [
   {
     id: "u1",
     name: "Niko Morales",
-    avatar: "https://i.pravatar.cc/100?img=11",
+    avatar: "/assets/images/users/profile-19.png",
     bio: "sometimes i just talk to my plants 🌱",
     online: true,
     birthday: "1999-04-15",
     followers: 2450,
     following: 320,
-    interests: ["gardening", "photography", "journaling"],
+    interests: ["gardening", "photography", "journaling", "traveling", "cooking"],
     posts: [
       {
         id: "p1",
@@ -49,7 +48,8 @@ export const mockPeople = [
   {
     id: "u3",
     name: "Kaia",
-avatar: "/assets/images/users/kaia.png",    bio: "🏃‍♀️ morning runs, bad coffee, better vibes",
+    avatar: "/assets/images/users/kaia.png",
+    bio: "🏃‍♀️ morning runs, bad coffee, better vibes",
     online: true,
     birthday: "2001-07-09",
     followers: 3520,
@@ -66,12 +66,13 @@ avatar: "/assets/images/users/kaia.png",    bio: "🏃‍♀️ morning runs, ba
   {
     id: "u4",
     name: "Lucas Chen",
-avatar: "/assets/images/users/avery.png",    bio: "i really like tacos 🌮",
+    avatar: "/assets/images/users/avery.png",
+    bio: "i really like tacos 🌮",
     online: false,
     birthday: "1996-12-22",
     followers: 910,
     following: 670,
-    interests: ["foodie", "travel", "street photography"],
+    interests: ["foodie", "traveling", "street photography"],
     posts: [
       {
         id: "p1",
@@ -83,12 +84,13 @@ avatar: "/assets/images/users/avery.png",    bio: "i really like tacos 🌮",
   {
     id: "u5",
     name: "Sofia Torres",
-avatar: "/assets/images/users/sofia-torres.png",    bio: "procrastinator level: expert 😅",
+    avatar: "/assets/images/users/sofia-torres.png",
+    bio: "procrastinator level: expert 😅",
     online: true,
     birthday: "2002-05-03",
     followers: 2765,
     following: 310,
-    interests: ["reading", "anime", "late-night snacking"],
+    interests: ["reading", "anime", "tv series"],
     posts: [
       {
         id: "p1",
@@ -100,7 +102,8 @@ avatar: "/assets/images/users/sofia-torres.png",    bio: "procrastinator level: 
   {
     id: "u6",
     name: "Jace Garcia",
-avatar: "/assets/images/users/jace-garcia.png",    bio: "sometimes quiet, sometimes too loud",
+    avatar: "/assets/images/users/jace-garcia.png",
+    bio: "sometimes quiet, sometimes too loud",
     online: false,
     birthday: "1998-11-27",
     followers: 1430,
@@ -117,12 +120,13 @@ avatar: "/assets/images/users/jace-garcia.png",    bio: "sometimes quiet, someti
   {
     id: "u7",
     name: "Maya Crochet",
-avatar: "/assets/images/users/maya-crochet.jpeg",    bio: "i put pineapple on pizza and i stand by it 🍍",
+    avatar: "/assets/images/users/maya-crochet.jpeg",
+    bio: "i put pineapple on pizza and i stand by it 🍍",
     online: true,
     birthday: "2006-01-19",
     followers: 4820,
     following: 980,
-    interests: ["cooking", "travel", "memes"],
+    interests: ["cooking", "traveling", "memes"],
     posts: [
       {
         id: "p1",
@@ -134,7 +138,8 @@ avatar: "/assets/images/users/maya-crochet.jpeg",    bio: "i put pineapple on pi
   {
     id: "u8",
     name: "Jaehyun Kim",
-avatar: "/assets/images/users/kim.png",    bio: "…",
+    avatar: "/assets/images/users/kim.png",
+    bio: "…",
     online: true,
     birthday: "2002-08-08",
     followers: 2010,
@@ -151,7 +156,8 @@ avatar: "/assets/images/users/kim.png",    bio: "…",
   {
     id: "u9",
     name: "Gracie Alvarez",
-avatar: "/assets/images/users/avery.png",    bio: "coffee, coding, chaos",
+    avatar: "/assets/images/users/avery.png",
+    bio: "coffee, coding, chaos",
     online: false,
     birthday: "1999-03-11",
     followers: 3275,
@@ -168,7 +174,8 @@ avatar: "/assets/images/users/avery.png",    bio: "coffee, coding, chaos",
   {
     id: "u10",
     name: "Rowan Davis",
-avatar: "/assets/images/users/avery.png",    bio: "ask me about my cat or don’t. your choice 😼",
+    avatar: "/assets/images/users/avery.png",
+    bio: "ask me about my cat or don’t. your choice 😼",
     online: true,
     birthday: "2001-06-30",
     followers: 1980,
@@ -183,22 +190,31 @@ avatar: "/assets/images/users/avery.png",    bio: "ask me about my cat or don’
     ],
   },
 
-   {
+  {
     id: "u11",
     name: "Cha",
-avatar: "/assets/images/users/cha.jpeg",    bio: "🏃‍♀️ morning runs, bad coffee, better vibes",
+    avatar: "/assets/images/users/cha.jpeg",
+    bio: "🏃‍♀️ morning runs, bad coffee, better vibes",
     online: true,
     birthday: "2001-07-09",
     followers: 3520,
     following: 450,
-    interests: ["sleeping", "eating", "pets"],
+    interests: ["sleeping", "pets", "coffee"],
     posts: [
       {
         id: "p1",
-        description: "5k done before 7am 🏃‍♀️",
-        image: "https://picsum.photos/400/300?random=13",
+        description: "🍓",
+        image: "/assets/images/posts/cha-post-1.png",
       },
     ],
   },
-  
 ];
+
+
+
+
+
+
+// make browser remember not just the pages i have on bottom nav , but also other navigations like profile page, when i visit account, etc
+
+

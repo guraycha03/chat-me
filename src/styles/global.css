@@ -1,47 +1,37 @@
 /* =======================
-   Root / Global Styles & Scrollbar
+   Root / Global Styles
    ======================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Poppins:wght@600;700;800&display=swap');
 
    
 :root {
-  --color-bg: #f5f3ef;                /* soft off-white page background */
-  --color-card-bg: #ffffff;           /* clean, light card */
-  --color-text-primary: #4a3f36;      /* matte brown, main text */
-  --color-text-secondary: #6b7a68;    /* dusty green accent text */
-  --color-input-bg: #f2f2f0;          /* subtle input background */
-  --color-input-focus: #e0e5dd;       /* gentle focus highlight */
-  --color-button-bg: #2c2c2c;         /* soft black / charcoal */
-  --color-button-hover: #1f1f1f;      /* slightly darker on hover */
+  --color-bg: #f5f3ef;             
+  --color-card-bg: #ffffff;          
+  --color-text-primary: #4a3f36;      
+  --color-text-secondary: #6b7a68;   
+  --color-input-bg: #f2f2f0;         
+  --color-input-focus: #e0e5dd;     
+  --color-button-bg: #2c2c2c;        
+  --color-button-hover: #1f1f1f;     
   --color-button-text: #ffffff;   
   --color-error-bg: rgba(255, 69, 58, 0.1);
   --color-error-text: #c94f42;
   --color-divider: #d1cdc2;
   --color-underline: #a8b1a6;
-  --color-accent: #6b7a68;   /* dusty green */
+  --color-accent: #6b7a68;   
 }
 
 * {
-  /* scrollbar-width: thin;
-  scrollbar-color: #b89572 #e6e3dd; */
   box-sizing: border-box;
   margin: 0; padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* outline: 1px solid rgb(147, 163, 155); */
 }
 
-
-
-/* =======================
-   Global / Base Styles
-   ======================= */
-
-/* Hide scrollbars but keep scrolling functional */
 html, body, #app, .main-content, .home-wrapper, .messages-wrapper, .people-list {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-  overflow-x: hidden; /* fix horizontal scroll */
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  overflow-x: hidden; 
 }
 
 html::-webkit-scrollbar,
@@ -51,7 +41,7 @@ body::-webkit-scrollbar,
 .home-wrapper::-webkit-scrollbar,
 .messages-wrapper::-webkit-scrollbar,
 .people-list::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  display: none; 
 }
 
 html, body, #app {
@@ -430,7 +420,6 @@ img {
   }
 }
 
-/* ... (Keep all your existing CSS below this section) ... */
 
 .sidebar-content {
   display: flex;
@@ -485,6 +474,12 @@ img {
 
 .menu-item.logout:hover {
   background: #ff5544;
+}
+
+.menu-item.active {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 
@@ -782,13 +777,14 @@ button.primary:hover {
   height: 44px;
   background: var(--color-card-bg);
   border-radius: 16px;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
   z-index: 0;
 
-  /* ✨ Neumorphic shadow */
+  /* ✨ Neumorphic shadow with glow */
   box-shadow:
     -4px -4px 8px rgba(255, 255, 255, 0.7),
-     4px  4px 10px rgba(0, 0, 0, 0.1);
+     4px  4px 10px rgba(0, 0, 0, 0.1),
+     0 0 20px rgba(107, 122, 104, 0.3); /* subtle glow */
 }
 
 
@@ -862,6 +858,7 @@ button.primary:hover {
   stroke: var(--color-accent);
 }
 
+
 /* Create button oblong style */
 
 
@@ -916,7 +913,6 @@ button.primary:hover {
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
-  background: var(--color-card-bg);
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
