@@ -78,10 +78,10 @@ export function initFeed(container = document.getElementById("app")) {
       return;
     }
     feedContainer.innerHTML = posts.map(post => `
-      <div class="post-card" data-id="${post.id}">
+      <div class="post-card${!post.image ? ' text-post' : ''}" data-id="${post.id}">
         <div class="post-author">${escapeHtml(post.author)}</div>
-        ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Post image" /></div>` : ""}
         <div class="post-text">${escapeHtml(post.text)}</div>
+        ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Post image" /></div>` : ""}
         <div class="post-meta">${new Date(post.createdAt).toLocaleString()}</div>
       </div>
     `).join("");

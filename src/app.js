@@ -96,31 +96,26 @@ export function initApp(container) {
     }
   }
 
-  // Initial page render based on saved currentActive state
-  switch (currentActive) {
-    case "home":
-      renderHome(pageContentEl);
-      manageBackButton(false);
-      break;
-    case "friends":
-      renderFriends(pageContentEl);
-      manageBackButton(false);
-      break;
-    case "messages":
-      renderMessages(pageContentEl);
-      manageBackButton(false);
-      break;
-    case "notifications":
-      renderNotifications(pageContentEl);
-      manageBackButton(false);
-      break;
-    case "profile":
-      renderProfile(pageContentEl);
-      manageBackButton(false);
-      break;
-    default:
-      renderHome(pageContentEl);
-      manageBackButton(false);
+  // Parse URL parameters for initial page
+  const urlParams = new URLSearchParams(window.location.search);
+  const pageFromUrl = urlParams.get('page');
+  const userIdFromUrl = urlParams.get('userId');
+
+  // Determine initial page: URL takes precedence, then localStorage
+  const initialPage = pageFromUrl || currentActive;
+  const initialUserId = userIdFromUrl || null;
+
+  // Render initial page
+  renderPage(initialPage, initialUserId);
+
+  // If loaded from URL, update localStorage and push state
+  if (pageFromUrl) {
+    // Import setCurrentActive
+    import('./utils/navigationState.js').then(({ setCurrentActive }) => {
+      setCurrentActive(initialPage);
+    });
+    // Push state to history
+    history.replaceState({ page: initialPage, userId: initialUserId }, '', window.location.href);
   }
 
   // --- SPA Routing ---
