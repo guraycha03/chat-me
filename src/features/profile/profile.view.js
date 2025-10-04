@@ -81,10 +81,8 @@ export function renderProfile(container, person) {
     // Add back button using reusable component
     const header = container.querySelector(".profile-header");
     createBackButton(header, () => {
-      // Go back to people list
-      import("../people/people.view.js").then(module => {
-        module.renderPeople(container);
-      });
+      // Go back in history
+      history.back();
     });
 
     // Add event listener for Edit Profile button

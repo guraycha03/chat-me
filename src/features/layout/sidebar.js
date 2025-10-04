@@ -1,5 +1,5 @@
 // src/features/layout/sidebar.js
-import { currentActive, setCurrentActive } from "../../utils/navigationState.js";
+import { currentActive, navigate } from "../../utils/navigationState.js";
 
 // Now accepts pageContent container and render functions to centralize navigation
 export function createSidebar(container, pageContentEl, renderers) {
@@ -117,27 +117,23 @@ export function createSidebar(container, pageContentEl, renderers) {
 
   // Attach navigation listeners for the sidebar menu
   document.getElementById("nav-home").addEventListener("click", () => {
-    setCurrentActive('home');
-    renderers.renderHome(pageContentEl);
+    navigate('home');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
   document.getElementById("nav-people").addEventListener("click", () => {
-    setCurrentActive('people');
-    renderers.renderPeople(pageContentEl);
+    navigate('people');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
   document.getElementById("nav-messages").addEventListener("click", () => {
-    setCurrentActive('messages');
-    renderers.renderMessages(pageContentEl);
+    navigate('messages');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
   document.getElementById("nav-notifications").addEventListener("click", () => {
-    setCurrentActive('notifications');
-    renderers.renderNotifications(pageContentEl);
+    navigate('notifications');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
   document.getElementById("nav-profile").addEventListener("click", () => {
-    renderers.renderProfile(pageContentEl);
+    navigate('profile');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
 

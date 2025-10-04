@@ -1,13 +1,8 @@
-# TODO: Improve Active Indicator for Responsiveness, Interactivity, and Engagement
+# TODO: Separate Designs for Text and Image Posts
 
 ## Tasks
-- [x] Enhance bottom nav active indicator with glow and scale animations
-- [x] Add interactive hover effects to bottom nav items
-- [x] Add active state highlighting to sidebar menu items
-- [x] Sync sidebar active state with bottom nav's currentActive
-- [x] Add smooth transitions for sidebar active state changes
-- [x] Update CSS styles for sidebar active menu item (color, background, box-shadow)
-- [x] Update CSS styles for enhanced bottom nav indicator animations
-- [x] Add hover and focus styles for bottom nav and sidebar menu items
-- [x] Test responsiveness and interactivity on different screen sizes
-- [x] Verify smooth transitions and synced active states
+- [x] Modify composer in feed.controller.js to add file input for image upload
+- [x] Update post creation logic to include image (base64) if selected
+- [x] Update renderFeed function to conditionally render image in posts
+- [x] Add CSS styles for .post-card with image in global.css
+- [ ] Test image upload and post display

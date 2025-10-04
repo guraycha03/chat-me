@@ -1,4 +1,3 @@
-// src/app.js
 import { createSidebar } from "./features/layout/sidebar.js";
 import { createBottomNav } from "./features/layout/bottomnav.js";
 import { renderHome } from "./features/home/home.view.js";
@@ -8,6 +7,7 @@ import { renderNotifications } from "./features/notifications/notifications.view
 import { renderProfile } from "./features/profile/profile.view.js";
 import { createIcons, icons } from "lucide";
 import { currentActive } from "./utils/navigationState.js";
+import { mockPeople } from "./data/people.mock.js";
 
 
 export function initApp(container) {
@@ -38,14 +38,14 @@ export function initApp(container) {
 
   // Initialize Lucide icons for the FAB
   createIcons({ icons, attrs: { 'stroke-width': 2 } });
-  
+
   // Initialize sidebar with responsive logic AND ALL navigation items
-  createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications, renderProfile }); 
+  createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications, renderProfile });
 
   // Function to toggle bottom nav display based on screen size
   const toggleBottomNav = () => {
     if (window.innerWidth < 900) {
-      bottomNavEl.style.display = "flex"; 
+      bottomNavEl.style.display = "flex";
       createBottomNav(bottomNavEl, pageContentEl); // Pass page content for navigation
       fabBtn.style.display = "none"; // FAB is part of bottom nav on mobile
     } else {
@@ -83,4 +83,37 @@ export function initApp(container) {
     default:
       renderHome(pageContentEl);
   }
+
+  // Add global navigate event listener to handle SPA navigation with params
+  window.addEventListener('navigate', (e) => {
+    const { page, userId } = e.detail;
+    switch (page) {
+      case 'home':
+        renderHome(pageContentEl);
+        break;
+      case 'people':
+        renderPeople(pageContentEl);
+        break;
+      case 'messages':
+        renderMessages(pageContentEl);
+        break;
+      case 'notifications':
+        renderNotifications(pageContentEl);
+        break;
+      case 'profile':
+        if (userId) {
+          const person = mockPeople.find(u => u.id === userId);
+          if (person) {
+            renderProfile(pageContentEl, person);
+          } else {
+            renderProfile(pageContentEl); // fallback to current user profile
+          }
+        } else {
+          renderProfile(pageContentEl);
+        }
+        break;
+      default:
+        renderHome(pageContentEl);
+    }
+  });
 }

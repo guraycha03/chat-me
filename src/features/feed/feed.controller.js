@@ -1,5 +1,6 @@
 // src/features/feed/feed.controller.js
 import { getCurrentUser, removeCurrentUser } from "../../utils/storage.js";
+import { toBase64 } from "../../utils/convert.js";
 
 /* Simple in-file post storage helpers */
 const POSTS_KEY = "myapp_posts";
@@ -30,23 +31,34 @@ export function initFeed(container = document.getElementById("app")) {
   composer.innerHTML = `
     <form id="post-form">
       <textarea id="post-text" rows="3" placeholder="What's on your mind?"></textarea>
+      <input type="file" id="post-image" accept="image/*" style="margin-top: 10px;">
       <button type="submit">Post</button>
     </form>
   `;
-  composer.querySelector("#post-form").addEventListener("submit", (e) => {
+  composer.querySelector("#post-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const textEl = composer.querySelector("#post-text");
+    const imageEl = composer.querySelector("#post-image");
     const text = textEl.value.trim();
-    if (!text) return;
+    const file = imageEl.files[0];
+    if (!text && !file) return;
+
+    let image = null;
+    if (file) {
+      image = await toBase64(file);
+    }
+
     const post = {
       id: Date.now(),
       author: user.username,
       text,
+      image,
       createdAt: new Date().toISOString(),
       reactions: {}
     };
     addPost(post);
     textEl.value = "";
+    imageEl.value = "";
     renderFeed();
   });
 
@@ -68,6 +80,7 @@ export function initFeed(container = document.getElementById("app")) {
     feedContainer.innerHTML = posts.map(post => `
       <div class="post-card" data-id="${post.id}">
         <div class="post-author">${escapeHtml(post.author)}</div>
+        ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Post image" /></div>` : ""}
         <div class="post-text">${escapeHtml(post.text)}</div>
         <div class="post-meta">${new Date(post.createdAt).toLocaleString()}</div>
       </div>

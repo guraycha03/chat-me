@@ -4,7 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Poppins:wght@600;700;800&display=swap');
 
-   
 :root {
   --color-bg: #f5f3ef;             
   --color-card-bg: #ffffff;          
@@ -22,18 +21,31 @@
   --color-accent: #6b7a68;   
 }
 
+/* Reset & Base */
 * {
   box-sizing: border-box;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-html, body, #app, .main-content, .home-wrapper, .messages-wrapper, .people-list {
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
-  overflow-x: hidden; 
+html, body, #app {
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
+/* Hide scrollbars */
+html, body, #app, .main-content, .home-wrapper, .messages-wrapper, .people-list {
+  scrollbar-width: none;  
+  -ms-overflow-style: none; 
+  overflow-x: hidden;
+}
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 #app::-webkit-scrollbar,
@@ -41,34 +53,21 @@ body::-webkit-scrollbar,
 .home-wrapper::-webkit-scrollbar,
 .messages-wrapper::-webkit-scrollbar,
 .people-list::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
-html, body, #app {
-  width: 100%;
-  position: relative;
-  overflow-x: hidden;
-  min-height: 100%;
-  color: var(--color-text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-}
-
+/* Images */
 img {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
-  -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
 }
 
+/* Layout */
 #messages-panel {
-  display: none; /* hidden by default */
+  display: none; 
 }
 
 .app-wrapper {
@@ -76,14 +75,14 @@ img {
   flex-direction: row;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;  /* prevent horizontal scroll */
-}
-
-
-
-.app-wrapper, .main-content, #sidebar {
   overflow-x: hidden;
 }
+
+.main-content,
+#sidebar {
+  overflow-x: hidden;
+}
+
 
 
 /* =======================
@@ -745,6 +744,54 @@ button.primary:hover {
   flex-direction: column;
 }
 
+/* =======================
+   Feed Post Styles
+   ======================= */
+.post-card {
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.post-author {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+}
+
+.post-text {
+  font-size: 16px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+  color: var(--color-text-primary);
+}
+
+.post-meta {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+/* Image post specific styles */
+.post-image {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.post-image img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  user-select: none;
+  pointer-events: none;
+}
+
 
 
 
@@ -1137,7 +1184,6 @@ button.primary:hover {
   position: relative;
   height: 320px;
   overflow: hidden;
-  backgound: red;
 }
 
 /* Cover color behind bottom half of header */

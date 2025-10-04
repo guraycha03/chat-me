@@ -1,5 +1,5 @@
 // src/features/people/people.view.js
-import { renderProfile } from "../profile/profile.view.js";
+import { navigate } from "../../utils/navigationState.js";
 import { mockPeople } from "../../data/people.mock.js";
 
 export async function renderPeople(container) {
@@ -46,7 +46,7 @@ export async function renderPeople(container) {
         const id = el.dataset.id;
         const person = users.find(u => u.id === id);
         if (person) {
-          renderProfile(document.getElementById("page-content"), person);
+          navigate('profile', { userId: person.id });
         }
       });
       const chatBtn = el.querySelector(".btn-chat");
@@ -55,7 +55,7 @@ export async function renderPeople(container) {
         const id = el.dataset.id;
         const person = users.find(u => u.id === id);
         if (person) {
-          renderProfile(document.getElementById("page-content"), person);
+          navigate('messages', { userId: person.id });
         }
       });
       const addFriendBtn = el.querySelector(".btn-add-friend");
