@@ -1,6 +1,8 @@
 import { predefinedInterests } from "../../data/interests.js";
 import { updateUser, getCurrentUser } from "../../utils/storage.js";
 import { createElement } from "../../utils/DOM.js";
+import { createIcons, icons } from "lucide";
+import { showNotice } from "../../utils/notification.js";
 import { renderInterestBadges } from "../components/interestBadge.js";
 
 export function renderProfile(container, person) {
@@ -51,7 +53,18 @@ export function renderProfile(container, person) {
           </div>
           <p class="profile-bio">${userData.bio}</p>
           <p>${renderInterestBadges(userData.interests)}</p>
-          ${userData.id === getCurrentUser()?.id ? '<button class="edit-profile-btn">Edit Profile</button>' : ''}
+          ${userData.id === getCurrentUser()?.id ? `
+            <div class="profile-actions-container">
+              <button class="profile-action-btn primary" id="add-story-btn">
+                <i data-lucide="plus"></i>
+                <span>Add story</span>
+              </button>
+              <button class="profile-action-btn edit-profile-btn">
+                <i data-lucide="pencil"></i>
+                <span>Edit info</span>
+              </button>
+            </div>
+          ` : ''}
         </div>
 
         <main class="profile-main">
@@ -80,6 +93,14 @@ export function renderProfile(container, person) {
       coverPhoto.style.background = userData.coverColor || "linear-gradient(135deg, #d1ddf1 0%, #96add4 100%)";
     }
 
+    // Initialize lucide icons for the new buttons
+    createIcons({ icons });
+
+    // Add event listener for Add Story button
+    const addStoryBtn = container.querySelector("#add-story-btn");
+    if (addStoryBtn) {
+      addStoryBtn.addEventListener("click", () => showNotice("Add story clicked!"));
+    }
     // Add event listener for Edit Profile button
     const editBtn = container.querySelector(".edit-profile-btn");
     if (editBtn) {

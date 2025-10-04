@@ -1,14 +1,14 @@
 import { createSidebar } from "./features/layout/sidebar.js";
 import { createBottomNav } from "./features/layout/bottomnav.js";
 import { renderHome } from "./features/home/home.view.js";
-import { renderPeople } from "./features/people/people.view.js";
+import { renderFriends } from "./features/friends/friends.view.js";
 import { renderMessages } from "./features/messages/messages.view.js";
 import { renderNotifications } from "./features/notifications/notifications.view.js";
 import { renderProfile } from "./features/profile/profile.view.js";
 import { createIcons, icons } from "lucide";
 import { currentActive } from "./utils/navigationState.js";
 import { createBackButton, removeBackButton } from "./features/components/backButton.js";
-import { mockPeople } from "./data/people.mock.js";
+import { mockFriends } from "./data/friends.mock.js";
 
 
 export function initApp(container) {
@@ -43,7 +43,7 @@ export function initApp(container) {
   createIcons({ icons, attrs: { 'stroke-width': 2 } });
 
   // Initialize sidebar with responsive logic AND ALL navigation items
-  createSidebar(sidebarEl, pageContentEl, { renderHome, renderPeople, renderMessages, renderNotifications, renderProfile });
+  createSidebar(sidebarEl, pageContentEl, { renderHome, renderFriends, renderMessages, renderNotifications, renderProfile });
 
   // --- Back Button Management ---
   function manageBackButton(show, text = 'Back') {
@@ -84,11 +84,11 @@ export function initApp(container) {
   function renderPage(page, userId) {
     switch (page) {
       case "home": renderHome(pageContentEl); manageBackButton(false); break;
-      case "people": renderPeople(pageContentEl); manageBackButton(false); break;
+      case "friends": renderFriends(pageContentEl); manageBackButton(false); break;
       case "messages": renderMessages(pageContentEl); manageBackButton(false); break;
       case "notifications": renderNotifications(pageContentEl); manageBackButton(false); break;
       case "profile":
-        const person = userId ? mockPeople.find(u => u.id === userId) : null;
+        const person = userId ? mockFriends.find(u => u.id === userId) : null;
         renderProfile(pageContentEl, person);
         manageBackButton(!!userId, 'Profile');
         break;
@@ -102,8 +102,8 @@ export function initApp(container) {
       renderHome(pageContentEl);
       manageBackButton(false);
       break;
-    case "people":
-      renderPeople(pageContentEl);
+    case "friends":
+      renderFriends(pageContentEl);
       manageBackButton(false);
       break;
     case "messages":

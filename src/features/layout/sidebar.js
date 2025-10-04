@@ -18,7 +18,7 @@ export function createSidebar(container, pageContentEl, renderers) {
       </div>
       <nav class="menu">
         <button class="menu-item" id="nav-home">Home</button>
-        <button class="menu-item" id="nav-people">People</button>
+        <button class="menu-item" id="nav-friends">Friends</button>
         <button class="menu-item" id="nav-messages">Messages</button>
         <button class="menu-item" id="nav-notifications">Notifications</button>
         <div class="divider"></div> <button class="menu-item" id="nav-profile">Profile</button>
@@ -120,8 +120,8 @@ export function createSidebar(container, pageContentEl, renderers) {
     navigate('home');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
-  document.getElementById("nav-people").addEventListener("click", () => {
-    navigate('people');
+  document.getElementById("nav-friends").addEventListener("click", () => {
+    navigate('friends');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
   document.getElementById("nav-messages").addEventListener("click", () => {

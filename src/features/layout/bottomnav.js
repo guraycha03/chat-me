@@ -1,7 +1,7 @@
  // src/features/layout/bottomnav.js
 import { renderHome } from "../home/home.view.js";
 import { renderProfile } from "../profile/profile.view.js";
-import { renderPeople } from "../people/people.view.js";
+import { renderFriends } from "../friends/friends.view.js";
 import { renderMessages } from "../messages/messages.view.js";
 import { renderNotifications } from "../notifications/notifications.view.js";
 import { createIcons, icons } from "lucide";
@@ -18,9 +18,9 @@ export function createBottomNav(container, pageContentEl) {
       <i data-lucide="home"></i>
       <small>Home</small>
     </button>
-    <button id="bottom-people" class="bottom-nav-item" aria-label="People">
+    <button id="bottom-friends" class="bottom-nav-item" aria-label="Friends">
       <i data-lucide="users"></i>
-      <small>People</small>
+      <small>Friends</small>
     </button>
     <button id="bottom-create" class="bottom-nav-item create-btn" aria-label="Create">
       <i data-lucide="plus"></i>
@@ -50,7 +50,7 @@ export function createBottomNav(container, pageContentEl) {
     const itemRect = item.getBoundingClientRect();
     // Calculate the center of the item and offset for the indicator's fixed width
     const itemCenter = (itemRect.left - navRect.left) + (itemRect.width / 2);
-    const indicatorOffset = 60 / 2; // 60 is the indicator's new fixed width from CSS
+    const indicatorOffset = 72 / 2; // 72 is the indicator's new fixed width from CSS
 
     indicator.style.transform = `translateX(${itemCenter - indicatorOffset}px)`;
   }
@@ -92,7 +92,7 @@ export function createBottomNav(container, pageContentEl) {
   }
 
   document.getElementById("bottom-home").addEventListener("click", () => dispatchNavigation('home'));
-  document.getElementById("bottom-people").addEventListener("click", () => dispatchNavigation('people'));
+  document.getElementById("bottom-friends").addEventListener("click", () => dispatchNavigation('friends'));
   document.getElementById("bottom-messages").addEventListener("click", () => dispatchNavigation('messages'));
   document.getElementById("bottom-notifications").addEventListener("click", () => dispatchNavigation('notifications'));
 

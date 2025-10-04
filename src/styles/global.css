@@ -799,9 +799,10 @@ button.primary:hover {
 
 .nav-indicator {
   position: absolute;
-  bottom: 5px;
+
+  bottom: 6px;
   left: 0; /* Will be controlled by transform */
-  width: 60px;
+  width: 72px;
   height: 2px;
   background: var(--color-accent);
   border-radius: 0;
@@ -1250,7 +1251,7 @@ button.primary:hover {
   background: rgba(0, 0, 0, 0.05);
   border: none;
   padding: 8px 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-weight: 600;
   color: var(--color-text-primary);
   cursor: pointer;
@@ -1261,6 +1262,62 @@ button.primary:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.profile-actions-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.profile-action-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-input-bg);
+  border: 1.5px solid transparent;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.profile-action-btn:hover {
+  background: var(--color-input-focus);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+.profile-actions-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.profile-action-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-input-bg);
+  border: 1.5px solid transparent;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.profile-action-btn:hover {
+  background: var(--color-input-focus);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
 .profile-follow-stats {
   display: flex;
   gap: 1rem;
@@ -1350,6 +1407,18 @@ button.primary:hover {
   }
 }
 
+/* Add Story Button Styles */
+#add-story-btn {
+  background: linear-gradient(135deg, #6a8fb8 0%, #4a6b8c 100%);
+  color: #fff;
+  border-radius: 10px;
+}
+
+#add-story-btn:hover {
+  background: linear-gradient(135deg, #4a6b8c 0%, #3a5a7a 100%);
+  transform: translateY(-2px);
+}
+
 
 /* =======================
    Interest Badge Styles (Unified)
@@ -1362,6 +1431,7 @@ button.primary:hover {
   border-radius: 24px; /* Adopted from editable badge */
   font-size: 14px; /* Adjusted for consistency */
   font-weight: 600;
+  margin: 4px; /* Adjusted for a slightly tighter grid */
   margin: 8px 8px 8px 0; /* Increased margins for more spacing: top, right, bottom, left */
   letter-spacing: 0.2px;
   transition: all 0.3s cubic-bezier(.4,0,.2,1); /* Adopted from editable badge */
@@ -1393,7 +1463,7 @@ button.primary:hover {
   margin: 2rem auto;
   background: var(--color-card-bg); 
   padding: 2rem 3rem;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 2.5rem 3rem;
   border-radius: 24px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);

@@ -13,7 +13,7 @@ export function renderMessages(content) {
       <!-- Search -->
       <div class="messages-search">
         <i data-lucide="search"></i>
-        <input type="text" placeholder="Search messages or people" />
+        <input type="text" placeholder="Search messages or friends" />
       </div>
 
       <!-- Active friends row -->
