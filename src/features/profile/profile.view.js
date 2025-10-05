@@ -42,7 +42,7 @@ export function renderProfile(container, person) {
       <div class="profile-wrapper">
         <header class="profile-header">
           <div class="cover-photo"></div>
-          <img src="${userData.avatar}" alt="${userData.name} avatar" class="profile-avatar" style="position: absolute; top: 200px; left: 2rem;" />
+          <img src="${userData.avatar}" alt="${userData.name} avatar" class="profile-avatar" style="position: absolute; top: 200px; left: 2rem; ${userData.avatar !== '/assets/images/profile-placeholder.png' ? 'background: white;' : ''}" />
 ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="Change Profile Image" style="position: absolute; top: 254px; left: 106px; background: #a3b18a; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); color: #e6f0d4; z-index: 30;">
             <i data-lucide="camera" style="width: 20px; height: 20px;"></i>
           </button>` : ''}

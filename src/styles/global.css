@@ -174,12 +174,12 @@ img {
 }
 
 .burger-menu {
-  font-size: 26px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 12px;
-  transition: background 0.2s ease;
-  line-height: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
   display: none;
 }
 

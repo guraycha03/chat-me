@@ -26,7 +26,7 @@ export function initApp(container) {
           </div>
           <div class="header-actions">
             <button class="header-search-btn" id="header-search-btn" title="Search"><i data-lucide="search"></i></button>
-            <div class="burger-menu" id="burger-menu">&#9776;</div>
+            <img class="burger-menu" id="burger-menu" src="/assets/images/profile-placeholder.png" alt="Profile" />
           </div>
         </header>
         <div id="global-nav-bar"></div>
