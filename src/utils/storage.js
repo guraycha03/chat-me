@@ -56,4 +56,6 @@ export function updateUser(updatedUser) {
     saveUsers(users);
   }
   setCurrentUser(updatedUser);
+  // Dispatch event to notify components of user data update
+  window.dispatchEvent(new CustomEvent('userDataUpdated', { detail: updatedUser }));
 }
