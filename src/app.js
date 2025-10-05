@@ -5,8 +5,11 @@ import { renderFriends } from "./features/friends/friends.view.js";
 import { renderMessages } from "./features/messages/messages.view.js";
 import { renderNotifications } from "./features/notifications/notifications.view.js";
 import { renderProfile } from "./features/profile/profile.view.js";
+import { renderSearch } from "./features/search/search.view.js";
+import { renderSettings } from "./features/settings/settings.view.js";
+import { renderEditInfo } from "./features/edit-info/edit-info.view.js";
 import { createIcons, icons } from "lucide";
-import { currentActive } from "./utils/navigationState.js";
+import { currentActive, navigate } from "./utils/navigationState.js";
 import { createBackButton, removeBackButton } from "./features/components/backButton.js";
 import { mockFriends } from "./data/friends.mock.js";
 
@@ -21,10 +24,16 @@ export function initApp(container) {
             <img src="./assets/logo/chat-me-logo.png" alt="Chat Me Logo" class="logo-img" />
             <h1 class="logo-text">Chat Me</h1>
           </div>
-          <div class="burger-menu" id="burger-menu">&#9776;</div>
+          <div class="header-actions">
+            <button class="header-search-btn" id="header-search-btn" title="Search"><i data-lucide="search"></i></button>
+            <div class="burger-menu" id="burger-menu">&#9776;</div>
+          </div>
         </header>
         <div id="global-nav-bar"></div>
-        <main id="page-content"></main>
+        <div class="content-wrapper">
+          <div id="messages-panel"></div>
+          <main id="page-content"></main>
+        </div>
         <div id="bottom-nav"></div>
       </div>
     </div>
@@ -38,12 +47,13 @@ export function initApp(container) {
   const pageContentEl = document.getElementById("page-content");
   const globalNavBarEl = document.getElementById("global-nav-bar");
   const fabBtn = document.getElementById("floating-create-btn");
+  const messagesPanelEl = document.getElementById("messages-panel");
 
   // Initialize Lucide icons for the FAB
   createIcons({ icons, attrs: { 'stroke-width': 2 } });
 
   // Initialize sidebar with responsive logic AND ALL navigation items
-  createSidebar(sidebarEl, pageContentEl, { renderHome, renderFriends, renderMessages, renderNotifications, renderProfile });
+  createSidebar(sidebarEl, pageContentEl, { renderHome, renderFriends, renderMessages, renderNotifications, renderProfile, renderSearch, renderSettings });
 
   // --- Back Button Management ---
   function manageBackButton(show, text = 'Back') {
@@ -71,14 +81,32 @@ export function initApp(container) {
     }
   };
 
+  // Function to toggle messages panel based on screen size
+  const toggleMessagesPanel = () => {
+    if (window.innerWidth >= 1200) {
+      messagesPanelEl.style.display = "flex";
+      renderMessages(messagesPanelEl); // Render messages view in the panel
+    } else {
+      messagesPanelEl.style.display = "none";
+    }
+  };
+
   // Attach FAB click listener (example: alert or open a modal)
   fabBtn.addEventListener("click", () => {
       alert("Create button clicked! (Wide Screen FAB)");
   });
 
+  // Attach header search button listener
+  const headerSearchBtn = document.getElementById("header-search-btn");
+  headerSearchBtn.addEventListener("click", () => {
+    navigate('search');
+  });
+
   // Initial call and listener for responsiveness
   toggleBottomNav();
+  toggleMessagesPanel();
   window.addEventListener('resize', toggleBottomNav);
+  window.addEventListener('resize', toggleMessagesPanel);
 
   // --- Centralized Page Rendering Function ---
   function renderPage(page, userId) {
@@ -87,11 +115,14 @@ export function initApp(container) {
       case "friends": renderFriends(pageContentEl); manageBackButton(false); break;
       case "messages": renderMessages(pageContentEl); manageBackButton(false); break;
       case "notifications": renderNotifications(pageContentEl); manageBackButton(false); break;
+      case "search": renderSearch(pageContentEl); manageBackButton(false); break;
       case "profile":
         const person = userId ? mockFriends.find(u => u.id === userId) : null;
         renderProfile(pageContentEl, person);
         manageBackButton(!!userId, 'Profile');
         break;
+      case "settings": renderSettings(pageContentEl); manageBackButton(false); break;
+      case "edit-info": renderEditInfo(pageContentEl); manageBackButton(true, 'Edit Information'); break;
       default: renderHome(pageContentEl); manageBackButton(false); break;
     }
   }

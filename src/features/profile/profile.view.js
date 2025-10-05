@@ -18,7 +18,7 @@ export function renderProfile(container, person) {
       return;
     }
     // Set defaults for own profile data
-    userData.name = userData.username;
+    // userData.name = userData.username; // removed to keep firstName and lastName separate
     userData.avatar = userData.avatar || '/assets/images/profile-placeholder.png';
     userData.bio = userData.bio || "No bio available.";
     userData.birthday = userData.birthday || "Unknown";
@@ -42,11 +42,19 @@ export function renderProfile(container, person) {
       <div class="profile-wrapper">
         <header class="profile-header">
           <div class="cover-photo"></div>
-          <img src="${userData.avatar}" alt="${userData.name} avatar" class="profile-avatar" />
+          <img src="${userData.avatar}" alt="${userData.name} avatar" class="profile-avatar" style="position: absolute; top: 200px; left: 2rem;" />
+${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="Change Profile Image" style="position: absolute; top: 254px; left: 106px; background: #a3b18a; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); color: #e6f0d4; z-index: 30;">
+            <i data-lucide="camera" style="width: 20px; height: 20px;"></i>
+          </button>` : ''}
         </header>
 
         <div class="profile-details">
-          <h2 id="username">${userData.name}</h2>
+          ${userData.id === getCurrentUser()?.id ? `
+            <h2 id="fullname">${userData.firstName || ''} ${userData.lastName || ''}</h2>
+            <h3 id="username">@${userData.username || ''}</h3>
+          ` : `
+            <h2 id="username">${userData.name}</h2>
+          `}
           <div class="profile-follow-stats">
             <div><strong>${followersCount}</strong> Followers</div>
             <div><strong>${followingCount}</strong> Following</div>
@@ -113,12 +121,57 @@ export function renderProfile(container, person) {
         renderEditForm();
       });
     }
+
+    // Add event listener for Change Avatar button
+    const changeAvatarBtn = container.querySelector("#change-avatar-btn");
+    if (changeAvatarBtn) {
+      changeAvatarBtn.addEventListener("click", () => {
+        // Create hidden file input
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+        fileInput.style.display = "none";
+
+        fileInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              userData.avatar = event.target.result;
+              updateUser(userData);
+              renderView();
+              showNotice("Profile image updated!");
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        document.body.appendChild(fileInput);
+        fileInput.click();
+        document.body.removeChild(fileInput);
+      });
+    }
   }
 
   function renderEditForm() {
     container.innerHTML = "";
 
     const form = createElement("form", { class: "edit-profile-form" });
+
+    // First Name input
+    const firstNameLabel = createElement("label", { innerText: "First Name:" });
+    const firstNameInput = createElement("input", { type: "text", value: userData.firstName || "" });
+    firstNameLabel.appendChild(firstNameInput);
+
+    // Last Name input
+    const lastNameLabel = createElement("label", { innerText: "Last Name:" });
+    const lastNameInput = createElement("input", { type: "text", value: userData.lastName || "" });
+    lastNameLabel.appendChild(lastNameInput);
+
+    // Username input
+    const usernameLabel = createElement("label", { innerText: "Username:" });
+    const usernameInput = createElement("input", { type: "text", value: userData.username || userData.name || "" });
+    usernameLabel.appendChild(usernameInput);
 
     // Bio input
     const bioLabel = createElement("label", { innerText: "Bio:" });
@@ -164,7 +217,7 @@ export function renderProfile(container, person) {
     const saveBtn = createElement("button", { type: "submit", innerText: "Save" });
     const cancelBtn = createElement("button", { type: "button", innerText: "Cancel" });
 
-    form.append(bioLabel, avatarLabel, bgColorLabel, interestsLabel, saveBtn, cancelBtn);
+    form.append(firstNameLabel, lastNameLabel, usernameLabel, bioLabel, avatarLabel, bgColorLabel, interestsLabel, saveBtn, cancelBtn);
     container.appendChild(form);
 
     // Preview uploaded image
@@ -199,10 +252,12 @@ export function renderProfile(container, person) {
     // Form submit handler
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const newBio = bioInput.value.trim();
 
-      // Update userData
-      userData.bio = newBio;
+      // Update userData from inputs
+      userData.firstName = firstNameInput.value.trim();
+      userData.lastName = lastNameInput.value.trim();
+      userData.username = usernameInput.value.trim();
+      userData.bio = bioInput.value.trim();
 
       // Persist changes
       updateUser(userData);
@@ -216,6 +271,15 @@ export function renderProfile(container, person) {
       renderView();
     });
   }
+
+  // Listen for user data updates and re-render if it's the current user's profile
+  const handleUserDataUpdate = (e) => {
+    if (!person) { // Only for own profile
+      userData = getCurrentUser();
+      renderView();
+    }
+  };
+  window.addEventListener('userDataUpdated', handleUserDataUpdate);
 
   renderView();
 }

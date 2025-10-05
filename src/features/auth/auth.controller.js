@@ -46,12 +46,14 @@ export function initAuth(container = document.getElementById("app")) {
     e.preventDefault();
     els.signupError.style.display = "none";
 
+    const firstName = els.signupFirstname.value.trim();
+    const lastName = els.signupLastname.value.trim();
     const username = els.signupUsername.value.trim();
     const email = els.signupEmail.value.trim();
     const password = els.signupPassword.value;
     const confirm = els.signupPasswordConfirm.value;
 
-    if (!username || !email || !password) {
+    if (!firstName || !lastName || !username || !email || !password) {
       els.signupError.innerText = "Please fill in all fields.";
       els.signupError.style.display = "block";
       return;
@@ -61,13 +63,31 @@ export function initAuth(container = document.getElementById("app")) {
       els.signupError.style.display = "block";
       return;
     }
+
+    // Validate password rules
+    const checkPasswordRules = (pw) => {
+      return {
+        length: pw.length >= 6,
+        lower: /[a-z]/.test(pw),
+        upper: /[A-Z]/.test(pw),
+        number: /[0-9]/.test(pw)
+      };
+    };
+
+    const rules = checkPasswordRules(password);
+    if (!rules.length || !rules.lower || !rules.upper || !rules.number) {
+      els.signupError.innerText = "Password must be at least 6 characters and include upper, lower and a number.";
+      els.signupError.style.display = "block";
+      return;
+    }
+
     if (userExists(username) || getUsers().some(u => u.email === email)) {
       els.signupError.innerText = "Username or email already exists.";
       els.signupError.style.display = "block";
       return;
     }
 
-    const newUser = { username, email, password };
+    const newUser = { firstName, lastName, username, email, password };
     addUser(newUser);
     setCurrentUser(newUser);
 
@@ -94,6 +114,23 @@ export function initAuth(container = document.getElementById("app")) {
         els.loginError.innerText = "Invalid username or password.";
         els.loginError.style.display = "block";
         return;
+    }
+
+    // Validate password rules before login success
+    const checkPasswordRules = (pw) => {
+      return {
+        length: pw.length >= 6,
+        lower: /[a-z]/.test(pw),
+        upper: /[A-Z]/.test(pw),
+        number: /[0-9]/.test(pw)
+      };
+    };
+
+    const rules = checkPasswordRules(password);
+    if (!rules.length || !rules.lower || !rules.upper || !rules.number) {
+      els.loginError.innerText = "Password must be at least 6 characters and include upper, lower and a number.";
+      els.loginError.style.display = "block";
+      return;
     }
 
     setCurrentUser(user); // ✅ stores as "myapp_currentUser"

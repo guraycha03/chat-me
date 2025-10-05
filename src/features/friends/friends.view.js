@@ -6,13 +6,6 @@ import { showNotice } from "../../utils/notification.js";
 export async function renderFriends(container) {
   container.innerHTML = `
     <div class="people-wrapper">
-      <div class="people-top">
-        <div class="search-wrap">
-          <i data-lucide="search"></i>
-          <input id="friends-search" placeholder="Search friends" />
-        </div>
-      </div>
-
       <div id="friends-list" class="people-list"></div>
     </div>
   `;
@@ -28,7 +21,6 @@ export async function renderFriends(container) {
   }
 
   const listEl = container.querySelector("#friends-list");
-  const searchInput = container.querySelector("#friends-search");
 
   function renderList(items) {
     listEl.innerHTML = items.map(u => `
@@ -42,7 +34,6 @@ export async function renderFriends(container) {
         </div>
         <div class="people-actions">
           <button class="btn-add-friend ${u.friendRequested ? 'cancel' : ''}" title="${u.friendRequested ? 'Cancel Friend Request' : 'Add Friend'}">${u.friendRequested ? 'Cancel' : 'Add Friend'}</button>
-          <button class="btn-chat" title="Open chat"><i data-lucide="message-circle"></i></button>
         </div>
       </div>
     `).join("");
@@ -75,11 +66,13 @@ export async function renderFriends(container) {
             friend.friendRequested = false;
             addFriendBtn.textContent = "Add Friend";
             addFriendBtn.title = "Add Friend";
+            addFriendBtn.classList.remove('cancel');
             showNotice(`Friend request cancelled for ${friend.name}`);
           } else {
             friend.friendRequested = true;
             addFriendBtn.textContent = "Cancel";
             addFriendBtn.title = "Cancel Friend Request";
+            addFriendBtn.classList.add('cancel');
             showNotice(`Friend request sent to ${friend.name}`);
           }
           localStorage.setItem("app_friends_cache", JSON.stringify(users));
@@ -92,10 +85,4 @@ export async function renderFriends(container) {
   }
 
   renderList(users);
-
-  searchInput.addEventListener("input", (e) => {
-    const q = e.target.value.trim().toLowerCase();
-    if (!q) return renderList(users);
-    renderList(users.filter(u => u.name.toLowerCase().includes(q)));
-  });
 }

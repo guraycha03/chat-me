@@ -57,15 +57,22 @@ export function createBottomNav(container, pageContentEl) {
 
   // Function to update active state
   function updateActiveState(activeId) {
+    let hasActive = false;
     navItems.forEach(btn => {
       const id = btn.id.replace("bottom-", "");
       if (id === activeId) {
         btn.classList.add("active");
         moveIndicator(btn);
+        hasActive = true;
       } else {
         btn.classList.remove("active");
       }
     });
+    if (!hasActive) {
+      indicator.style.display = "none";
+    } else {
+      indicator.style.display = "block";
+    }
   }
 
   // Restore correct active state

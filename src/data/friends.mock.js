@@ -98,7 +98,7 @@ export const mockFriends = [
   online: false,
   birthday: "1996-12-22",
   followers: 910,
-  following: 670,
+  following: 64,
   interests: ["foodie", "traveling", "street photography"],
   stories: [
     "/assets/images/stories/lucas-1.png"
@@ -107,7 +107,7 @@ export const mockFriends = [
     {
       id: "p1",
       type: "image",
-      description: "best taco spot in town 🤤",
+      description: ". . . ",
       image: "https://picsum.photos/400/300?random=14",
       date: "2025-09-29",
       likes: 180,
@@ -216,7 +216,7 @@ export const mockFriends = [
 {
   id: "u10",
   name: "Rowan Davis",
-  avatar: "/assets/images/users/rowan-davis.jpeg",
+  avatar: "/assets/images/users/rowan-davis.png",
   bio: " . . . ",
   online: true,
   birthday: "2001-06-30",
