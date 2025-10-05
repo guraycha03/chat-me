@@ -15,7 +15,7 @@ export function createSidebar(container, pageContentEl, renderers) {
     <button class="collapse-btn" id="sidebar-collapse-btn" aria-label="Collapse sidebar"><i data-lucide="chevron-left"></i></button>
     <div class="sidebar-content">
       <div class="user-info" aria-label="User information" tabindex="0">
-        <img src="/assets/images/profile-placeholder.png" alt="Profile Avatar" class="sidebar-avatar">
+        <img src="${currentUser.avatar || '/assets/images/profile-placeholder.png'}" alt="Profile Avatar" class="sidebar-avatar">
         <div class="user-text">
           <h2>${currentUser.username}</h2>
           <p>${currentUser.email}</p>
@@ -207,6 +207,10 @@ export function createSidebar(container, pageContentEl, renderers) {
       if (userText) {
         userText.querySelector('h2').textContent = updatedUser.username;
         userText.querySelector('p').textContent = updatedUser.email;
+      }
+      const avatarImg = container.querySelector('.sidebar-avatar');
+      if (avatarImg) {
+        avatarImg.src = updatedUser.avatar || '/assets/images/profile-placeholder.png';
       }
     }
   }
