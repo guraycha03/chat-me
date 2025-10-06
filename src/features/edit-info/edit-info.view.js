@@ -21,7 +21,7 @@ export function renderEditInfo(container) {
           <div class="form-group">
             <label for="first-name">First Name</label>
             <input type="text" id="first-name" name="firstName" value="${currentUser.firstName || ''}" required>
-          </div>
+ n
           <div class="form-group">
             <label for="last-name">Last Name</label>
             <input type="text" id="last-name" name="lastName" value="${currentUser.lastName || ''}" required>
