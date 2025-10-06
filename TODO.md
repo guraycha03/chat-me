@@ -1,4 +1,5 @@
-- [x] Add scrollbar hide rules to .chat-list in global.css to remove browser scrollbar on message panel
-- [x] Add scrollbar-gutter: stable; to .main-content in desktop media query to prevent white space when scrollbar is hidden
-- [x] Remove white space around main content by adding padding: 0 to .main-content in desktop media query
-- [ ] Make the add friend button smaller and ensure cancel button matches the size
+# TODO: Add Label and Fix White Container on Friends Page
+
+## Tasks
+- [x] Add a "Friends" label at the top of the friends page in `src/features/friends/friends.view.js`
+- [x] Investigate and fix the white container appearing on top of the bottom nav on the friends page

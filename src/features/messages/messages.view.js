@@ -6,7 +6,7 @@ export function renderMessages(content) {
       <header class="messages-header">
         <h1>Chats</h1>
         <div class="header-actions">
-          <button aria-label="New Message"><i data-lucide="edit-3"></i></button>
+          <button class="new-message-btn" aria-label="New Message"><i data-lucide="edit-3"></i></button>
         </div>
       </header>
 
