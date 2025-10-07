@@ -1772,10 +1772,7 @@ button i[data-lucide] {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.post-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-}
+
 
 /* ========== Post Header ========== */
 .post-header {
@@ -1835,6 +1832,8 @@ button i[data-lucide] {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 0.8rem; /* adjust as needed */
+
 }
 
 .post-media {
@@ -1847,10 +1846,6 @@ button i[data-lucide] {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.post-media:hover {
-  transform: scale(1.01);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
-}
 
 
 /* ========== Multi-Image Carousel ========== */
@@ -1863,6 +1858,7 @@ button i[data-lucide] {
   width: 100%;
   max-width: 460px;
   border-radius: 10px;
+  margin-bottom: 0.8rem;
 }
 
 .carousel-slide {
@@ -1933,6 +1929,7 @@ button i[data-lucide] {
   justify-content: flex-start;
   gap: 1.8rem;
   margin-top: 0.9rem;
+  margin-bottom: 0.8rem; 
   padding-left: 0.3rem;
 }
 
