@@ -1,12 +1,36 @@
-// src/features/messages/messages.view.js
+import { createIcons, icons } from "lucide";
+import { mockFriends } from "../../data/friends.mock.js";
+
+
+
 export function renderMessages(content) {
+  // ✅ Filter online friends only
+  const activeFriends = mockFriends.filter(friend => friend.online);
+
+  // ✅ Generate HTML for active friends
+  const activeFriendsHTML = activeFriends
+    .map(
+      (friend) => `
+      <div class="friend">
+        <div class="avatar-wrap">
+          <img src="${friend.avatar}" alt="${friend.name}" />
+          <span class="online-dot"></span>
+        </div>
+        <small>${friend.name.split(" ")[0]}</small>
+      </div>
+    `
+    )
+    .join("");
+
+  // ✅ Build full page layout
   content.innerHTML = `
     <div class="messages-wrapper">
-      <!-- Header -->
       <header class="messages-header">
         <h1>Chats</h1>
         <div class="header-actions">
-          <button class="new-message-btn" aria-label="New Message"><i data-lucide="edit-3"></i></button>
+          <button class="new-message-btn" aria-label="New Message">
+            <i data-lucide="edit-3"></i>
+          </button>
         </div>
       </header>
 
@@ -16,38 +40,18 @@ export function renderMessages(content) {
         <input type="text" placeholder="Search messages or friends" />
       </div>
 
-      <!-- Active friends row -->
+      <!-- Active Friends Row -->
       <div class="active-friends">
-        <div class="friend">
-          <div class="avatar-wrap">
-            <img src="/assets/images/users/kaia.png" alt="User" />
-            <span class="online-dot"></span>
-          </div>
-          <small>Kaia</small>
-        </div>
-        <div class="friend">
-          <div class="avatar-wrap">
-            <img src="/assets/images/users/kaia.png" alt="User" />
-            <span class="online-dot"></span>
-          </div>
-          <small>Kaia</small>
-        </div>
-        <div class="friend">
-          <div class="avatar-wrap">
-            <img src="/assets/images/users/kaia.png" alt="User" />
-            <span class="online-dot"></span>
-          </div>
-          <small>Kaia</small>
-        </div>
+        ${activeFriendsHTML.length > 0 ? activeFriendsHTML : "<p>No friends online</p>"}
       </div>
 
-      <!-- Chats list -->
+      <!-- Chats list (sample static data for now) -->
       <main class="chat-list">
         <div class="chat-preview">
           <img src="/assets/images/users/kaia.png" alt="User" class="chat-avatar"/>
           <div class="chat-info">
             <h3>Kaia</h3>
-            <p>Sure ☕ let's do it!</p>
+            <p>asan ka na??</p>
           </div>
           <span class="chat-time">2m</span>
         </div>
@@ -72,4 +76,7 @@ export function renderMessages(content) {
       </main>
     </div>
   `;
+
+  // ✅ Initialize Lucide icons after render
+  createIcons({ icons });
 }

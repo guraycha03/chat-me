@@ -76,20 +76,100 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
         </div>
 
         <main class="profile-main">
-          <div class="profile-stats">
-            <div><strong>${postsCount}</strong> Posts</div>
-          </div>
           <section class="profile-posts">
             <h3>Posts</h3>
-            <div class="posts-grid">
-              ${posts.length > 0 ? posts.map(post => `
-                <div class="post-item" key="${post.id}">
-                  ${post.image ? `<img src="${post.image}" alt="Post image" />` : ""}
-                  <p>${post.description || ""}</p>
-                  <p>${post.text || ""}</p>
-                </div>
-              `).join("") : "<p>No posts available.</p>"}
+
+            <div class="posts-list">
+              ${posts.length > 0
+                ? posts.map(post => {
+                    const postDate = post.date
+                      ? (() => {
+                          const dateObj = new Date(post.date);
+                          const months = [
+                            "Jan", "Feb", "Mar", "Apr", "May", "June",
+                            "July", "Aug", "Sept", "Oct", "Nov", "Dec"
+                          ];
+                          return `${months[dateObj.getMonth()]} ${dateObj.getDate()}`;
+                        })()
+                      : "Unknown";
+
+
+
+                    return `
+                      <div class="post-item" key="${post.id}">
+                        <div class="post-header">
+                          <img src="${userData.avatar}" alt="${userData.name} avatar" class="post-avatar" />
+                          <div class="post-user-info">
+                            <span class="post-username">${userData.name || `${userData.firstName || ""} ${userData.lastName || ""}`}</span>
+                            <span class="post-date">${postDate}</span>
+                          </div>
+                        </div>
+
+                        <div class="post-body">
+                          ${post.images && post.images.length > 1
+                            ? `
+                                ${post.description ? `<p class="post-caption">${post.description}</p>` : ""}
+                                <div class="post-carousel" data-post-id="${post.id}">
+                                  ${post.images
+                                    .map(
+                                      (img) => `
+                                        <div class="carousel-slide">
+                                          <img src="${img}" alt="Post image" class="post-media" />
+                                        </div>
+                                      `
+                                    )
+                                    .join("")}
+                                </div>
+                                <div class="carousel-dots" id="dots-${post.id}">
+                                  ${post.images.map((_, i) => `<span class="dot ${i === 0 ? "active" : ""}"></span>`).join("")}
+                                </div>
+                              `
+
+
+
+                            : post.image
+                              ? `
+                                ${post.description ? `<p class="post-caption">${post.description}</p>` : ""}
+                                <div class="post-media-wrapper">
+                                  <img src="${post.image}" alt="Post image" class="post-media" />
+                                </div>
+                              `
+                            : post.text
+                              ? `<p class="text-content">${post.text}</p>`
+                              : ""
+                          }
+
+                        </div>
+
+                        <!-- ✅ Add this new section -->
+                        <!-- ✅ Enhanced post action bar -->
+                        <div class="action-item like-action">
+                          <div class="icon-box"><i data-lucide="heart"></i></div>
+                          <span>${post.likes || 0}</span>
+                        </div>
+                        <div class="action-item">
+                          <div class="icon-box"><i data-lucide="message-circle"></i></div>
+                          <span>${post.comments || 0}</span>
+                        </div>
+                        <div class="action-item">
+                          <div class="icon-box"><i data-lucide="forward"></i></div>
+                          <span>${post.shares || 0}</span>
+                        </div>
+
+
+
+                      </div>
+                    `;
+
+
+
+
+                  }).join("")
+                : "<p>No posts available.</p>"}
             </div>
+
+
+
           </section>
         </main>
       </div>
@@ -103,6 +183,59 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
 
     // Initialize lucide icons for the new buttons
     createIcons({ icons });
+
+    // 🟣 Carousel scroll detection for dot indicators
+    const carousels = container.querySelectorAll(".post-carousel");
+    carousels.forEach((carousel) => {
+      const dots = carousel.nextElementSibling?.querySelectorAll(".dot");
+      if (!dots) return;
+
+      carousel.addEventListener("scroll", () => {
+        const scrollLeft = carousel.scrollLeft;
+        const slideWidth = carousel.clientWidth;
+        const currentIndex = Math.round(scrollLeft / slideWidth);
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentIndex);
+        });
+      });
+    });
+
+
+    // ❤️ Like button toggle logic
+    const likeButtons = container.querySelectorAll(".like-action");
+    likeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const countEl = btn.querySelector("span");
+        let count = parseInt(countEl.textContent);
+
+        // Toggle liked state
+        const isLiked = btn.classList.toggle("liked");
+        if (isLiked) count++;
+        else count--;
+
+        countEl.textContent = count;
+
+        // Re-render icons to ensure Lucide SVG refreshes
+        createIcons({ icons });
+
+        // ✅ Apply color to the newly rendered SVG
+        const svg = btn.querySelector("svg");
+        if (svg) {
+          if (isLiked) {
+            svg.style.stroke = "#e74c3c";
+            svg.style.fill = "#e74c3c";
+          } else {
+            svg.style.stroke = "#888";
+            svg.style.fill = "none";
+          }
+        }
+
+
+
+      });
+    });
+
 
     // Add event listener for Add Story button
     const addStoryBtn = container.querySelector("#add-story-btn");
@@ -153,6 +286,8 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
     }
   }
 
+  
+
   function renderEditForm() {
     container.innerHTML = "";
 
@@ -188,28 +323,80 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
     const bgColorInput = createElement("input", { type: "color", value: userData.coverColor || "#96add4" });
     bgColorLabel.appendChild(bgColorInput);
 
-    // Interests badges editable
-    const interestsLabel = createElement("label", { innerText: "Interests:" });
-    const interestsContainer = createElement("div", { class: "interests-badges-edit" });
+    // Interests input with search and badges
+const interestsLabel = createElement("label", { innerText: "Interests:" });
+const interestSearchWrapper = createElement("div", { class: "interest-search-wrapper" });
+const interestSearchInput = createElement("input", {
+  type: "text",
+  placeholder: "Search or add interest...",
+  class: "interest-search-input"
+});
+const suggestionList = createElement("div", { class: "interest-suggestions" });
+const interestsContainer = createElement("div", { class: "interests-badges-edit" });
 
-    predefinedInterests.forEach(interest => {
-      const badge = createElement("span", {
-        className: `interest-badge interest-badge--editable ${userData.interests.includes(interest) ? "selected" : ""}`,
-        innerText: interest,
-        tabIndex: 0,
-        role: "button",
-        "aria-pressed": userData.interests.includes(interest) ? "true" : "false"
-      });
-
-      badge.addEventListener("click", () => {
-        const isSelected = badge.classList.toggle("selected");
-        badge.setAttribute("aria-pressed", isSelected);
-        userData.interests = Array.from(interestsContainer.querySelectorAll('.interest-badge.selected'))
-                                  .map(b => b.innerText);
-      });
-
-      interestsContainer.appendChild(badge);
+// Render initial interests as badges
+function renderSelectedInterests() {
+  interestsContainer.innerHTML = "";
+  userData.interests.forEach(interest => {
+    const badge = createElement("span", {
+      className: "interest-badge selected",
+      innerText: interest
     });
+    const removeIcon = createElement("i", { "data-lucide": "x" });
+    badge.appendChild(removeIcon);
+    badge.addEventListener("click", () => {
+      userData.interests = userData.interests.filter(i => i !== interest);
+      renderSelectedInterests();
+      createIcons({ icons });
+    });
+    interestsContainer.appendChild(badge);
+  });
+  createIcons({ icons });
+}
+
+// Show matching suggestions
+function updateSuggestions(query) {
+  suggestionList.innerHTML = "";
+  if (!query) return;
+  const matches = predefinedInterests.filter(i =>
+    i.toLowerCase().includes(query.toLowerCase()) &&
+    !userData.interests.includes(i)
+  );
+  matches.slice(0, 5).forEach(match => {
+    const suggestion = createElement("div", {
+      class: "suggestion-item",
+      innerText: match
+    });
+    suggestion.addEventListener("click", () => {
+      userData.interests.push(match);
+      interestSearchInput.value = "";
+      updateSuggestions("");
+      renderSelectedInterests();
+    });
+    suggestionList.appendChild(suggestion);
+  });
+}
+
+interestSearchInput.addEventListener("input", (e) => {
+  updateSuggestions(e.target.value);
+});
+
+interestSearchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && interestSearchInput.value.trim() !== "") {
+    e.preventDefault();
+    const newInterest = interestSearchInput.value.trim();
+    if (!userData.interests.includes(newInterest)) {
+      userData.interests.push(newInterest);
+      renderSelectedInterests();
+    }
+    interestSearchInput.value = "";
+    updateSuggestions("");
+  }
+});
+
+interestSearchWrapper.append(interestSearchInput, suggestionList);
+interestsLabel.append(interestSearchWrapper, interestsContainer);
+
 
     interestsLabel.appendChild(interestsContainer);
 

@@ -1120,10 +1120,10 @@ button.primary:hover {
 
 
 .story-container {
-  display:flex;
-  overflow: auto;
+  display: flex;
+  overflow-x: auto;
   padding: 10px;
- 
+  gap: 10px;
 }
 
 .story-container::-webkit-scrollbar {
@@ -1133,22 +1133,94 @@ button.primary:hover {
 .story {
   position: relative;
   flex-shrink: 0;
-  height: 200px;
   width: 100px;
-  border-radius: 10px;
-   margin-right: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+  text-align: center;
+  cursor: pointer;
 }
 
 .story img {
   width: 100%;
-  height: 100%;
+  height: 150px;
   border-radius: 10px;
   object-fit: cover;
-
-
+  border: none;
+  transition: transform 0.3s ease;
 }
+
+/* Make stories bigger on small screens to fit 3 */
+@media (max-width: 899px) {
+  .story {
+    width: 120px;
+  }
+
+  .story img {
+    height: 180px;
+  }
+}
+
+.story img:hover {
+  transform: scale(1.05);
+}
+
+.story-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+  z-index: 1;
+}
+
+.create-story {
+  border: 2px dashed var(--color-accent);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: var(--color-card-bg);
+}
+
+.create-icon {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+/* General Lucide icon color fix */
+[data-lucide] {
+  stroke: #333 !important;  /* dark gray */
+  stroke-width: 2.2;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+}
+
+/* If inside buttons, keep consistent spacing */
+button i[data-lucide] {
+  margin: 0 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1307,6 +1379,21 @@ button.primary:hover {
 .chat-preview.unread h3 {
   font-weight: 700;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* =======================
@@ -1484,6 +1571,13 @@ button.primary:hover {
 }
 
 
+
+
+
+
+
+
+
 /* =======================
    Profile Page Styles - Twitter/X style
    ======================= */
@@ -1643,70 +1737,306 @@ button.primary:hover {
   color: var(--color-text-primary);
 }
 
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding-bottom: 80px; /* Add space below posts to avoid bottom nav overlap */
+
+
+
+
+
+
+
+
+
+
+
+/* =======================
+   Facebook-Style Post Layout
+   Centered, Clean, Minimal
+======================= */
+
+/* ========== Layout ========== */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 70px;
 }
 
 .post-item {
-  position: relative;
-
   background: var(--color-card-bg);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: box-shadow 0.3s ease;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 500px;
+  padding: 0.75rem 0.9rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .post-item:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
-.post-item img {
+/* ========== Post Header ========== */
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-bottom: 0.4rem;
+  text-align: left;
+}
+
+.post-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d8d8d8;
+}
+
+.post-user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.post-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+}
+
+.post-date {
+  font-size: 0.74rem;
+  color: var(--color-text-secondary, #777);
+}
+
+/* ========== Post Body ========== */
+.post-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+/* Caption ABOVE image */
+.post-caption {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-align: left;            /* <-- now left aligned */
+  width: 92%;
+  margin: 0.6rem 0 0.7rem 0;   /* balanced space above & below */
+  line-height: 1.5;
+}
+
+/* Image styling */
+.post-media-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.post-media {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 10px;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+  background: #eaeaea;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-media:hover {
+  transform: scale(1.01);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========== Multi-Image Carousel ========== */
+.post-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 0.3rem;
+  width: 100%;
+  max-width: 460px;
+  border-radius: 10px;
+}
+
+.carousel-slide {
+  flex: 0 0 100%; /* One image per view */
+  scroll-snap-align: center;
+  position: relative;
+}
+
+.carousel-slide img {
   width: 100%;
   height: auto;
+  border-radius: 10px;
   object-fit: cover;
-  display: block;
-  
+  aspect-ratio: 4 / 3;
+  background: #eaeaea;
 }
 
-.post-item p {
+/* Hide scrollbar but keep scrollable */
+.post-carousel::-webkit-scrollbar {
+  display: none;
+}
+.post-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+/* ========== Carousel Dots ========== */
+.carousel-dots {
   display: flex;
-  justify-content: left;
-  align-items:start;
-  
-  padding: 10px;
-  font-size: 14px;
-  color: var(--color-text-primary);
-  margin: 0;
-  white-space: pre-wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.45rem;
 }
 
-.post-placeholder {
-  background: var(--color-card-bg);
-  border-radius: 12px;
-  height: 140px;
+.carousel-dots .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #bbb;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.carousel-dots .dot.active {
+  background-color: #4a4a4a;
+  transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+  .carousel-dots {
+    gap: 4px;
+    margin-top: 0.35rem;
+  }
+  .carousel-dots .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+
+
+
+/* ========== Post Actions (Icons + Counts) ========== */
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.8rem;
+  margin-top: 0.9rem;
+  padding-left: 0.3rem;
+}
+
+.action-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #6b6b6b);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+/* ✅ Create an isolated box for the icon to scale inside */
+.action-item .icon-box {
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-secondary);
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
 }
 
-.post-placeholder:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.action-item svg {
+  width: 18px;
+  height: 18px;
+  stroke: #888;
+  fill: none;
+  transition: fill 0.15s ease, stroke 0.15s ease;
 }
+
+/* ❤️ When liked */
+.action-item.liked svg {
+  stroke: #e74c3c;
+  fill: #e74c3c;
+}
+
+/* 💫 Scale animation inside fixed box */
+.action-item.liked .icon-box {
+  transform: scale(1.15);
+}
+
+.action-item:hover .icon-box {
+  transform: scale(1.1);
+}
+
+
+
+
+/* ========== Text-Only Post ========== */
+.text-content {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0.6rem 0 0.4rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 600px) {
+  .post-item {
+    max-width: 100%;
+    padding: 0.7rem 0.8rem;
+    border-radius: 12px;
+  }
+
+  .post-avatar {
+    width: 22px;
+    height: 22px;
+  }
+
+  .post-username {
+    font-size: 0.85rem;
+  }
+
+  .post-date {
+    font-size: 0.7rem;
+  }
+
+  .post-caption {
+    font-size: 0.95rem;
+    width: 95%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Responsive tweaks */
 @media (max-width: 600px) {
@@ -1735,6 +2065,19 @@ button.primary:hover {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Add Story Button Styles */
 #add-story-btn {
   background: var(--color-accent);
@@ -1747,6 +2090,17 @@ button.primary:hover {
   transform: translateY(-2px);
 }
 
+
+
+
+
+
+
+
+
+/* =======================
+   Edit Profile
+   ======================= */
 
 /* =======================
    Interest Badge Styles (Unified)
@@ -1997,6 +2351,98 @@ button.primary:hover {
     padding: 2rem 1.5rem;
   }
 }
+
+.interest-search-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.interest-search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-divider);
+  background: var(--color-input-bg);
+  font-size: 15px;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+}
+
+.interest-search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.25);
+  outline: none;
+}
+
+.interest-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-card-bg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  margin-top: 6px;
+  z-index: 20;
+  overflow: hidden;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 10px 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: var(--color-text-primary);
+}
+
+.suggestion-item:hover {
+  background: var(--color-input-focus);
+}
+
+.interests-badges-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.interest-badge.selected {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-input-focus);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.interest-badge.selected:hover {
+  background: var(--color-accent-light);
+}
+
+.interest-badge i[data-lucide="x"] {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
 
 /* =======================
    Loading More Indicator

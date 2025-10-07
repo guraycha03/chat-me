@@ -10,18 +10,23 @@ export const mockFriends = [
     following: 320,
     interests: ["gardening", "photography", "journaling", "traveling", "cooking"],
     stories: [
-      "/assets/images/stories/niko-1.png",
+      "/assets/images/posts/niko-story-1.jpg",
       "/assets/images/stories/niko-2.png",
-      "/assets/images/stories/niko-3.png", // added
+      "/assets/images/stories/niko-3.png",
     ],
     posts: [
       {
         id: "p1",
         type: "image",
-        description: " . . . ",
-        image: "https://picsum.photos/400/300?random=11",
+        description: "nakasalubong kong mga pusa sa daan ",
+        images: [
+          "/assets/images/posts/niko-cat-post-1.png",
+          "/assets/images/posts/niko-cat-post-2.png"
+        ],
         date: "2025-10-01",
         likes: 120,
+        comments: 14,
+        shares: 3,
       },
       {
         id: "p2",
@@ -30,6 +35,8 @@ export const mockFriends = [
         description: "quiet mornings with coffee & plants.",
         date: "2025-10-02",
         likes: 95,
+        comments: 9,
+        shares: 2,
       },
     ],
   },
@@ -44,8 +51,8 @@ export const mockFriends = [
     following: 890,
     interests: ["traveling", "cooking", "photography"],
     stories: [
-      "/assets/images/stories/avery-1.png",
-      "/assets/images/stories/avery-2.png", // added
+      "/assets/images/stories/avery-story-1.jpg",
+      "/assets/images/stories/avery-2.jpg",
     ],
     posts: [
       {
@@ -55,6 +62,8 @@ export const mockFriends = [
         description: " . . . ",
         date: "2025-09-30",
         likes: 210,
+        comments: 16,
+        shares: 5,
       },
       {
         id: "p2",
@@ -63,6 +72,8 @@ export const mockFriends = [
         image: "/assets/images/users/avery.png",
         date: "2025-10-01",
         likes: 150,
+        comments: 12,
+        shares: 4,
       },
     ],
   },
@@ -77,17 +88,29 @@ export const mockFriends = [
     following: 450,
     interests: ["running", "fitness", "coffee"],
     stories: [
-      "/assets/images/stories/kaia-story.png",
-      "/assets/images/stories/kaia-2.png", // added
+      "/assets/images/stories/kaia-post-1.png",
+      "/assets/images/stories/kaia-2.png",
     ],
     posts: [
       {
         id: "p1",
+        type: "text",
+        text: " just had the weirdest dream and I'm still thinking about it ",
+        description: "just had the weirdest dream and I'm still thinking about it",
+        date: "2025-09-30",
+        likes: 156,
+        comments: 18,
+        shares: 2,
+      },
+      {
+        id: "p2",
         type: "image",
         description: " . . . ",
-        image: "/assets/images/posts/kaia-post.png",
-        date: "2025-10-03",
+        image: "/assets/images/posts/kaia-post-1.png",
+        date: "2025-06-03",
         likes: 300,
+        comments: 22,
+        shares: 7,
       },
     ],
   },
@@ -103,7 +126,7 @@ export const mockFriends = [
     interests: ["foodie", "traveling", "street photography"],
     stories: [
       "/assets/images/stories/lucas-1.png",
-      "/assets/images/stories/lucas-2.png", // added
+      "/assets/images/stories/lucas-2.png",
     ],
     posts: [
       {
@@ -113,6 +136,8 @@ export const mockFriends = [
         image: "https://picsum.photos/400/300?random=14",
         date: "2025-09-29",
         likes: 180,
+        comments: 15,
+        shares: 4,
       },
     ],
   },
@@ -127,8 +152,8 @@ export const mockFriends = [
     following: 310,
     interests: ["reading", "anime", "tv series"],
     stories: [
-      "/assets/images/stories/sofia-1.png",
-      "/assets/images/stories/sofia-2.png", // added
+      "/assets/images/posts/sofia-post.jpg",
+      "/assets/images/posts/sofia-post.jpg",
     ],
     posts: [
       {
@@ -139,6 +164,8 @@ export const mockFriends = [
         image: "/assets/images/users/sofia-torres.png",
         date: "2025-10-02",
         likes: 95,
+        comments: 8,
+        shares: 2,
       },
     ],
   },
@@ -154,7 +181,7 @@ export const mockFriends = [
     interests: ["music", "basketball", "coding"],
     stories: [
       "/assets/images/stories/jace-1.png",
-      "/assets/images/stories/jace-2.png", // added
+      "/assets/images/stories/jace-2.png",
     ],
     posts: [
       {
@@ -164,6 +191,8 @@ export const mockFriends = [
         image: "https://picsum.photos/400/300?random=16",
         date: "2025-09-28",
         likes: 220,
+        comments: 20,
+        shares: 6,
       },
     ],
   },
@@ -179,7 +208,7 @@ export const mockFriends = [
     interests: ["minimalism", "art", "photography"],
     stories: [
       "/assets/images/stories/jaehyun-1.png",
-      "/assets/images/stories/jaehyun-2.png", // added
+      "/assets/images/stories/jaehyun-2.png",
     ],
     posts: [
       {
@@ -189,6 +218,8 @@ export const mockFriends = [
         description: "clean lines. no clutter.",
         date: "2025-09-27",
         likes: 140,
+        comments: 11,
+        shares: 1,
       },
     ],
   },
@@ -204,7 +235,7 @@ export const mockFriends = [
     interests: ["coffee", "tech", "indie music"],
     stories: [
       "/assets/images/stories/gracie-1.png",
-      "/assets/images/stories/gracie-2.png", // added
+      "/assets/images/stories/gracie-2.png",
     ],
     posts: [
       {
@@ -214,6 +245,8 @@ export const mockFriends = [
         image: "https://picsum.photos/400/300?random=19",
         date: "2025-09-30",
         likes: 270,
+        comments: 17,
+        shares: 3,
       },
     ],
   },
@@ -229,7 +262,7 @@ export const mockFriends = [
     interests: ["cats", "photography", "movies"],
     stories: [
       "/assets/images/stories/rowan-1.png",
-      "/assets/images/stories/rowan-2.png", // added
+      "/assets/images/stories/rowan-2.png",
     ],
     posts: [
       {
@@ -239,6 +272,8 @@ export const mockFriends = [
         image: "https://picsum.photos/400/300?random=20",
         date: "2025-10-02",
         likes: 185,
+        comments: 10,
+        shares: 2,
       },
     ],
   },
@@ -255,7 +290,7 @@ export const mockFriends = [
     stories: [
       "/assets/images/stories/cha-1.png",
       "/assets/images/stories/cha-2.png",
-      "/assets/images/stories/cha-3.png", // added
+      "/assets/images/stories/cha-3.png",
     ],
     posts: [
       {
@@ -265,6 +300,8 @@ export const mockFriends = [
         image: "/assets/images/posts/cha-post-1.png",
         date: "2025-10-03",
         likes: 420,
+        comments: 25,
+        shares: 8,
       },
     ],
   },

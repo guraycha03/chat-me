@@ -3,6 +3,7 @@ import { currentActive, navigate } from "../../utils/navigationState.js";
 import { createIcons, icons } from "lucide";
 import { removeCurrentUser } from "../../utils/storage.js";
 
+
 export function createSidebar(container, pageContentEl, renderers) {
   const currentUser = JSON.parse(localStorage.getItem("myapp_currentUser"));
   if (!currentUser) {
@@ -51,6 +52,8 @@ export function createSidebar(container, pageContentEl, renderers) {
     }
   });
 
+  const MOBILE_BREAKPOINT = 900;
+
   // Add click listener to user-info for navigation to profile
   const userInfo = container.querySelector('.user-info');
   userInfo.addEventListener('click', () => {
@@ -80,7 +83,7 @@ export function createSidebar(container, pageContentEl, renderers) {
     }
   };
 
-  const MOBILE_BREAKPOINT = 900;
+ 
 
   // Function to apply the correct layout based on screen width
   const applyLayout = () => {
