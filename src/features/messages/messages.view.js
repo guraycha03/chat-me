@@ -34,18 +34,17 @@ export function renderMessages(content) {
         </div>
       </header>
 
-      <!-- Search -->
+     
       <div class="messages-search">
         <i data-lucide="search"></i>
         <input type="text" placeholder="Search messages or friends" />
       </div>
 
-      <!-- Active Friends Row -->
       <div class="active-friends">
         ${activeFriendsHTML.length > 0 ? activeFriendsHTML : "<p>No friends online</p>"}
       </div>
 
-      <!-- Chats list (sample static data for now) -->
+   
       <main class="chat-list">
         <div class="chat-preview">
           <img src="/assets/images/users/kaia.png" alt="User" class="chat-avatar"/>

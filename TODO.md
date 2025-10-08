@@ -1,5 +1,3 @@
-# TODO: Add Label and Fix White Container on Friends Page
-
-## Tasks
-- [x] Add a "Friends" label at the top of the friends page in `src/features/friends/friends.view.js`
-- [x] Investigate and fix the white container appearing on top of the bottom nav on the friends page
+- [ ] Update src/features/home/home.view.js to include story image in HTML and restructure card layout
+- [ ] Update src/features/layout/home.css to style story cards as vertical rectangles with positioned avatar and name
+- [ ] Test the changes by running the app

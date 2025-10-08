@@ -32,7 +32,6 @@ export const mockFriends = [
         id: "p2",
         type: "text",
         text: " . . . ",
-        description: "quiet mornings with coffee & plants.",
         date: "2025-10-02",
         likes: 95,
         comments: 9,
@@ -40,6 +39,7 @@ export const mockFriends = [
       },
     ],
   },
+  
   {
     id: "u2",
     name: "Avery Ramirez",
@@ -305,4 +305,48 @@ export const mockFriends = [
       },
     ],
   },
+
+
+
+  {
+    id: "u12",
+    name: "Mira Santos",
+    avatar: "/assets/images/users/profile-14.png",
+    bio: "plant mom & cozy corner enthusiast 🌿☕",
+    online: true,
+    birthday: "2002-02-17",
+    followers: 1620,
+    following: 295,
+    interests: ["plants", "reading", "home decor", "baking", "journaling"],
+    stories: [
+      "/assets/images/stories/mira-1.jpg",
+      "/assets/images/stories/mira-2.jpg",
+      "/assets/images/stories/mira-3.jpg",
+    ],
+    posts: [
+      {
+        id: "p1",
+        type: "image",
+        description: "repotted my monstera today 🪴💚",
+        images: [
+          "/assets/images/posts/mira-plants-1.png",
+          "/assets/images/posts/mira-plants-2.png"
+        ],
+        date: "2025-10-03",
+        likes: 175,
+        comments: 16,
+        shares: 2,
+      },
+      {
+        id: "p2",
+        type: "text",
+        text: "slow mornings and soft music are healing.",
+        description: "peaceful day",
+        date: "2025-10-04",
+        likes: 132,
+        comments: 8,
+        shares: 1,
+      },
+    ],
+  }
 ];

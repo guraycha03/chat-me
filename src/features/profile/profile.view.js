@@ -245,14 +245,7 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
     // Add event listener for Edit Profile button
     const editBtn = container.querySelector(".edit-profile-btn");
     if (editBtn) {
-      editBtn.addEventListener("click", () => {
-        isEditing = true;
-        // Show back button for the edit form
-        const event = new CustomEvent('manageBackButton', { detail: { show: true, text: 'Edit Profile' } });
-        window.dispatchEvent(event);
-
-        renderEditForm();
-      });
+      // Edit profile button removed as per user request, no event listener added
     }
 
     // Add event listener for Change Avatar button
@@ -293,136 +286,95 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
 
     const form = createElement("form", { class: "edit-profile-form" });
 
-    // First Name input
-    const firstNameLabel = createElement("label", { innerText: "First Name:" });
-    const firstNameInput = createElement("input", { type: "text", value: userData.firstName || "" });
-    firstNameLabel.appendChild(firstNameInput);
+    // Interests section
+    const interestsSection = createElement("div", { class: "interest-section" });
 
-    // Last Name input
-    const lastNameLabel = createElement("label", { innerText: "Last Name:" });
-    const lastNameInput = createElement("input", { type: "text", value: userData.lastName || "" });
-    lastNameLabel.appendChild(lastNameInput);
-
-    // Username input
-    const usernameLabel = createElement("label", { innerText: "Username:" });
-    const usernameInput = createElement("input", { type: "text", value: userData.username || userData.name || "" });
-    usernameLabel.appendChild(usernameInput);
-
-    // Bio input
-    const bioLabel = createElement("label", { innerText: "Bio:" });
-    const bioInput = createElement("textarea", { rows: 3, value: userData.bio });
-    bioLabel.appendChild(bioInput);
-
-    // Profile Image upload
-    const avatarLabel = createElement("label", { innerText: "Profile Image:" });
-    const avatarInput = createElement("input", { type: "file", accept: "image/*" });
-    avatarLabel.appendChild(avatarInput);
-
-    // Background color picker
-    const bgColorLabel = createElement("label", { innerText: "Background Color:" });
-    const bgColorInput = createElement("input", { type: "color", value: userData.coverColor || "#96add4" });
-    bgColorLabel.appendChild(bgColorInput);
+    // Interest title
+    const interestTitle = createElement("div", { class: "interest-title" });
+    interestTitle.innerHTML = '<i data-lucide="heart"></i> Interests';
+    interestsSection.appendChild(interestTitle);
 
     // Interests input with search and badges
-const interestsLabel = createElement("label", { innerText: "Interests:" });
-const interestSearchWrapper = createElement("div", { class: "interest-search-wrapper" });
-const interestSearchInput = createElement("input", {
-  type: "text",
-  placeholder: "Search or add interest...",
-  class: "interest-search-input"
-});
-const suggestionList = createElement("div", { class: "interest-suggestions" });
-const interestsContainer = createElement("div", { class: "interests-badges-edit" });
-
-// Render initial interests as badges
-function renderSelectedInterests() {
-  interestsContainer.innerHTML = "";
-  userData.interests.forEach(interest => {
-    const badge = createElement("span", {
-      className: "interest-badge selected",
-      innerText: interest
+    const interestsLabel = createElement("label", { innerText: "Interests:" });
+    const interestSearchWrapper = createElement("div", { class: "interest-search-wrapper" });
+    const interestSearchInput = createElement("input", {
+      type: "text",
+      placeholder: "Search or add interest...",
+      class: "interest-search-input"
     });
-    const removeIcon = createElement("i", { "data-lucide": "x" });
-    badge.appendChild(removeIcon);
-    badge.addEventListener("click", () => {
-      userData.interests = userData.interests.filter(i => i !== interest);
-      renderSelectedInterests();
+    const suggestionList = createElement("div", { class: "interest-suggestions" });
+    const interestsContainer = createElement("div", { class: "interests-badges-edit" });
+
+    // Render initial interests as badges
+    function renderSelectedInterests() {
+      interestsContainer.innerHTML = "";
+      userData.interests.forEach(interest => {
+        const badge = createElement("span", {
+          className: "interest-badge selected",
+          innerText: interest
+        });
+        const removeIcon = createElement("i", { "data-lucide": "x" });
+        badge.appendChild(removeIcon);
+        badge.addEventListener("click", () => {
+          userData.interests = userData.interests.filter(i => i !== interest);
+          renderSelectedInterests();
+          createIcons({ icons });
+        });
+        interestsContainer.appendChild(badge);
+      });
       createIcons({ icons });
-    });
-    interestsContainer.appendChild(badge);
-  });
-  createIcons({ icons });
-}
-
-// Show matching suggestions
-function updateSuggestions(query) {
-  suggestionList.innerHTML = "";
-  if (!query) return;
-  const matches = predefinedInterests.filter(i =>
-    i.toLowerCase().includes(query.toLowerCase()) &&
-    !userData.interests.includes(i)
-  );
-  matches.slice(0, 5).forEach(match => {
-    const suggestion = createElement("div", {
-      class: "suggestion-item",
-      innerText: match
-    });
-    suggestion.addEventListener("click", () => {
-      userData.interests.push(match);
-      interestSearchInput.value = "";
-      updateSuggestions("");
-      renderSelectedInterests();
-    });
-    suggestionList.appendChild(suggestion);
-  });
-}
-
-interestSearchInput.addEventListener("input", (e) => {
-  updateSuggestions(e.target.value);
-});
-
-interestSearchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && interestSearchInput.value.trim() !== "") {
-    e.preventDefault();
-    const newInterest = interestSearchInput.value.trim();
-    if (!userData.interests.includes(newInterest)) {
-      userData.interests.push(newInterest);
-      renderSelectedInterests();
     }
-    interestSearchInput.value = "";
-    updateSuggestions("");
-  }
-});
 
-interestSearchWrapper.append(interestSearchInput, suggestionList);
-interestsLabel.append(interestSearchWrapper, interestsContainer);
+    // Show matching suggestions
+    function updateSuggestions(query) {
+      suggestionList.innerHTML = "";
+      if (!query) return;
+      const matches = predefinedInterests.filter(i =>
+        i.toLowerCase().includes(query.toLowerCase()) &&
+        !userData.interests.includes(i)
+      );
+      matches.slice(0, 5).forEach(match => {
+        const suggestion = createElement("div", {
+          class: "suggestion-item",
+          innerText: match
+        });
+        suggestion.addEventListener("click", () => {
+          userData.interests.push(match);
+          interestSearchInput.value = "";
+          updateSuggestions("");
+          renderSelectedInterests();
+        });
+        suggestionList.appendChild(suggestion);
+      });
+    }
 
+    interestSearchInput.addEventListener("input", (e) => {
+      updateSuggestions(e.target.value);
+    });
 
-    interestsLabel.appendChild(interestsContainer);
+    interestSearchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && interestSearchInput.value.trim() !== "") {
+        e.preventDefault();
+        const newInterest = interestSearchInput.value.trim();
+        if (!userData.interests.includes(newInterest)) {
+          userData.interests.push(newInterest);
+          renderSelectedInterests();
+        }
+        interestSearchInput.value = "";
+        updateSuggestions("");
+      }
+    });
+
+    interestSearchWrapper.append(interestSearchInput, suggestionList);
+    interestsLabel.append(interestSearchWrapper, interestsContainer);
+    interestsSection.appendChild(interestsLabel);
 
     // Save and Cancel buttons
     const saveBtn = createElement("button", { type: "submit", innerText: "Save" });
     const cancelBtn = createElement("button", { type: "button", innerText: "Cancel" });
 
-    form.append(firstNameLabel, lastNameLabel, usernameLabel, bioLabel, avatarLabel, bgColorLabel, interestsLabel, saveBtn, cancelBtn);
+    form.append(interestsSection, saveBtn, cancelBtn);
     container.appendChild(form);
-
-    // Preview uploaded image
-    avatarInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          userData.avatar = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // Update background color on change
-    bgColorInput.addEventListener("input", (e) => {
-      userData.coverColor = e.target.value;
-    });
 
     // Cancel button handler
     cancelBtn.addEventListener("click", (e) => {
@@ -439,12 +391,6 @@ interestsLabel.append(interestSearchWrapper, interestsContainer);
     // Form submit handler
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      // Update userData from inputs
-      userData.firstName = firstNameInput.value.trim();
-      userData.lastName = lastNameInput.value.trim();
-      userData.username = usernameInput.value.trim();
-      userData.bio = bioInput.value.trim();
 
       // Persist changes
       updateUser(userData);

@@ -1,6 +1,6 @@
- /* =======================
-  Global CSS File
-  Contains resets, variables, and base styles for the entire application.
+/* =======================
+   Global CSS File
+   Contains resets, variables, and base styles for the entire application.
 */
 /* =======================
    Root / Global Styles
@@ -43,6 +43,10 @@ html, body, #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Hide scrollbars */
@@ -64,6 +68,7 @@ body::-webkit-scrollbar,
 /* Images */
 img {
   user-select: none;
+  -webkit-user-select: none;
   -webkit-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
@@ -728,7 +733,7 @@ body.auth-page {
 .form-card input:focus {
   background: #f0f5ed;
   outline: none !important;                /* remove default blue outline */
-  border: 2px solid #8b9a88 !important; /* lighter green border */
+  border: 2px solid #a4b8a0 !important; /* lighter green border */
   box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.2);  /* lighter soft green-gray glow */
   -webkit-appearance: none;                /* fix Safari default */
   -moz-appearance: none;
@@ -952,6 +957,7 @@ button.primary:hover {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   user-select: none;
+  -webkit-user-select: none;
   pointer-events: none;
 }
 
@@ -1197,7 +1203,7 @@ button.primary:hover {
 
 /* General Lucide icon color fix */
 [data-lucide] {
-  stroke: #333 !important;  /* dark gray */
+  stroke: currentColor;
   stroke-width: 2.2;
   width: 22px;
   height: 22px;
@@ -2099,263 +2105,30 @@ button i[data-lucide] {
    Edit Profile
    ======================= */
 
-/* =======================
-   Interest Badge Styles (Unified)
-   ======================= */
-.interest-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px; /* Adopted from editable badge */
-  border-radius: 24px; /* Adopted from editable badge */
-  font-size: 14px; /* Adjusted for consistency */
-  font-weight: 600;
-  margin: 4px; /* Adjusted for a slightly tighter grid */
-  margin: 8px 8px 8px 0; /* Increased margins for more spacing: top, right, bottom, left */
-  letter-spacing: 0.2px;
-  transition: all 0.3s cubic-bezier(.4,0,.2,1); /* Adopted from editable badge */
-  user-select: none; /* Adopted from editable badge */
-  border: 1.8px solid transparent; /* Adopted from editable badge */
-  background: var(--color-input-bg); /* Adopted from editable badge */
-  color: var(--color-text-primary); /* Adopted from editable badge */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12); /* Unified shadow */
-  cursor: default; /* Default cursor, overridden by --editable */
-}
-.interests-container {
-  margin-top: 0.5rem;
-  margin-left: 0; /* Align left with other profile info */
-  line-height: 1.5; /* Add line height for better vertical spacing between wrapped lines */
-}
-
-.interest-badge:hover {
-  transform: translateY(-2px); /* Adopted from editable badge hover */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.16); /* Enhanced shadow for more depth */
-  color: var(--color-text-primary); /* Keep original text color for clarity */
-
-}
-
-
-/* Profile Edit Form Container */
+/* Edit Profile Page Styling */
 .edit-profile-form {
-  max-width: 600px;
+  background: var(--color-card-bg);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   max-width: 700px;
   margin: 2rem auto;
-  background: var(--color-card-bg); 
-  padding: 2rem 3rem;
-  border-radius: 10px;
-  padding: 2.5rem 3rem;
-  border-radius: 24px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-  font-family: 'Poppins', 'Inter', sans-serif;
-  color: var(--color-text-primary);
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
+  transition: all 0.3s ease;
 }
 
-/* Form Section for grouping */
-.form-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-/* Form Header */
-.edit-profile-form h2 {
-  font-size: 26px;
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  color: var(--color-text-primary);
-}
-
-/* Form Labels */
 .edit-profile-form label {
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 0.6rem;
-  margin-bottom: 0;
   display: block;
-  color: var(--color-text-primary);
-}
-
-/* Textarea */
-.edit-profile-form textarea {
-  width: 100%;
-  font-size: 16px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  border-radius: 12px;
-  border: 1.5px solid var(--color-divider);
-  background: var(--color-input-bg);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.06);
-  resize: vertical;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--color-text-primary);
-}
-
-.edit-profile-form textarea:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 8px rgba(107, 122, 104, 0.4);
-  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.3);
-  outline: none;
-}
-
-/* File input wrapper */
-.file-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: var(--color-input-bg);
-  border-radius: 12px;
-  border: 1.5px solid var(--color-divider);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.file-input-wrapper:hover,
-.file-input-wrapper:focus-within {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.3);
-}
-
-.edit-profile-form input[type="file"] {
-  display: block;
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 16px;
-  border: 1.5px solid var(--color-divider);
-  background: var(--color-input-bg);
-  height: 100%;
-  cursor: pointer;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.edit-profile-form input[type="file"]:hover,
-.edit-profile-form input[type="file"]:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 8px rgba(107, 122, 104, 0.4);
-  outline: none;
-}
-
-.file-input-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  width: 100%;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 15px;
   color: var(--color-text-secondary);
-  pointer-events: none; /* Let clicks pass through to the input */
+  margin-bottom: 0.5rem;
 }
 
-.file-input-label i {
-  stroke: var(--color-accent);
-}
-
-/* Color picker */
-.edit-profile-form input[type="color"] {
-  width: 60px;
-  height: 36px;
-  height: 48px;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  border-radius: 12px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: box-shadow 0.3s ease;
-}
-
-.edit-profile-form input[type="color"]:hover,
-.edit-profile-form input[type="color"]:focus {
-  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.4);
-  outline: none;
-}
-
-/* Interests container */
-.interests-badges-edit {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 0.5rem;
-}
-
-/* Button container */
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  border-top: 1px solid var(--color-divider);
-  padding-top: 1.5rem;
-}
-
-/* Buttons */
-.edit-profile-form button {
-  padding: 14px 24px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 16px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  min-width: 120px;
-  margin-top: 1rem;
-}
-
-.edit-profile-form button[type="submit"] {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: var(--color-accent);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.6);
-  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
-}
-
-.edit-profile-form button[type="submit"]:hover {
-  background-color: #556b4a;
-  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.8);
-  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.6);
-  transform: translateY(-2px);
-}
-
-.edit-profile-form button[type="button"] {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: var(--color-input-bg);
-  color: var(--color-text-primary);
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-  margin-left: 1rem;
-}
-
-.edit-profile-form button[type="button"]:hover {
-  background-color: var(--color-input-focus);
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 600px) {
-  .edit-profile-form {
-    padding: 2rem 1.5rem;
-  }
-}
-
-.interest-search-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
+.edit-profile-form input,
+.edit-profile-form textarea,
 .interest-search-input {
   width: 100%;
   padding: 12px 16px;
@@ -2365,63 +2138,154 @@ button i[data-lucide] {
   font-size: 15px;
   color: var(--color-text-primary);
   transition: all 0.3s ease;
+  outline: none;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus,
+.interest-search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.2);
+}
+
+/* Interest section wrapper */
+.interest-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--color-input-bg) 0%, #f0f5ed 100%);
+  border-radius: 16px;
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interest-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.25);
+}
+
+/* Interest title */
+.interest-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.interest-title i {
+  color: var(--color-accent);
+}
+
+/* Interest search input wrapper */
+.interest-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.interest-search-input {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid var(--color-divider);
+  background: var(--color-card-bg);
+  font-size: 16px;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .interest-search-input:focus {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.25);
-  outline: none;
+  box-shadow: 0 0 0 4px rgba(107, 122, 104, 0.2);
+  transform: scale(1.02);
 }
 
+.interest-search-input::placeholder {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Interest suggestions */
 .interest-suggestions {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   background: var(--color-card-bg);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-  border-radius: 10px;
-  margin-top: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  margin-top: 8px;
   z-index: 20;
-  overflow: hidden;
-  max-height: 180px;
+  max-height: 200px;
   overflow-y: auto;
+  border: 1px solid var(--color-divider);
 }
 
 .suggestion-item {
-  padding: 10px 14px;
+  padding: 12px 16px;
   font-size: 15px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
 }
 
 .suggestion-item:hover {
   background: var(--color-input-focus);
+  color: var(--color-accent);
+  transform: translateX(4px);
 }
 
+/* Interest badges container */
 .interests-badges-edit {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-divider);
+  min-height: 60px;
+  align-items: flex-start;
 }
 
-.interest-badge.selected {
+/* Individual badge */
+.interest-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-input-focus);
-  border-radius: 20px;
-  padding: 8px 14px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: background 0.3s ease;
+  background: #e6f0d4;
+  color: #4a5a3c;
+  border: 1px solid #c5d8a1;
+  box-shadow: none;
+  cursor: default;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.interest-badge.selected:hover {
-  background: var(--color-accent-light);
+.interest-badge:hover {
+  background: #d1e2b8;
+  color: #3a4a2c;
+}
+
+.interest-badge.selected {
+  background: #e6f0d4;
+  color: #4a5a3c;
 }
 
 .interest-badge i[data-lucide="x"] {
@@ -2429,6 +2293,406 @@ button i[data-lucide] {
   height: 16px;
   stroke-width: 2;
   cursor: pointer;
+  background: rgba(74, 90, 60, 0.2);
+  border-radius: 50%;
+  padding: 2px;
+  transition: background 0.2s ease;
+}
+
+.interest-badge i[data-lucide="x"]:hover {
+  background: rgba(74, 90, 60, 0.4);
+}
+
+@media (max-width: 600px) {
+  .interest-badge {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 14px;
+  }
+}
+
+/* Buttons */
+.edit-profile-form button {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-form button[type="submit"] {
+  background-color: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #556b4a;
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.6);
+  transform: translateY(-2px);
+}
+
+.edit-profile-form button[type="button"] {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+.edit-profile-form button[type="button"]:hover {
+  background-color: var(--color-input-focus);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .edit-profile-form {
+    padding: 1.5rem 1rem;
+  }
+
+  .edit-profile-form button {
+    width: 100%;
+  }
+}
+
+/* Edit Profile Page Styling */
+.edit-profile-form {
+  background: var(--color-card-bg);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  transition: all 0.3s ease;
+}
+
+.edit-profile-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-divider);
+  background: var(--color-input-bg);
+  font-size: 15px;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.2);
+}
+
+.edit-profile-form button {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-form button[type="submit"] {
+  background-color: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #556b4a;
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.6);
+  transform: translateY(-2px);
+}
+
+.edit-profile-form button[type="button"] {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+.edit-profile-form button[type="button"]:hover {
+  background-color: var(--color-input-focus);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+
+/* =======================
+   Edit Profile - Modern UI
+   ======================= */
+
+/* Form Container */
+.edit-profile-form {
+  background: var(--color-card-bg);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  transition: all 0.3s ease;
+}
+
+/* Form Label */
+.edit-profile-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs & Textareas */
+.edit-profile-form input,
+.edit-profile-form textarea,
+.interest-search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-divider);
+  background: var(--color-input-bg);
+  font-size: 15px;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus,
+.interest-search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(107, 122, 104, 0.2);
+}
+
+/* Interest section wrapper */
+.interest-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--color-input-bg) 0%, #f0f5ed 100%);
+  border-radius: 16px;
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interest-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.25);
+}
+
+/* Interest title */
+.interest-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.interest-title i {
+  color: var(--color-accent);
+}
+
+/* Interest search input wrapper */
+.interest-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.interest-search-input {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid var(--color-divider);
+  background: var(--color-card-bg);
+  font-size: 16px;
+  color: var(--color-text-primary);
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.interest-search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(107, 122, 104, 0.2);
+  transform: scale(1.02);
+}
+
+.interest-search-input::placeholder {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Interest suggestions */
+.interest-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-card-bg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  margin-top: 8px;
+  z-index: 20;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--color-divider);
+}
+
+.suggestion-item {
+  padding: 12px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: var(--color-input-focus);
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+/* Interest badges container */
+.interests-badges-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-divider);
+  min-height: 60px;
+  align-items: flex-start;
+}
+
+/* Individual badge */
+.interest-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 28px;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #5a7a4a 100%);
+  color: #fff;
+  border: 2px solid transparent;
+  box-shadow: 0 3px 8px rgba(107, 122, 104, 0.3);
+  cursor: default;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.interest-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.interest-badge:hover::before {
+  left: 100%;
+}
+
+.interest-badge:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
+}
+
+.interest-badge.selected {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #5a7a4a 100%);
+}
+
+.interest-badge i[data-lucide="x"] {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  padding: 2px;
+  transition: background 0.2s ease;
+}
+
+.interest-badge i[data-lucide="x"]:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* Buttons */
+.edit-profile-form button {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-form button[type="submit"] {
+  background-color: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(107, 122, 104, 0.4);
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #556b4a;
+  box-shadow: 0 8px 20px rgba(107, 122, 104, 0.6);
+  transform: translateY(-2px);
+}
+
+.edit-profile-form button[type="button"] {
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+.edit-profile-form button[type="button"]:hover {
+  background-color: var(--color-input-focus);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .edit-profile-form {
+    padding: 1.5rem 1rem;
+  }
+
+  .edit-profile-form button {
+    width: 100%;
+  }
 }
 
 

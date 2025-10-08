@@ -1,4 +1,6 @@
-import { renderProfile } from "./profile.view.js";
+// import { renderProfile } from "./profile.view.js";
+export { renderProfile };
+
 
 export function initProfile(container = document.getElementById("app")) {
   if (!container) return;
