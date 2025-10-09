@@ -1,3 +1,3 @@
-- [ ] Update src/features/home/home.view.js to include story image in HTML and restructure card layout
-- [ ] Update src/features/layout/home.css to style story cards as vertical rectangles with positioned avatar and name
-- [ ] Test the changes by running the app
+- [ ] Add profile-actions-container with Add Friend and Message buttons in friend's profile view
+- [ ] Add event listeners for the new buttons
+- [ ] Verify buttons are same size as existing ones

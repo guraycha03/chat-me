@@ -37,6 +37,16 @@ my-social-app/
 
 
 
+
+  I want the upper half of the profile header to have a background color, and the lower half to blend into the rest of the page, so the profile image sits in between these two sections — like a Facebook-style transition between cover and body.
+
+
+
+
+
+
+
+
 design my edit profile page into more modern and interactive and engaging. make it rich in ui and ux, responsive and look premium
 
 

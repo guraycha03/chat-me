@@ -1,7 +1,7 @@
-import { createElement } from "../../utils/DOM.js";
 import { createIcons, icons } from "lucide";
 import { showNotice } from "../../utils/notification.js";
 import { navigate } from "../../utils/navigationState.js";
+import { updateUser } from "../../utils/storage.js";
 import "./edit-info.css";
 
 export function renderEditInfo(container) {
@@ -21,7 +21,7 @@ export function renderEditInfo(container) {
           <div class="form-group">
             <label for="first-name">First Name</label>
             <input type="text" id="first-name" name="firstName" value="${currentUser.firstName || ''}" required>
- n
+          </div>
           <div class="form-group">
             <label for="last-name">Last Name</label>
             <input type="text" id="last-name" name="lastName" value="${currentUser.lastName || ''}" required>
@@ -29,10 +29,6 @@ export function renderEditInfo(container) {
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value="${currentUser.email || ''}" required>
-          </div>
-          <div class="form-group">
-            <label for="bio">Bio</label>
-            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself...">${currentUser.bio || ''}</textarea>
           </div>
           <div class="form-group">
             <label for="phone">Phone Number</label>
@@ -70,11 +66,11 @@ export function renderEditInfo(container) {
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName'),
       email: formData.get('email'),
-      bio: formData.get('bio'),
       phone: formData.get('phone'),
       location: formData.get('location'),
     };
     localStorage.setItem("myapp_currentUser", JSON.stringify(updatedUser));
+    updateUser(updatedUser);
     showNotice("Information updated successfully!");
     // Dispatch event to notify other parts of the app about user data update
     window.dispatchEvent(new CustomEvent('userDataUpdated', { detail: updatedUser }));

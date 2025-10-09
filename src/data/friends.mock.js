@@ -133,7 +133,7 @@ export const mockFriends = [
         id: "p1",
         type: "image",
         description: ". . . ",
-        image: "https://picsum.photos/400/300?random=14",
+        image: "/assets/images/posts/lucas-post-1.jpg",
         date: "2025-09-29",
         likes: 180,
         comments: 15,

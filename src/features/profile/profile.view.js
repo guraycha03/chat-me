@@ -4,6 +4,7 @@ import { createElement } from "../../utils/DOM.js";
 import { createIcons, icons } from "lucide";
 import { showNotice } from "../../utils/notification.js";
 import { renderInterestBadges } from "../components/interestBadge.js";
+import "./profile.css";
 
 export function renderProfile(container, person) {
   let userData = person;
@@ -27,6 +28,7 @@ export function renderProfile(container, person) {
     posts = JSON.parse(localStorage.getItem("posts") || "[]");
   } else {
     // For other people's profiles
+    userData.avatar = userData.avatar || '/assets/images/profile-placeholder.png';
     posts = userData.posts || [];
   }
 
@@ -34,19 +36,31 @@ export function renderProfile(container, person) {
   const followersCount = userData.followers || 0;
   const followingCount = userData.following || 0;
 
+  // Function to format numbers as K for thousands
+  function formatNumber(num) {
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num.toString();
+  }
+
   // Flag to track edit mode
   let isEditing = false;
 
   function renderView() {
+    console.log("Profile avatar URL:", userData.avatar);
+    console.log("Full userData:", userData);
     container.innerHTML = `
       <div class="profile-wrapper">
-        <header class="profile-header">
+        <div class="profile-header">
           <div class="cover-photo"></div>
-          <img src="${userData.avatar}" alt="${userData.name} avatar" class="profile-avatar" style="position: absolute; top: 200px; left: 2rem; ${userData.avatar !== '/assets/images/profile-placeholder.png' ? 'background: white;' : ''}" />
-${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="Change Profile Image" style="position: absolute; top: 254px; left: 106px; background: #a3b18a; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3); color: #e6f0d4; z-index: 30;">
-            <i data-lucide="camera" style="width: 20px; height: 20px;"></i>
-          </button>` : ''}
-        </header>
+          <div class="profile-avatar-wrapper">
+            <img src="${userData.avatar}" alt="Profile image" class="profile-avatar" onerror="this.src='/assets/images/profile-placeholder.png'" />
+            <button id="change-avatar-btn" title="Change Profile Image">
+              <i data-lucide="camera"></i>
+            </button>
+          </div>
+        </div>
 
         <div class="profile-details">
           ${userData.id === getCurrentUser()?.id ? `
@@ -56,8 +70,8 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
             <h2 id="username">${userData.name}</h2>
           `}
           <div class="profile-follow-stats">
-            <div><strong>${followersCount}</strong> Followers</div>
-            <div><strong>${followingCount}</strong> Following</div>
+            <div><strong>${formatNumber(followersCount)}</strong> Followers</div>
+            <div><strong>${formatNumber(followingCount)}</strong> Following</div>
           </div>
           <p class="profile-bio">${userData.bio}</p>
           <p>${renderInterestBadges(userData.interests)}</p>
@@ -67,12 +81,23 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
                 <i data-lucide="plus"></i>
                 <span>Add story</span>
               </button>
-              <button class="profile-action-btn edit-profile-btn">
+              <button class="profile-action-btn edit-profile-btn" id="edit-profile-btn">
                 <i data-lucide="pencil"></i>
-                <span>Edit info</span>
+                <span>Edit Profile</span>
               </button>
             </div>
-          ` : ''}
+          ` : `
+            <div class="profile-actions-container">
+              <button class="profile-action-btn primary" id="add-friend-btn">
+                <i data-lucide="user-plus"></i>
+                <span>Add Friend</span>
+              </button>
+              <button class="profile-action-btn" id="message-btn">
+                <i data-lucide="message-circle"></i>
+                <span>Message</span>
+              </button>
+            </div>
+          `}
         </div>
 
         <main class="profile-main">
@@ -98,8 +123,7 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
                     return `
                       <div class="post-item" key="${post.id}">
                         <div class="post-header">
-                          <img src="${userData.avatar}" alt="${userData.name} avatar" class="post-avatar" />
-                          <div class="post-user-info">
+                          <img src="${userData.avatar}" alt="${userData.name} avatar" class="post-avatar" onerror="this.src='/assets/images/profile-placeholder.png'" />
                             <span class="post-username">${userData.name || `${userData.firstName || ""} ${userData.lastName || ""}`}</span>
                             <span class="post-date">${postDate}</span>
                           </div>
@@ -178,7 +202,8 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
     // Set dynamic cover background
     const coverPhoto = container.querySelector(".cover-photo");
     if (coverPhoto) {
-      coverPhoto.style.background = userData.coverColor || "linear-gradient(135deg, #d1ddf1 0%, #96add4 100%)";
+      // Upper half background color, lower half blends into the page
+      coverPhoto.style.background = userData.coverColor || "var(--color-primary)";
     }
 
     // Initialize lucide icons for the new buttons
@@ -243,9 +268,12 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
       addStoryBtn.addEventListener("click", () => showNotice("Add story clicked!"));
     }
     // Add event listener for Edit Profile button
-    const editBtn = container.querySelector(".edit-profile-btn");
+    const editBtn = container.querySelector("#edit-profile-btn");
     if (editBtn) {
-      // Edit profile button removed as per user request, no event listener added
+      editBtn.addEventListener("click", () => {
+        isEditing = true;
+        renderEditForm();
+      });
     }
 
     // Add event listener for Change Avatar button
@@ -277,33 +305,58 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
         document.body.removeChild(fileInput);
       });
     }
+
+    // Add event listener for Add Friend button
+    const addFriendBtn = container.querySelector("#add-friend-btn");
+    if (addFriendBtn) {
+      addFriendBtn.addEventListener("click", () => showNotice("Add friend clicked!"));
+    }
+    // Add event listener for Message button
+    const messageBtn = container.querySelector("#message-btn");
+    if (messageBtn) {
+      messageBtn.addEventListener("click", () => showNotice("Message clicked!"));
+    }
   }
 
   
 
   function renderEditForm() {
-    container.innerHTML = "";
+    container.innerHTML = `
+      <div class="edit-profile-inline">
+        <form class="edit-profile-form" id="edit-profile-form">
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself...">${userData.bio || ''}</textarea>
+          </div>
 
-    const form = createElement("form", { class: "edit-profile-form" });
+          <!-- Interests Section -->
+          <div class="interest-section">
+            <div class="interest-title">
+              <i data-lucide="heart"></i> Interests
+            </div>
+            <label>Interests:</label>
+            <div class="interest-search-wrapper">
+              <input type="text" placeholder="Search or add interest..." class="interest-search-input" id="interest-search-input">
+              <div class="interest-suggestions" id="interest-suggestions"></div>
+            </div>
+            <div class="interests-badges-edit" id="interests-badges-edit"></div>
+          </div>
 
-    // Interests section
-    const interestsSection = createElement("div", { class: "interest-section" });
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" id="cancel-btn">Cancel</button>
+            <button type="submit" class="save-btn">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    `;
 
-    // Interest title
-    const interestTitle = createElement("div", { class: "interest-title" });
-    interestTitle.innerHTML = '<i data-lucide="heart"></i> Interests';
-    interestsSection.appendChild(interestTitle);
+    // Initialize Lucide icons
+    createIcons({ icons });
 
-    // Interests input with search and badges
-    const interestsLabel = createElement("label", { innerText: "Interests:" });
-    const interestSearchWrapper = createElement("div", { class: "interest-search-wrapper" });
-    const interestSearchInput = createElement("input", {
-      type: "text",
-      placeholder: "Search or add interest...",
-      class: "interest-search-input"
-    });
-    const suggestionList = createElement("div", { class: "interest-suggestions" });
-    const interestsContainer = createElement("div", { class: "interests-badges-edit" });
+    // Interests functionality
+    const interestSearchInput = container.querySelector("#interest-search-input");
+    const suggestionList = container.querySelector("#interest-suggestions");
+    const interestsContainer = container.querySelector("#interests-badges-edit");
 
     // Render initial interests as badges
     function renderSelectedInterests() {
@@ -365,42 +418,26 @@ ${userData.id === getCurrentUser()?.id ? `<button id="change-avatar-btn" title="
       }
     });
 
-    interestSearchWrapper.append(interestSearchInput, suggestionList);
-    interestsLabel.append(interestSearchWrapper, interestsContainer);
-    interestsSection.appendChild(interestsLabel);
+    // Initial render of interests
+    renderSelectedInterests();
 
-    // Save and Cancel buttons
-    const saveBtn = createElement("button", { type: "submit", innerText: "Save" });
-    const cancelBtn = createElement("button", { type: "button", innerText: "Cancel" });
-
-    form.append(interestsSection, saveBtn, cancelBtn);
-    container.appendChild(form);
-
-    // Cancel button handler
-    cancelBtn.addEventListener("click", (e) => {
-      e.preventDefault();
+    // Cancel button
+    const cancelBtn = container.querySelector("#cancel-btn");
+    cancelBtn.addEventListener("click", () => {
       isEditing = false;
-
-      // Hide back button when cancelling edit
-      const event = new CustomEvent('manageBackButton', { detail: { show: false } });
-      window.dispatchEvent(event);
-
       renderView();
     });
 
-    // Form submit handler
+    // Form submit
+    const form = container.querySelector("#edit-profile-form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      // Persist changes
+      const formData = new FormData(form);
+      userData.bio = formData.get('bio');
+      // interests are already updated in userData
       updateUser(userData);
-
+      showNotice("Profile updated successfully!");
       isEditing = false;
-
-      // Hide back button after saving
-      const event = new CustomEvent('manageBackButton', { detail: { show: false } });
-      window.dispatchEvent(event);
-
       renderView();
     });
   }
