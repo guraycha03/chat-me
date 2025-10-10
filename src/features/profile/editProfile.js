@@ -3,7 +3,6 @@ import { updateUser } from "../../utils/storage.js";
 import { createElement } from "../../utils/DOM.js";
 import { createIcons, icons } from "lucide";
 import { showNotice } from "../../utils/notification.js";
-import { createBackButton } from "../components/backButton.js"; // ✅ Import reusable back button
 import "./editProfile.css";
 
 export function renderEditProfile(container, userData, onCancel) {
@@ -45,7 +44,6 @@ export function renderEditProfile(container, userData, onCancel) {
   </div>
 `;
 
-
   // === Back button action ===
   container.querySelector("#back-btn").addEventListener("click", onCancel);
   createIcons({ icons });
@@ -70,36 +68,71 @@ export function renderEditProfile(container, userData, onCancel) {
     createIcons({ icons });
   }
 
-  function updateSuggestions(query) {
+  function addInterest(interest) {
+    if (!userData.interests.includes(interest)) {
+      userData.interests.push(interest);
+      renderSelectedInterests();
+    }
+    interestInput.value = "";
     suggestionList.innerHTML = "";
-    if (!query) return;
-    predefinedInterests
-      .filter(i => i.toLowerCase().includes(query.toLowerCase()) && !userData.interests.includes(i))
-      .slice(0, 5)
-      .forEach(match => {
-        const div = createElement("div", { class: "suggestion-item", innerText: match });
-        div.addEventListener("click", () => {
-          userData.interests.push(match);
-          renderSelectedInterests();
-          interestInput.value = "";
-          updateSuggestions("");
-        });
-        suggestionList.appendChild(div);
-      });
   }
 
-  interestInput.addEventListener("input", (e) => updateSuggestions(e.target.value));
+  function updateSuggestions(query) {
+    suggestionList.innerHTML = "";
+    if (!query.trim()) return;
 
-  interestInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && interestInput.value.trim() !== "") {
-      e.preventDefault();
-      const newInterest = interestInput.value.trim();
-      if (!userData.interests.includes(newInterest)) userData.interests.push(newInterest);
-      renderSelectedInterests();
-      interestInput.value = "";
-      updateSuggestions("");
+    const matches = predefinedInterests
+      .filter(i => i.toLowerCase().includes(query.toLowerCase()))
+      .filter(i => !userData.interests.includes(i))
+      .slice(0, 5);
+
+    matches.forEach(match => {
+      const div = createElement("div", { className: "suggestion-item", innerText: match });
+      div.addEventListener("click", () => addInterest(match));
+      suggestionList.appendChild(div);
+    });
+
+    setupKeyboardNavigation();
+  }
+
+  // === Keyboard navigation inside suggestions ===
+  function setupKeyboardNavigation() {
+    let currentIndex = -1;
+    const items = suggestionList.querySelectorAll(".suggestion-item");
+
+    interestInput.onkeydown = (e) => {
+      if (items.length === 0) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % items.length;
+        updateActiveItem();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateActiveItem();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (currentIndex >= 0) {
+          addInterest(items[currentIndex].innerText);
+        } else if (interestInput.value.trim() !== "") {
+          addInterest(interestInput.value.trim());
+        }
+      }
+    };
+
+    function updateActiveItem() {
+      items.forEach((item, idx) => {
+        item.classList.toggle("active", idx === currentIndex);
+        if (idx === currentIndex) {
+          item.scrollIntoView({ block: "nearest" });
+        }
+      });
     }
-  });
+  }
+
+  // === Listeners ===
+  interestInput.addEventListener("input", (e) => updateSuggestions(e.target.value));
 
   renderSelectedInterests();
 
