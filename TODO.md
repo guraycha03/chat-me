@@ -43,3 +43,15 @@
 - [x] After edits, update this TODO.md to mark the steps as completed.
 
 - [ ] Followup: Test the edit profile page for organization, functionality (saving changes), responsiveness, and modern design.
+
+# TODO for Consistent Back Button on Profile Pages
+
+## Steps:
+
+- [x] Update `src/features/profile/profile.view.js` to show name beside back button for both own and friends profiles, remove "Profile" label.
+
+- [x] Update `src/app.js` to not show global back button on profile pages, avoiding duplicate back buttons.
+
+- [x] After edits, update this TODO.md to mark the steps as completed.
+
+- [ ] Followup: Test back button on own profile (shows name), friends profile (shows name, no duplicate).

@@ -119,7 +119,7 @@ export function initApp(container) {
       case "profile":
         const person = userId ? mockFriends.find(u => u.id === userId) : null;
         renderProfile(pageContentEl, person);
-        manageBackButton(!!userId, 'Profile');
+        manageBackButton(false);
         break;
       case "settings": renderSettings(pageContentEl); manageBackButton(false); break;
       case "edit-info": renderEditInfo(pageContentEl); manageBackButton(true, 'Edit Information'); break;
