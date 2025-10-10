@@ -1,6 +1,8 @@
 {
   "name": "my-social-app",
   "version": "0.0.0",
+  "private": true,
+  "workspaces": ["packages/*"],
   "type": "module",
   "scripts": {
     "dev": "vite",

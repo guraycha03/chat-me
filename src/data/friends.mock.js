@@ -383,7 +383,7 @@ export const mockFriends = [
       {
         id: "p2",
         type: "image",
-        description: "Set yourself free from the chains of doubt and fear, and embrace the love that has always been within you. When you love yourself, the world around you begins to shine differently.",
+        description: "nothing can bring you peace but yourself",
         image: "/assets/images/posts/seraphina-post-2.jpg",
         date: "2025-10-03",
         likes: 420,

@@ -78,10 +78,12 @@ export function createPostElement(post, userData, profileContainer) {
   const avatarEl = postEl.querySelector(".post-avatar");
   avatarEl.style.cursor = "pointer";
   avatarEl.addEventListener("click", () => {
-    if (profileContainer) {
-      renderProfile(profileContainer, userData);
+    const userId = userData.id;
+    if (userId) {
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'profile', userId } }));
     } else {
-      console.warn("Profile container not found");
+      // Fallback to current user's profile if no id
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'profile' } }));
     }
   });
 
