@@ -21,7 +21,7 @@ export function renderProfile(container, person) {
     // Set defaults for own profile data
     // userData.name = userData.username; // removed to keep firstName and lastName separate
     userData.avatar = userData.avatar || '/assets/images/profile-placeholder.png';
-    userData.bio = userData.bio || "No bio available.";
+    userData.bio = userData.bio || "";
     userData.birthday = userData.birthday || "Unknown";
     userData.interests = userData.interests || [];
     // For own profile, get posts from localStorage
