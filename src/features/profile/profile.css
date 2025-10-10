@@ -376,7 +376,7 @@
 }
 
 .action-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.3rem;
   font-size: 0.85rem;
@@ -384,6 +384,13 @@
   cursor: pointer;
   transition: color 0.2s ease;
   position: relative;
+  width: 50px;
+  justify-content: center;
+}
+
+.action-item span {
+  width: 12px;
+  text-align: center;
 }
 
 /* ✅ Create an isolated box for the icon to scale inside */

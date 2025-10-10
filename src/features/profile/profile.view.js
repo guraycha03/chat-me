@@ -240,10 +240,7 @@ export function renderProfile(container, person) {
 
         countEl.textContent = count;
 
-        // Re-render icons to ensure Lucide SVG refreshes
-        createIcons({ icons });
-
-        // ✅ Apply color to the newly rendered SVG
+        // Apply color to the SVG without re-rendering all icons
         const svg = btn.querySelector("svg");
         if (svg) {
           if (isLiked) {
@@ -254,9 +251,6 @@ export function renderProfile(container, person) {
             svg.style.fill = "none";
           }
         }
-
-
-
       });
     });
 
