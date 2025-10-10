@@ -818,6 +818,24 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+
+.like-btn.liked {
+  color: var(--color-text-primary); /* matte red tone */
+}
+
+.like-count {
+  font-size: 1rem;
+  min-width: 20px;
+  text-align: left;
+}
 
 
 

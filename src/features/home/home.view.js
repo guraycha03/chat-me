@@ -1,8 +1,8 @@
 // src/features/home/home.view.js
-
 import { mockFriends } from '../../data/friends.mock.js';
 import { getCurrentUser } from '../../utils/storage.js';
 import { createIcons, icons } from 'lucide';
+import { initFeed } from '../feed/feed.controller.js'; // ✅ import feed
 import '../layout/home.css';
 
 export function renderHome(container) {
@@ -32,6 +32,7 @@ export function renderHome(container) {
     `;
   }).join('');
 
+  // Render structure: stories + feed
   container.innerHTML = `
     <div class="home-wrapper">
       <section class="stories-section">
@@ -47,8 +48,18 @@ export function renderHome(container) {
           ${storiesHTML}
         </div>
       </section>
+
+      <!-- ✅ Add feed container -->
+      <section id="feed-section" class="feed-section"></section>
     </div>
   `;
 
+  // Initialize icons
   createIcons({ icons });
+
+  // ✅ Render feed (posts) inside feed-section
+  const feedContainer = container.querySelector("#feed-section");
+  if (feedContainer) {
+    initFeed(feedContainer);
+  }
 }

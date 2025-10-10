@@ -194,8 +194,12 @@ posts = allPosts.filter(p => p.userId === userData.id);
                             <div class="icon-box">
                               <i data-lucide="heart"></i>
                             </div>
+                            <span class="like-count">${post.likes || 0}</span>
                           </button>
                         </div>
+
+
+
                       </div>
                        
                     `;
@@ -239,22 +243,26 @@ posts = allPosts.filter(p => p.userId === userData.id);
     });
 
     // ❤️ Like Button Logic with Local Storage Persistence
-// ❤️ Like Button Logic with Separate Likes per Post and User
 const likeBtns = container.querySelectorAll('.like-btn');
 likeBtns.forEach(btn => {
   const currentUser = getCurrentUser();
   if (!currentUser) return;
 
-  // Ensure likedPosts array exists
   currentUser.likedPosts = currentUser.likedPosts || [];
 
   const postId = btn.dataset.postId;
-  const postOwnerId = userData.id; // The profile owner's ID
-  const uniquePostKey = `${postOwnerId}:${postId}`; // combine for uniqueness
+  const postOwnerId = userData.id;
+  const uniquePostKey = `${postOwnerId}:${postId}`;
+  const post = posts.find(p => p.id === postId);
+
+  const likeCountEl = btn.querySelector('.like-count');
+  let likeCount = post.likes || 0;
 
   const isLiked = currentUser.likedPosts.includes(uniquePostKey);
-
   if (isLiked) btn.classList.add('liked');
+
+  // Initial count render
+  likeCountEl.textContent = likeCount;
 
   btn.addEventListener('click', () => {
     const currentUser = getCurrentUser();
@@ -264,24 +272,39 @@ likeBtns.forEach(btn => {
     }
 
     currentUser.likedPosts = currentUser.likedPosts || [];
-    const postOwnerId = userData.id;
-    const uniquePostKey = `${postOwnerId}:${postId}`;
-
     const index = currentUser.likedPosts.indexOf(uniquePostKey);
+
     if (index > -1) {
       // Unlike
       currentUser.likedPosts.splice(index, 1);
       btn.classList.remove('liked');
+      likeCount = Math.max(0, likeCount - 1);
     } else {
       // Like
       currentUser.likedPosts.push(uniquePostKey);
       btn.classList.add('liked');
+      likeCount++;
     }
 
+    // Update count visually and in data
+    likeCountEl.textContent = likeCount;
+    post.likes = likeCount;
+
+    // Persist changes
     updateUser(currentUser);
-    createIcons({ icons }); // Refresh lucide icons
+
+    // Update posts in localStorage (for own profile)
+    const allPosts = JSON.parse(localStorage.getItem("posts") || "[]");
+    const postIndex = allPosts.findIndex(p => p.id === post.id && p.userId === userData.id);
+    if (postIndex > -1) {
+      allPosts[postIndex].likes = likeCount;
+      localStorage.setItem("posts", JSON.stringify(allPosts));
+    }
+
+    createIcons({ icons });
   });
 });
+
 
 
 
