@@ -127,7 +127,6 @@ export function renderProfile(container, person) {
                             <span class="post-username">${userData.name || `${userData.firstName || ""} ${userData.lastName || ""}`}</span>
                             <span class="post-date">${postDate}</span>
                           </div>
-                        </div>
 
                         <div class="post-body">
                           ${post.images && post.images.length > 1
@@ -181,8 +180,6 @@ export function renderProfile(container, person) {
                             <span>${post.shares || 0}</span>
                           </div>
                         </div>
-
-
 
                       </div>
                     `;
