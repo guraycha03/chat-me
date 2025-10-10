@@ -2,6 +2,7 @@
 import { navigate } from "../../utils/navigationState.js";
 import { mockFriends } from "../../data/friends.mock.js";
 import { showNotice } from "../../utils/notification.js";
+import { getCurrentUser, updateUser } from "../../utils/storage.js";
 
 export async function renderFriends(container) {
   container.innerHTML = `
@@ -11,15 +12,11 @@ export async function renderFriends(container) {
     </div>
   `;
 
-  let users = mockFriends;
-
-  // Load from cache or initialize
-  const cached = localStorage.getItem("app_friends_cache");
-  if (cached) {
-    users = JSON.parse(cached);
-  } else {
-    users.forEach(u => { u.friendRequested = u.friendRequested ?? false; });
-  }
+  const currentUser = getCurrentUser();
+  let users = mockFriends.map(u => ({
+    ...u,
+    friendRequested: currentUser.pendingRequests?.includes(u.id) || false
+  }));
 
   // Shuffle the users array for random order on refresh
   users = users.sort(() => Math.random() - 0.5);
@@ -80,18 +77,20 @@ export async function renderFriends(container) {
         if (friend) {
           if (friend.friendRequested) {
             friend.friendRequested = false;
+            currentUser.pendingRequests = currentUser.pendingRequests.filter(reqId => reqId !== friend.id);
             addFriendBtn.textContent = "Add Friend";
             addFriendBtn.title = "Add Friend";
             addFriendBtn.classList.remove('cancel');
             showNotice(`Friend request cancelled for ${friend.name}`);
           } else {
             friend.friendRequested = true;
+            currentUser.pendingRequests.push(friend.id);
             addFriendBtn.textContent = "Cancel";
             addFriendBtn.title = "Cancel Friend Request";
             addFriendBtn.classList.add('cancel');
             showNotice(`Friend request sent to ${friend.name}`);
           }
-          localStorage.setItem("app_friends_cache", JSON.stringify(users));
+          updateUser(currentUser);
         }
       });
     });
@@ -110,7 +109,7 @@ export async function renderFriends(container) {
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Simulate adding more friends (duplicate mockFriends for demo)
-    const newFriends = mockFriends.map(f => ({ ...f, id: f.id + "_new_" + Date.now() }));
+    const newFriends = mockFriends.map(f => ({ ...f, id: f.id + "_new_" + Date.now(), friendRequested: false }));
     users = users.concat(newFriends);
     renderList(users);
 

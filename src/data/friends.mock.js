@@ -15,8 +15,19 @@ export const mockFriends = [
       "/assets/images/stories/niko-3.png",
     ],
     posts: [
-      {
+      
+        {
         id: "p1",
+        type: "text",
+        text: " . . . ",
+        date: "2025-10-02",
+        likes: 95,
+        comments: 9,
+        shares: 2,
+      },
+      {
+
+        id: "p2",
         type: "image",
         description: "nakasalubong kong mga pusa sa daan ",
         images: [
@@ -29,14 +40,20 @@ export const mockFriends = [
         shares: 3,
       },
       {
+
         id: "p2",
-        type: "text",
-        text: " . . . ",
-        date: "2025-10-02",
-        likes: 95,
-        comments: 9,
-        shares: 2,
-      },
+        type: "image",
+        description: "nakasalubong kong mga pusa sa daan ",
+        images: [
+          "/assets/images/posts/niko-cat-post-1.png",
+          "/assets/images/posts/niko-cat-post-2.png"
+        ],
+        date: "2025-10-01",
+        likes: 120,
+        comments: 14,
+        shares: 3,
+      }
+      
     ],
   },
   

@@ -1,3 +1,3 @@
-- [ ] Add profile-actions-container with Add Friend and Message buttons in friend's profile view
-- [ ] Add event listeners for the new buttons
-- [ ] Verify buttons are same size as existing ones
+- [x] Update storage.js to add likedPosts: [] and friends: [] to user objects
+- [x] Modify feed.controller.js to add like button to posts and handle like/unlike
+- [x] Modify friends.view.js to store friend requests per user in localStorage

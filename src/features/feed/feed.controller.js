@@ -1,9 +1,9 @@
 // src/features/feed/feed.controller.js
-import { getCurrentUser, removeCurrentUser } from "../../utils/storage.js";
+import { getCurrentUser, removeCurrentUser, updateUser } from "../../utils/storage.js";
 import { toBase64 } from "../../utils/convert.js";
 
 /* Simple in-file post storage helpers */
-const POSTS_KEY = "myapp_posts";
+const POSTS_KEY = "posts";
 function getPosts() { return JSON.parse(localStorage.getItem(POSTS_KEY) || "[]"); }
 function savePosts(posts) { localStorage.setItem(POSTS_KEY, JSON.stringify(posts)); }
 function addPost(post) { const p = getPosts(); p.unshift(post); savePosts(p); }
@@ -50,6 +50,7 @@ export function initFeed(container = document.getElementById("app")) {
 
     const post = {
       id: Date.now(),
+      userId: user.id,
       author: user.username,
       text,
       image,
@@ -73,6 +74,7 @@ export function initFeed(container = document.getElementById("app")) {
   function renderFeed() {
     const feedContainer = container.querySelector("#feed-container");
     const posts = getPosts();
+    const user = getCurrentUser();
     if (!posts.length) {
       feedContainer.innerHTML = `<p class="muted">No posts yet — be the first!</p>`;
       return;
@@ -83,8 +85,36 @@ export function initFeed(container = document.getElementById("app")) {
         <div class="post-text">${escapeHtml(post.text)}</div>
         ${post.image ? `<div class="post-image"><img src="${post.image}" alt="Post image" /></div>` : ""}
         <div class="post-meta">${new Date(post.createdAt).toLocaleString()}</div>
+        <div class="post-actions">
+          ${user ? `<button class="like-btn ${user.likedPosts?.includes(String(post.id)) ? 'liked' : ''}" data-id="${post.id}">${user.likedPosts?.includes(String(post.id)) ? 'Unlike' : 'Like'}</button>` : ''}
+        </div>
       </div>
     `).join("");
+
+    // Add event listeners for like buttons
+    if (user) {
+      const likeButtons = feedContainer.querySelectorAll('.like-btn');
+      likeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const postId = String(btn.dataset.id);
+          const index = user.likedPosts.indexOf(postId);
+          if (index > -1) {
+            // Unlike
+            user.likedPosts.splice(index, 1);
+            btn.textContent = 'Like';
+            btn.classList.remove('liked');
+          } else {
+            // Like
+            user.likedPosts.push(postId);
+            btn.textContent = 'Unlike';
+            btn.classList.add('liked');
+          }
+          updateUser(user);
+        });
+      });
+    }
   }
 }
 

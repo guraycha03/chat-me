@@ -26,7 +26,10 @@ export function renderProfile(container, person) {
     userData.birthday = userData.birthday || "Unknown";
     userData.interests = userData.interests || [];
     // For own profile, get posts from localStorage
-    posts = JSON.parse(localStorage.getItem("posts") || "[]");
+    const allPosts = JSON.parse(localStorage.getItem("posts") || "[]");
+// Only include posts belonging to this user
+posts = allPosts.filter(p => p.userId === userData.id);
+
   } else {
     // For other people's profiles
     userData = person;
@@ -121,15 +124,27 @@ export function renderProfile(container, person) {
                         })()
                       : "Unknown";
 
+                    // Light muted background colors
+                    // Light muted background palette
+                    const lightMutedColors = [
+                      "#dee3eeff", "#e8dcecff", "#e9ecddff", "#f8e7e0ffff", "#f4f2f7",
+                      "#dee9e6ff", "#ece5dbff", "#f3f6f2", "#e8f4f5ff", "#f5eedbff"
+                    ];
+                    const randomBg = lightMutedColors[Math.floor(Math.random() * lightMutedColors.length)];
+
+
 
 
                     return `
                       <div class="post-item" key="${post.id}">
                         <div class="post-header">
                           <img src="${userData.avatar}" alt="${userData.name} avatar" class="post-avatar" onerror="this.src='/assets/images/profile-placeholder.png'" />
+                          <div class="post-user-info">
                             <span class="post-username">${userData.name || `${userData.firstName || ""} ${userData.lastName || ""}`}</span>
                             <span class="post-date">${postDate}</span>
                           </div>
+                        </div>
+
 
                         <div class="post-body">
                           ${post.images && post.images.length > 1
@@ -161,34 +176,29 @@ export function renderProfile(container, person) {
                                 </div>
                               `
                             : post.text
-                              ? `<p class="text-content">${post.text}</p>`
+                              ? `
+                                <div class="text-post-card" style="background:${randomBg};">
+                                  <p class="text-content">${post.text}</p>
+                                </div>
+                              `
                               : ""
+
+
                           }
 
                         </div>
 
-                        <!-- ✅ Add this new section -->
-                        <!-- ✅ Enhanced post action bar -->
+                         <!-- ❤️ Like button -->
                         <div class="post-actions">
-                          <div class="action-item like-action ${currentUser && currentUser.likedPosts && currentUser.likedPosts.includes(post.id) ? 'liked' : ''}">
-                            <div class="icon-box"><i data-lucide="heart"></i></div>
-                            <span>${post.likes || 0}</span>
-                          </div>
-                          <div class="action-item">
-                            <div class="icon-box"><i data-lucide="message-circle"></i></div>
-                            <span>${post.comments || 0}</span>
-                          </div>
-                          <div class="action-item">
-                            <div class="icon-box"><i data-lucide="forward"></i></div>
-                            <span>${post.shares || 0}</span>
-                          </div>
+                          <button class="action-item like-btn" data-post-id="${post.id}">
+                            <div class="icon-box">
+                              <i data-lucide="heart"></i>
+                            </div>
+                          </button>
                         </div>
-
                       </div>
+                       
                     `;
-
-
-
 
                   }).join("")
                 : "<p>No posts available.</p>"}
@@ -228,51 +238,53 @@ export function renderProfile(container, person) {
       });
     });
 
+    // ❤️ Like Button Logic with Local Storage Persistence
+// ❤️ Like Button Logic with Separate Likes per Post and User
+const likeBtns = container.querySelectorAll('.like-btn');
+likeBtns.forEach(btn => {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return;
 
-    // ❤️ Like button toggle logic
-    const likeButtons = container.querySelectorAll(".like-action");
-    likeButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
+  // Ensure likedPosts array exists
+  currentUser.likedPosts = currentUser.likedPosts || [];
 
-        const currentUser = getCurrentUser();
-        if (!currentUser) {
-          showNotice("Please log in to like posts");
-          return;
-        }
+  const postId = btn.dataset.postId;
+  const postOwnerId = userData.id; // The profile owner's ID
+  const uniquePostKey = `${postOwnerId}:${postId}`; // combine for uniqueness
 
-        const postId = parseInt(btn.closest('.post-item').getAttribute('key'), 10);
-        const countEl = btn.querySelector("span");
-        let count = parseInt(countEl.textContent);
+  const isLiked = currentUser.likedPosts.includes(uniquePostKey);
 
-        // Toggle liked state
-        const isLiked = btn.classList.toggle("liked");
-        if (isLiked) {
-          count++;
-          if (!currentUser.likedPosts) currentUser.likedPosts = [];
-          if (!currentUser.likedPosts.includes(postId)) {
-            currentUser.likedPosts.push(postId);
-          }
-        } else {
-          count--;
-          if (currentUser.likedPosts) {
-            currentUser.likedPosts = currentUser.likedPosts.filter(id => id !== postId);
-          }
-        }
+  if (isLiked) btn.classList.add('liked');
 
-        countEl.textContent = count;
+  btn.addEventListener('click', () => {
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+      showNotice("Please log in to like posts");
+      return;
+    }
 
-        // Update posts in localStorage
-        const posts = JSON.parse(localStorage.getItem("posts") || "[]");
-        const postIndex = posts.findIndex(p => p.id === postId);
-        if (postIndex !== -1) {
-          posts[postIndex].likes = count;
-          localStorage.setItem("posts", JSON.stringify(posts));
-        }
+    currentUser.likedPosts = currentUser.likedPosts || [];
+    const postOwnerId = userData.id;
+    const uniquePostKey = `${postOwnerId}:${postId}`;
 
-        // Save user
-        updateUser(currentUser);
-      });
-    });
+    const index = currentUser.likedPosts.indexOf(uniquePostKey);
+    if (index > -1) {
+      // Unlike
+      currentUser.likedPosts.splice(index, 1);
+      btn.classList.remove('liked');
+    } else {
+      // Like
+      currentUser.likedPosts.push(uniquePostKey);
+      btn.classList.add('liked');
+    }
+
+    updateUser(currentUser);
+    createIcons({ icons }); // Refresh lucide icons
+  });
+});
+
+
+
 
 
     // Add event listener for Add Story button
@@ -322,7 +334,28 @@ export function renderProfile(container, person) {
     // Add event listener for Add Friend button
     const addFriendBtn = container.querySelector("#add-friend-btn");
     if (addFriendBtn) {
-      addFriendBtn.addEventListener("click", () => showNotice("Add friend clicked!"));
+      addFriendBtn.addEventListener("click", () => {
+        const isPending = addFriendBtn.classList.contains("pending");
+        const icon = addFriendBtn.querySelector("i");
+        const text = addFriendBtn.querySelector("span");
+
+        if (isPending) {
+          // Currently in "Cancel" state, switch back to "Add Friend"
+          addFriendBtn.classList.remove("pending");
+          addFriendBtn.classList.add("primary");
+          icon.setAttribute("data-lucide", "user-plus");
+          text.textContent = "Add Friend";
+          showNotice("Friend request canceled.");
+        } else {
+          // Currently in "Add Friend" state, switch to "Cancel"
+          addFriendBtn.classList.add("pending");
+          addFriendBtn.classList.remove("primary");
+          icon.setAttribute("data-lucide", "user-x");
+          text.textContent = "Cancel";
+          showNotice("Friend request sent!");
+        }
+        createIcons({ icons }); // Re-render the icon
+      });
     }
     // Add event listener for Message button
     const messageBtn = container.querySelector("#message-btn");
