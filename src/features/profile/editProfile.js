@@ -8,14 +8,21 @@ import "./editProfile.css";
 
 export function renderEditProfile(container, userData, onCancel) {
   container.innerHTML = `
-    <div class="edit-profile-wrapper">
-      <div class="edit-profile-header">
-        <button class="back-btn" id="back-btn">
-          <i data-lucide="arrow-left"></i>
-        </button>
-        <h1>Edit Profile</h1>
+  <div class="edit-profile-wrapper">
+    <div class="edit-profile-header">
+      <div id="global-nav-bar">
+        <div class="back-button-wrapper">
+          <button class="back-button" id="back-btn">
+            <i data-lucide="arrow-left"></i>
+            <span>Edit Profile</span>
+          </button>
+        </div>
       </div>
+    </div>
 
+    <h1>Edit Profile</h1>
+
+    <div class="edit-profile-center">
       <form class="edit-profile-form" id="edit-profile-form">
         <div class="form-group">
           <label for="bio">Bio</label>
@@ -35,7 +42,9 @@ export function renderEditProfile(container, userData, onCancel) {
         </div>
       </form>
     </div>
-  `;
+  </div>
+`;
+
 
   // === Back button action ===
   container.querySelector("#back-btn").addEventListener("click", onCancel);
