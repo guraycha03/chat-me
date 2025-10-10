@@ -11,7 +11,8 @@ export function renderProfile(container, person) {
   let posts = [];
 
   const globalNavBarEl = document.getElementById("global-nav-bar");
-  if (!person) {
+  const currentUser = getCurrentUser();
+  if (!person || person.id === currentUser?.id) {
     // For current user profile
     userData = getCurrentUser();
     if (!userData) {
@@ -28,6 +29,7 @@ export function renderProfile(container, person) {
     posts = JSON.parse(localStorage.getItem("posts") || "[]");
   } else {
     // For other people's profiles
+    userData = person;
     userData.avatar = userData.avatar || '/assets/images/profile-placeholder.png';
     posts = userData.posts || [];
   }
@@ -48,6 +50,7 @@ export function renderProfile(container, person) {
   let isEditing = false;
 
   function renderView() {
+    const currentUser = getCurrentUser();
     console.log("Profile avatar URL:", userData.avatar);
     console.log("Full userData:", userData);
     container.innerHTML = `
@@ -167,7 +170,7 @@ export function renderProfile(container, person) {
                         <!-- ✅ Add this new section -->
                         <!-- ✅ Enhanced post action bar -->
                         <div class="post-actions">
-                          <div class="action-item like-action">
+                          <div class="action-item like-action ${currentUser && currentUser.likedPosts && currentUser.likedPosts.includes(post.id) ? 'liked' : ''}">
                             <div class="icon-box"><i data-lucide="heart"></i></div>
                             <span>${post.likes || 0}</span>
                           </div>
@@ -230,27 +233,44 @@ export function renderProfile(container, person) {
     const likeButtons = container.querySelectorAll(".like-action");
     likeButtons.forEach(btn => {
       btn.addEventListener("click", () => {
+
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+          showNotice("Please log in to like posts");
+          return;
+        }
+
+        const postId = parseInt(btn.closest('.post-item').getAttribute('key'), 10);
         const countEl = btn.querySelector("span");
         let count = parseInt(countEl.textContent);
 
         // Toggle liked state
         const isLiked = btn.classList.toggle("liked");
-        if (isLiked) count++;
-        else count--;
+        if (isLiked) {
+          count++;
+          if (!currentUser.likedPosts) currentUser.likedPosts = [];
+          if (!currentUser.likedPosts.includes(postId)) {
+            currentUser.likedPosts.push(postId);
+          }
+        } else {
+          count--;
+          if (currentUser.likedPosts) {
+            currentUser.likedPosts = currentUser.likedPosts.filter(id => id !== postId);
+          }
+        }
 
         countEl.textContent = count;
 
-        // Apply color to the SVG without re-rendering all icons
-        const svg = btn.querySelector("svg");
-        if (svg) {
-          if (isLiked) {
-            svg.style.stroke = "#e74c3c";
-            svg.style.fill = "#e74c3c";
-          } else {
-            svg.style.stroke = "#888";
-            svg.style.fill = "none";
-          }
+        // Update posts in localStorage
+        const posts = JSON.parse(localStorage.getItem("posts") || "[]");
+        const postIndex = posts.findIndex(p => p.id === postId);
+        if (postIndex !== -1) {
+          posts[postIndex].likes = count;
+          localStorage.setItem("posts", JSON.stringify(posts));
         }
+
+        // Save user
+        updateUser(currentUser);
       });
     });
 
@@ -437,7 +457,7 @@ export function renderProfile(container, person) {
 
   // Listen for user data updates and re-render if it's the current user's profile
   const handleUserDataUpdate = (e) => {
-    if (!person) { // Only for own profile
+    if (!person || person.id == getCurrentUser()?.id) { // Only for own profile
       userData = getCurrentUser();
       renderView();
     }
