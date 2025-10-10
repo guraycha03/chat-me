@@ -1,9 +1,9 @@
 // src/features/home/home.view.js
-import { renderPosts } from "../components/renderPosts.js";
-import { mockFriends } from "../../data/friends.mock.js";
 import { getCurrentUser } from "../../utils/storage.js";
 import { createIcons, icons } from "lucide";
 import "../layout/home.css";
+import { createPostElement } from "../components/postComponent.js"; // reusable post component
+import { mockFriends } from "../../data/friends.mock.js";
 
 export function renderHome(container) {
   const currentUser = getCurrentUser();
@@ -16,15 +16,15 @@ export function renderHome(container) {
   const storedPosts = JSON.parse(localStorage.getItem("posts") || "[]");
   const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
 
-  // 🔹 Combine mock friends and stored users into a single map
+  // 🔹 Combine mock friends and stored users into a map
   const usersMap = {};
   [...storedUsers, ...mockFriends].forEach(u => (usersMap[u.id] = u));
 
-  // 🔹 Gather posts from mock friends too
+  // 🔹 Gather posts from mock friends
   const friendPosts = mockFriends.flatMap(friend =>
     (friend.posts || []).map(p => ({
       ...p,
-      userId: friend.id, // tag friend to post
+      userId: friend.id,
     }))
   );
 
@@ -41,7 +41,7 @@ export function renderHome(container) {
     friend => friend.stories && friend.stories.length > 0
   );
 
-  // 🔹 Generate story HTML
+  // 🔹 Generate stories HTML
   const storiesHTML = friendsWithStories
     .map(friend => {
       const nameParts = friend.name.trim().split(" ");
@@ -59,16 +59,14 @@ export function renderHome(container) {
     })
     .join("");
 
-  // 🔹 Render structure: Stories + Feed container
+  // 🔹 Render homepage structure
   container.innerHTML = `
     <div class="home-wrapper">
       <section class="stories-section">
         <h3>Stories</h3>
         <div class="stories-container">
           <div class="story-card create-story-card" id="create-story">
-            <img src="${
-              currentUser.avatar || "/assets/images/profile-placeholder.png"
-            }" alt="Your Story" class="create-story-avatar">
+            <img src="${currentUser.avatar || "/assets/images/profile-placeholder.png"}" alt="Your Story" class="create-story-avatar">
             <div class="plus-icon">
               <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
             </div>
@@ -78,7 +76,7 @@ export function renderHome(container) {
         </div>
       </section>
 
-      <!-- ✅ Posts Feed -->
+      <!-- Posts Feed -->
       <section id="feed-section" class="feed-section"></section>
     </div>
   `;
@@ -86,9 +84,27 @@ export function renderHome(container) {
   // 🔹 Initialize icons
   createIcons({ icons });
 
-  // 🔹 Render posts below stories using same layout as profile
+  // 🔹 Render posts using shared post component
   const feedContainer = container.querySelector("#feed-section");
-  if (feedContainer) {
-    renderPosts(feedContainer, sortedPosts, usersMap);
+  feedContainer.innerHTML = ""; // clear previous content if any
+  sortedPosts.forEach(post => {
+    const userData = usersMap[post.userId] || { name: "Unknown", avatar: "/assets/images/profile-placeholder.png" };
+    const postEl = createPostElement(post, userData);
+    feedContainer.appendChild(postEl);
+  });
+
+  // 🔹 Auto-sync likes across homepage if liked from profile page or anywhere
+  window.addEventListener("postLikeUpdated", (e) => {
+    const { postId, likes } = e.detail;
+    feedContainer.querySelectorAll(`.post-item[data-post-id="${postId}"] .like-count`)
+      .forEach(el => el.textContent = likes);
+  });
+
+  // 🔹 Add "Create Story" button click (placeholder)
+  const createStoryBtn = container.querySelector("#create-story");
+  if (createStoryBtn) {
+    createStoryBtn.addEventListener("click", () => {
+      alert("Create Story clicked!");
+    });
   }
 }

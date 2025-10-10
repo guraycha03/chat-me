@@ -39,20 +39,7 @@ export const mockFriends = [
         comments: 14,
         shares: 3,
       },
-      {
-
-        id: "p2",
-        type: "image",
-        description: "nakasalubong kong mga pusa sa daan ",
-        images: [
-          "/assets/images/posts/niko-cat-post-1.png",
-          "/assets/images/posts/niko-cat-post-2.png"
-        ],
-        date: "2025-10-01",
-        likes: 120,
-        comments: 14,
-        shares: 3,
-      }
+   
       
     ],
   },
@@ -232,7 +219,6 @@ export const mockFriends = [
         id: "p1",
         type: "text",
         text: "less is more.",
-        description: "clean lines. no clutter.",
         date: "2025-09-27",
         likes: 140,
         comments: 11,
@@ -365,5 +351,57 @@ export const mockFriends = [
         shares: 1,
       },
     ],
+  },
+
+  {
+    id: "u13",
+    name: "Seraphina",
+    avatar: "/assets/images/users/seraphina.png",
+    bio: " . . .",
+    online: true,
+    birthday: "2001-07-09",
+    followers: 402510,
+    following: 16,
+    interests: ["journaling", "tea lover", "poetry", "writing", "self-care"],
+    stories: [
+      "/assets/images/stories/seraphina-story-1.png",
+     
+    ],
+    posts: [
+      {
+        id: "p1",
+        type: "image",
+        description: "when your food looks as good as it tastes",
+        image: "/assets/images/posts/seraphina-post-1.jpg",
+        date: "2025-10-03",
+        likes: 420,
+        comments: 25,
+        shares: 12,
+      },
+    
+  
+      {
+        id: "p2",
+        type: "image",
+        description: "Set yourself free from the chains of doubt and fear, and embrace the love that has always been within you. When you love yourself, the world around you begins to shine differently.",
+        image: "/assets/images/posts/seraphina-post-2.jpg",
+        date: "2025-10-03",
+        likes: 420,
+        comments: 25,
+        shares: 8,
+      },
+      {
+        id: "p1",
+        type: "text",
+        text: "Set yourself free from the chains of doubt and fear, and embrace the love that has always been within you. When you love yourself, the world around you begins to shine differently.",
+        date: "2025-09-27",
+        likes: 140,
+        comments: 11,
+        shares: 1,
+      },
+    ],
   }
+
+
 ];
+

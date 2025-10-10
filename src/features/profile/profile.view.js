@@ -3,6 +3,8 @@ import { updateUser, getCurrentUser } from "../../utils/storage.js";
 import { createElement } from "../../utils/DOM.js";
 import { createIcons, icons } from "lucide";
 import { showNotice } from "../../utils/notification.js";
+import { createPostElement } from "../components/postComponent.js";
+
 import { renderInterestBadges } from "../components/interestBadge.js";
 import "./profile.css";
 
@@ -34,8 +36,12 @@ posts = allPosts.filter(p => p.userId === userData.id);
     // For other people's profiles
     userData = person;
     userData.avatar = userData.avatar || '/assets/images/profile-placeholder.png';
-    posts = userData.posts || [];
+
+    // Get posts of this user from localStorage
+    const allPosts = JSON.parse(localStorage.getItem("posts") || "[]");
+    posts = allPosts.filter(p => p.userId === userData.id);
   }
+
 
   const postsCount = posts.length;
   const followersCount = userData.followers || 0;
@@ -110,110 +116,21 @@ posts = allPosts.filter(p => p.userId === userData.id);
           <section class="profile-posts">
             <h3>Posts</h3>
 
-            <div class="posts-list">
-              ${posts.length > 0
-                ? posts.map(post => {
-                    const postDate = post.date
-                      ? (() => {
-                          const dateObj = new Date(post.date);
-                          const months = [
-                            "Jan", "Feb", "Mar", "Apr", "May", "June",
-                            "July", "Aug", "Sept", "Oct", "Nov", "Dec"
-                          ];
-                          return `${months[dateObj.getMonth()]} ${dateObj.getDate()}`;
-                        })()
-                      : "Unknown";
-
-                    // Light muted background colors
-                    // Light muted background palette
-                    const lightMutedColors = [
-                      "#dee3eeff", "#e8dcecff", "#e9ecddff", "#f8e7e0ffff", "#f4f2f7",
-                      "#dee9e6ff", "#ece5dbff", "#f3f6f2", "#e8f4f5ff", "#f5eedbff"
-                    ];
-                    const randomBg = lightMutedColors[Math.floor(Math.random() * lightMutedColors.length)];
-
-
-
-
-                    return `
-                      <div class="post-item" key="${post.id}">
-                        <div class="post-header">
-                          <img src="${userData.avatar}" alt="${userData.name} avatar" class="post-avatar" onerror="this.src='/assets/images/profile-placeholder.png'" />
-                          <div class="post-user-info">
-                            <span class="post-username">${userData.name || `${userData.firstName || ""} ${userData.lastName || ""}`}</span>
-                            <span class="post-date">${postDate}</span>
-                          </div>
-                        </div>
-
-
-                        <div class="post-body">
-                          ${post.images && post.images.length > 1
-                            ? `
-                                ${post.description ? `<p class="post-caption">${post.description}</p>` : ""}
-                                <div class="post-carousel" data-post-id="${post.id}">
-                                  ${post.images
-                                    .map(
-                                      (img) => `
-                                        <div class="carousel-slide">
-                                          <img src="${img}" alt="Post image" class="post-media" />
-                                        </div>
-                                      `
-                                    )
-                                    .join("")}
-                                </div>
-                                <div class="carousel-dots" id="dots-${post.id}">
-                                  ${post.images.map((_, i) => `<span class="dot ${i === 0 ? "active" : ""}"></span>`).join("")}
-                                </div>
-                              `
-
-
-
-                            : post.image
-                              ? `
-                                ${post.description ? `<p class="post-caption">${post.description}</p>` : ""}
-                                <div class="post-media-wrapper">
-                                  <img src="${post.image}" alt="Post image" class="post-media" />
-                                </div>
-                              `
-                            : post.text
-                              ? `
-                                <div class="text-post-card" style="background:${randomBg};">
-                                  <p class="text-content">${post.text}</p>
-                                </div>
-                              `
-                              : ""
-
-
-                          }
-
-                        </div>
-
-                         <!-- ❤️ Like button -->
-                        <div class="post-actions">
-                          <button class="action-item like-btn" data-post-id="${post.id}">
-                            <div class="icon-box">
-                              <i data-lucide="heart"></i>
-                            </div>
-                            <span class="like-count">${post.likes || 0}</span>
-                          </button>
-                        </div>
-
-
-
-                      </div>
-                       
-                    `;
-
-                  }).join("")
-                : "<p>No posts available.</p>"}
-            </div>
-
-
+            <div class="posts-list"></div>
 
           </section>
         </main>
       </div>
     `;
+
+    // Render posts dynamically using reusable post component
+    const postsListContainer = container.querySelector(".posts-list");
+    postsListContainer.innerHTML = ""; // Clear any previous posts
+    posts.forEach(post => {
+      const postEl = createPostElement(post, userData, container); // pass container here
+      postsListContainer.appendChild(postEl);
+    });
+
 
     // Set dynamic cover background
     const coverPhoto = container.querySelector(".cover-photo");
@@ -224,91 +141,6 @@ posts = allPosts.filter(p => p.userId === userData.id);
 
     // Initialize lucide icons for the new buttons
     createIcons({ icons });
-
-    // 🟣 Carousel scroll detection for dot indicators
-    const carousels = container.querySelectorAll(".post-carousel");
-    carousels.forEach((carousel) => {
-      const dots = carousel.nextElementSibling?.querySelectorAll(".dot");
-      if (!dots) return;
-
-      carousel.addEventListener("scroll", () => {
-        const scrollLeft = carousel.scrollLeft;
-        const slideWidth = carousel.clientWidth;
-        const currentIndex = Math.round(scrollLeft / slideWidth);
-
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === currentIndex);
-        });
-      });
-    });
-
-    // ❤️ Like Button Logic with Local Storage Persistence
-const likeBtns = container.querySelectorAll('.like-btn');
-likeBtns.forEach(btn => {
-  const currentUser = getCurrentUser();
-  if (!currentUser) return;
-
-  currentUser.likedPosts = currentUser.likedPosts || [];
-
-  const postId = btn.dataset.postId;
-  const postOwnerId = userData.id;
-  const uniquePostKey = `${postOwnerId}:${postId}`;
-  const post = posts.find(p => p.id === postId);
-
-  const likeCountEl = btn.querySelector('.like-count');
-  let likeCount = post.likes || 0;
-
-  const isLiked = currentUser.likedPosts.includes(uniquePostKey);
-  if (isLiked) btn.classList.add('liked');
-
-  // Initial count render
-  likeCountEl.textContent = likeCount;
-
-  btn.addEventListener('click', () => {
-    const currentUser = getCurrentUser();
-    if (!currentUser) {
-      showNotice("Please log in to like posts");
-      return;
-    }
-
-    currentUser.likedPosts = currentUser.likedPosts || [];
-    const index = currentUser.likedPosts.indexOf(uniquePostKey);
-
-    if (index > -1) {
-      // Unlike
-      currentUser.likedPosts.splice(index, 1);
-      btn.classList.remove('liked');
-      likeCount = Math.max(0, likeCount - 1);
-    } else {
-      // Like
-      currentUser.likedPosts.push(uniquePostKey);
-      btn.classList.add('liked');
-      likeCount++;
-    }
-
-    // Update count visually and in data
-    likeCountEl.textContent = likeCount;
-    post.likes = likeCount;
-
-    // Persist changes
-    updateUser(currentUser);
-
-    // Update posts in localStorage (for own profile)
-    const allPosts = JSON.parse(localStorage.getItem("posts") || "[]");
-    const postIndex = allPosts.findIndex(p => p.id === post.id && p.userId === userData.id);
-    if (postIndex > -1) {
-      allPosts[postIndex].likes = likeCount;
-      localStorage.setItem("posts", JSON.stringify(allPosts));
-    }
-
-    createIcons({ icons });
-  });
-});
-
-
-
-
-
 
     // Add event listener for Add Story button
     const addStoryBtn = container.querySelector("#add-story-btn");
