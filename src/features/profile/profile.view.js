@@ -47,7 +47,10 @@ export function renderProfile(container, person) {
             <div><strong>${formatNumber(userData.following || 0)}</strong> Following</div>
           </div>
           <p class="profile-bio">${userData.bio}</p>
-          <p>${renderInterestBadges(userData.interests)}</p>
+          <div class="interests-badges-container">
+            ${renderInterestBadges(userData.interests)}
+          </div>
+
 
           <div class="profile-actions-container">
             ${userData.id === getCurrentUser()?.id
@@ -76,4 +79,5 @@ export function renderProfile(container, person) {
   }
 
   renderView();
+  window.scrollTo(0, 0);
 }

@@ -26,8 +26,20 @@
 
 ## Steps:
 
-- [ ] Update `src/features/profile/profile.view.js` to scroll to the top of the page when rendering the profile (after `renderView()`).
+- [x] Update `src/features/profile/profile.view.js` to scroll to the top of the page when rendering the profile (after `renderView()`).
 
 - [ ] After edit, update this TODO.md to mark the step as completed.
 
 - [ ] Followup: Test the navigation from post avatar click to ensure it navigates to profile and scrolls to the top (profile header visible).
+
+# TODO for Improving Edit Profile Page Layout and Design
+
+## Steps:
+
+- [x] Update `src/features/edit-profile/edit-profile.view.js` to organize into sections (Profile Picture, Personal Information, Interests), add avatar change, and include editable name fields.
+
+- [x] Update `src/features/edit-profile/edit-profile.css` to use CSS variables, add section dividers/icons, improve spacing/animations, and enhance modern clean design.
+
+- [x] After edits, update this TODO.md to mark the steps as completed.
+
+- [ ] Followup: Test the edit profile page for organization, functionality (saving changes), responsiveness, and modern design.

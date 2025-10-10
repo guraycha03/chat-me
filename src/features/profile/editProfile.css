@@ -1,0 +1,231 @@
+/* =======================
+   Edit Profile - Soft Modern UI
+   ======================= */
+
+   .edit-profile-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 20px 120px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header aligns back button and title horizontally */
+.edit-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.edit-profile-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+/* ✅ Reuse your existing back button styling */
+.back-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.back-btn i {
+  margin-right: 8px;
+}
+
+
+
+.edit-profile-inline {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.edit-profile-form {
+  background: var(--color-card-bg, #fafafa);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #444);
+}
+
+textarea {
+  resize: none;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  background-color: var(--color-input-bg, #fff);
+  color: var(--color-text-primary, #333);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea:focus {
+  border-color: #b7b7ff;
+  box-shadow: 0 0 0 3px rgba(183, 183, 255, 0.2);
+  outline: none;
+}
+
+/* Interest Section */
+.interest-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.interest-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #222);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#interest-search-input {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: var(--color-input-bg, #fff);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#interest-search-input:focus {
+  border-color: #b7b7ff;
+  box-shadow: 0 0 0 3px rgba(183, 183, 255, 0.2);
+  outline: none;
+}
+
+/* Suggestions */
+#interest-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.suggestion-item {
+  background: #f6f6f9;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+  background: #ebebf5;
+}
+
+/* Interest Badges */
+#interests-badges-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.interest-badge {
+  background: #f1f1f8;
+  color: #333;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: default;
+  transition: background 0.2s;
+}
+
+.interest-badge.selected {
+  background: #dcdcff;
+  color: #333;
+  cursor: pointer;
+}
+
+.interest-badge.selected:hover {
+  background: #c9c9ff;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#cancel-btn {
+  background-color: #f2f2f2;
+  color: #444;
+}
+
+#cancel-btn:hover {
+  background-color: #e1e1e1;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #7b7bff;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+  background-color: #6a6aff;
+}
+
+.form-actions button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .edit-profile-form {
+    padding: 1.5rem;
+  }
+  .form-actions {
+    flex-direction: column;
+  }
+  .form-actions button {
+    width: 100%;
+  }
+}
+
