@@ -167,17 +167,19 @@ export function renderProfile(container, person) {
 
                         <!-- ✅ Add this new section -->
                         <!-- ✅ Enhanced post action bar -->
-                        <div class="action-item like-action">
-                          <div class="icon-box"><i data-lucide="heart"></i></div>
-                          <span>${post.likes || 0}</span>
-                        </div>
-                        <div class="action-item">
-                          <div class="icon-box"><i data-lucide="message-circle"></i></div>
-                          <span>${post.comments || 0}</span>
-                        </div>
-                        <div class="action-item">
-                          <div class="icon-box"><i data-lucide="forward"></i></div>
-                          <span>${post.shares || 0}</span>
+                        <div class="post-actions">
+                          <div class="action-item like-action">
+                            <div class="icon-box"><i data-lucide="heart"></i></div>
+                            <span>${post.likes || 0}</span>
+                          </div>
+                          <div class="action-item">
+                            <div class="icon-box"><i data-lucide="message-circle"></i></div>
+                            <span>${post.comments || 0}</span>
+                          </div>
+                          <div class="action-item">
+                            <div class="icon-box"><i data-lucide="forward"></i></div>
+                            <span>${post.shares || 0}</span>
+                          </div>
                         </div>
 
 
