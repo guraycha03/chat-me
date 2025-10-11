@@ -12,6 +12,7 @@ import { createIcons, icons } from "lucide";
 import { currentActive, navigate } from "./utils/navigationState.js";
 import { createBackButton, removeBackButton } from "./features/components/backButton.js";
 import { mockFriends } from "./data/friends.mock.js";
+import { getCurrentUser } from "./utils/storage.js"; 
 
 
 export function initApp(container) {
@@ -25,7 +26,9 @@ export function initApp(container) {
             <h1 class="logo-text">Chat Me</h1>
           </div>
           <div class="header-actions">
-            <button class="header-search-btn" id="header-search-btn" title="Search"><i data-lucide="search"></i></button>
+            <button class="header-search-btn" id="header-search-btn" title="Search">
+              <i data-lucide="search"></i>
+            </button>
             <img class="burger-menu" id="burger-menu" src="/assets/images/profile-placeholder.png" alt="Profile" />
           </div>
         </header>
@@ -63,6 +66,26 @@ export function initApp(container) {
       removeBackButton(globalNavBarEl);
     }
   }
+
+  // 🟢 After rendering HTML:
+  const burgerMenu = document.getElementById("burger-menu");
+  const currentUser = getCurrentUser();
+
+  // Set avatar initially
+  if (burgerMenu && currentUser?.avatar) {
+    burgerMenu.src = currentUser.avatar;
+  }
+
+ window.addEventListener("userDataUpdated", () => {
+  if (!burgerMenu) return;
+  burgerMenu.classList.add("updating");
+  const updatedUser = getCurrentUser();
+  setTimeout(() => {
+    burgerMenu.src = updatedUser?.avatar || "/assets/images/profile-placeholder.png";
+    burgerMenu.classList.remove("updating");
+  }, 200);
+});
+
 
   // Listen for explicit back button management requests from components
   window.addEventListener('manageBackButton', (e) => {

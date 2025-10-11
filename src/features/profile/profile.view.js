@@ -1,9 +1,10 @@
-import { getCurrentUser } from "../../utils/storage.js";
+import { getCurrentUser, updateUser } from "../../utils/storage.js";
 import { createIcons, icons } from "lucide";
 import { renderInterestBadges } from "../components/interestBadge.js";
 import { createPostElement } from "../components/postComponent.js";
 import { renderEditProfile } from "./editProfile.js";
 import { navigate } from "../../utils/navigationState.js";
+import { showNotice } from "../../utils/notification.js";
 import "./profile.css";
 
 export function renderProfile(container, person) {
@@ -114,6 +115,33 @@ export function renderProfile(container, person) {
         } else {
           navigate('friends');
         }
+      });
+    }
+
+    // Change avatar button
+    const changeAvatarBtn = container.querySelector("#change-avatar-btn");
+    if (changeAvatarBtn) {
+      changeAvatarBtn.addEventListener("click", () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.style.display = "none";
+        document.body.appendChild(input);
+        input.click();
+        input.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              userData.avatar = event.target.result;
+              updateUser(userData);
+              showNotice("Profile picture updated!");
+              renderView();
+            };
+            reader.readAsDataURL(file);
+          }
+          document.body.removeChild(input);
+        });
       });
     }
   }
