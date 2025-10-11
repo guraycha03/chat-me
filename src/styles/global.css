@@ -415,6 +415,13 @@ img {
     flex: 0 0 20%;
   }
 
+  @media (min-width: 1200px) {
+  #sidebar .collapse-btn {
+    display: none !important;
+  }
+}
+
+
   .content-wrapper {
     display: flex;
     flex-direction: row;
@@ -468,22 +475,42 @@ img {
    ====================== */
 .floating-create-btn {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 30px;
+  right: calc(20% + 30px); /* 👈 Moves it left of the sidebar on wide screens */
+  z-index: 900;
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-button-text);
+  border: none;
   border-radius: 50%;
   width: 52px;
   height: 52px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease;
-  z-index: 1000;
   cursor: pointer;
-  border: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
+
+.floating-create-btn:hover {
+  background: var(--button-hover);
+  transform: scale(1.05);
+}
+
+/* ✅ Adjust for slightly smaller desktop (900–1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .floating-create-btn {
+    right: calc(35% + 20px); /* Sidebar is wider here */
+  }
+}
+
+/* ✅ On mobile (<900px), hide this button */
+@media (max-width: 899px) {
+  .floating-create-btn {
+    display: none;
+  }
+}
+
 
 .floating-create-btn svg {
   width: 26px;
@@ -493,10 +520,6 @@ img {
   transition: transform 0.25s ease;
 }
 
-.floating-create-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-}
 
 .floating-create-btn:hover svg {
   transform: rotate(90deg);
@@ -909,65 +932,6 @@ button.primary:hover {
 
 
 
-
-/* =======================
-   Feed Post Styles
-   ======================= */
-.post-card {
-  background: var(--color-card-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  padding: 20px;
-  margin-bottom: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.post-author {
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: var(--color-text-primary);
-}
-
-.post-text {
-  font-size: 16px;
-  margin-bottom: 12px;
-  white-space: pre-wrap;
-  color: var(--color-text-primary);
-}
-
-.text-post .post-text {
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.post-meta {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  text-align: left;
-  margin-top: 8px;
-}
-
-/* Image post specific styles */
-.post-image {
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.post-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  user-select: none;
-  -webkit-user-select: none;
-  pointer-events: none;
-}
 
 
 

@@ -107,4 +107,32 @@ export function renderHome(container) {
       alert("Create Story clicked!");
     });
   }
+
+  // 🔹 Add floating create button (desktop only)
+if (window.innerWidth >= 900) {
+  const existingFab = document.querySelector(".floating-create-btn");
+  if (!existingFab) {
+    const fab = document.createElement("button");
+    fab.className = "floating-create-btn";
+    fab.innerHTML = `<i data-lucide="plus"></i>`;
+    document.body.appendChild(fab);
+
+    createIcons({ icons });
+
+    fab.addEventListener("click", () => {
+      alert("Create Post clicked!");
+      // you can replace this alert with your create post modal or redirect
+    });
+  }
+}
+
+// 🔹 Remove floating button when leaving Home page
+window.addEventListener("navigate", (e) => {
+  if (e.detail.page !== "home") {
+    const fab = document.querySelector(".floating-create-btn");
+    if (fab) fab.remove();
+  }
+});
+
+
 }

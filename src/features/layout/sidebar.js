@@ -122,26 +122,35 @@ export function createSidebar(container, pageContentEl, renderers) {
 
       container.style.right = "0";
 
-      collapseBtn.style.display = "flex";
-      collapseBtn.onclick = () => {
-        isCollapsed = !isCollapsed;
+      if (screenWidth >= 1200) {
+        // Wide screen: Hide collapse button, always open
+        collapseBtn.style.display = "none";
+        container.classList.remove("collapsed");
+        isCollapsed = false;
+      } else {
+        // Medium desktop: Show collapse button
+        collapseBtn.style.display = "flex";
+        collapseBtn.onclick = () => {
+          isCollapsed = !isCollapsed;
+          if (isCollapsed) {
+            container.classList.add("collapsed");
+            collapseBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
+          } else {
+            container.classList.remove("collapsed");
+            collapseBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
+          }
+          createIcons({ icons, attrs: { 'stroke-width': 2 } });
+        };
+
         if (isCollapsed) {
           container.classList.add("collapsed");
-          collapseBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
         } else {
           container.classList.remove("collapsed");
-          collapseBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
         }
-        createIcons({ icons, attrs: { 'stroke-width': 2 } });
-      };
+      }
+
       container.style.right = "0";
       container.classList.remove("open");
-
-      if (isCollapsed) {
-        container.classList.add("collapsed");
-      } else {
-        container.classList.remove("collapsed");
-      }
 
       createIcons({ icons, attrs: { 'stroke-width': 2 } });
 
