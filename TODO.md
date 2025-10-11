@@ -1,1 +1,1 @@
-- [ ] Edit src/features/components/postComponent.js to add click event to .post-username for navigation to profile
+- [x] Update responsive CSS in src/features/layout/home.css for create-story-card to fix layout on small screens
