@@ -95,6 +95,19 @@ export function createPostElement(post, userData, profileContainer) {
     }
   });
 
+  // --- Username click logic: go to user profile ---
+  const usernameEl = postEl.querySelector(".post-username");
+  usernameEl.style.cursor = "pointer";
+  usernameEl.addEventListener("click", () => {
+    const userId = userData.id;
+    if (userId) {
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'profile', userId } }));
+    } else {
+      // Fallback to current user's profile if no id
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'profile' } }));
+    }
+  });
+
   // --- Like button logic ---
   const likeBtn = postEl.querySelector(".like-btn");
   const likeCountEl = likeBtn.querySelector(".like-count");

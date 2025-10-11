@@ -1,3 +1,1 @@
-- [x] Import updateUser and showNotice in src/features/profile/profile.view.js
-- [x] Add event listener for #change-avatar-btn to handle image upload
-- [ ] Test the upload functionality by running the app and verifying profile image update
+- [ ] Edit src/features/components/postComponent.js to add click event to .post-username for navigation to profile

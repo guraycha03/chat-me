@@ -314,7 +314,7 @@ export const mockFriends = [
   {
     id: "u12",
     name: "Mira Santos",
-    avatar: "/assets/images/users/profile-14.png",
+    avatar: "/assets/images/users/mira.jpeg",
     bio: "plant mom & cozy corner enthusiast 🌿☕",
     online: true,
     birthday: "2002-02-17",
@@ -332,8 +332,9 @@ export const mockFriends = [
         type: "image",
         description: "repotted my monstera today 🪴💚",
         images: [
-          "/assets/images/posts/mira-plants-1.png",
-          "/assets/images/posts/mira-plants-2.png"
+          "/assets/images/posts/mira-plants-1.jpg",
+          "/assets/images/posts/mira-plants-2.jpg",
+          "/assets/images/posts/mira-plants-3.jpg"
         ],
         date: "2025-10-03",
         likes: 175,
@@ -344,7 +345,6 @@ export const mockFriends = [
         id: "p2",
         type: "text",
         text: "slow mornings and soft music are healing.",
-        description: "peaceful day",
         date: "2025-10-04",
         likes: 132,
         comments: 8,
