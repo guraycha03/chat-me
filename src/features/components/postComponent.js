@@ -10,6 +10,13 @@ import { createIcons, icons } from "lucide";
  * @param {HTMLElement} profileContainer - Container to render profiles
  * @returns {HTMLElement} Post element
  */
+
+function formatCount(num) {
+  if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+  return num.toString();
+}
+
 export function createPostElement(post, userData, profileContainer) {
   const postEl = document.createElement("div");
   postEl.className = "post-item";
@@ -61,15 +68,16 @@ export function createPostElement(post, userData, profileContainer) {
     <div class="post-actions">
         <button class="action-item like-btn" data-post-id="${post.id}">
             <div class="icon-box"><i data-lucide="heart"></i></div>
-            <span class="like-count">${post.likes || 0}</span>
+            <span class="like-count">${formatCount(post.likes || 0)}</span>
+
         </button>
         <button class="action-item comment-btn" data-post-id="${post.id}">
             <div class="icon-box"><i data-lucide="message-circle"></i></div>
-            <span class="comment-count">${post.comments || 0}</span>
+            <span class="comment-count">${formatCount(post.comments || 0)}</span>
         </button>
         <button class="action-item share-btn" data-post-id="${post.id}">
             <div class="icon-box"><i data-lucide="share-2"></i></div>
-            <span class="share-count">${post.shares || 0}</span>
+            <span class="share-count">${formatCount(post.shares || 0)}</span>
         </button>
     </div>
   `;
@@ -119,7 +127,8 @@ export function createPostElement(post, userData, profileContainer) {
         likeCount++;
       }
 
-      likeCountEl.textContent = likeCount;
+      likeCountEl.textContent = formatCount(likeCount);
+
       post.likes = likeCount;
       updateUser(currentUser);
 

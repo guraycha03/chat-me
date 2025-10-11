@@ -1,6 +1,12 @@
 # TODO for Profile Navigation on Post Avatar Click
 
 ## Steps:
+make the backbutton from my own profile page navigate to homepage when clicked
+
+
+and when backbutton on friend's/other user's page is clicked, it will go back to friend page
+
+
 
 - [x] Update the avatar click handler in `src/features/components/postComponent.js`:
   - Remove dependency on `profileContainer`.
@@ -52,6 +58,8 @@
 
 - [x] Update `src/app.js` to not show global back button on profile pages, avoiding duplicate back buttons.
 
+- [x] Update back button click handler in `src/features/profile/profile.view.js` to navigate to home for own profile, to friends for others.
+
 - [x] After edits, update this TODO.md to mark the steps as completed.
 
-- [ ] Followup: Test back button on own profile (shows name), friends profile (shows name, no duplicate).
+- [ ] Followup: Test back button on own profile (shows name, navigates to home), friends profile (shows name, navigates to friends, no duplicate).

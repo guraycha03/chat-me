@@ -26,17 +26,14 @@
   --button-hover: #626d60;   
 }
 
-/* Reset & Base */ 
+/* =======================
+   Reset & Base
+======================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Poppins', 'Inter', sans-serif;
-
-
-
-
-
 }
 
 html, body, #app {
@@ -49,15 +46,12 @@ html, body, #app {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 /* Hide scrollbars */
 html, body, #app, .main-content, .home-wrapper, .messages-wrapper, .people-list {
-  scrollbar-width: none;  
-  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-x: hidden;
 }
 html::-webkit-scrollbar,
@@ -70,19 +64,20 @@ body::-webkit-scrollbar,
   display: none;
 }
 
-/* Images */
+/* Non-draggable images */
 img {
   user-select: none;
-  -webkit-user-select: none;
   -webkit-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
 }
 
-/* Layout */
+/* =======================
+   Layout
+======================= */
 #messages-panel {
-  display: none; 
+  display: none;
 }
 
 .app-wrapper {
@@ -98,11 +93,9 @@ img {
   overflow-x: hidden;
 }
 
-
-
 /* =======================
    Notice / Popups
-   ======================= */
+======================= */
 .notice {
   position: fixed;
   top: 50%;
@@ -121,7 +114,6 @@ img {
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
 .notice.show {
   opacity: 1;
   pointer-events: auto;
@@ -129,13 +121,13 @@ img {
 }
 
 /* =======================
-   Global App Header
-   ======================= */
+   Header
+======================= */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-   padding-left: 0;
+  padding-left: 0;
   padding-right: 20px;
   background: var(--color-card-bg);
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
@@ -147,13 +139,9 @@ img {
 .app-header .logo {
   display: flex;
   align-items: center;
-  font-family: 'Poppins', 'Inter', sans-serif;
   font-weight: 700;
   font-size: 22px;
   color: var(--color-text-primary);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   gap: 8px;
 }
@@ -172,17 +160,12 @@ img {
   width: auto;
   position: relative;
   left: 12px;
-  
 }
 
 .logo-text {
-  font-family: 'Poppins', 'Inter', sans-serif;
   font-weight: 700;
   font-size: 22px;
   color: var(--color-text-primary);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
@@ -195,7 +178,6 @@ img {
   transition: transform 0.2s ease;
   display: none;
 }
-
 .burger-menu:hover {
   background: var(--color-input-focus);
   box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
@@ -221,7 +203,7 @@ img {
 
 /* =======================
    Sidebar
-   ======================= */
+======================= */
 #sidebar {
   position: fixed;
   top: 0;
@@ -238,104 +220,110 @@ img {
   z-index: 1000;
 }
 
-.sidebar .close-arrow-btn {
+.collapse-btn {
+  position: absolute;
+  top: 1rem;
+  left: 10px; /* 👈 moves the button to the right a little bit */
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-divider);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.collapse-btn:hover {
+  background: var(--color-input-focus);
+}
+
+#sidebar.collapsed .collapse-btn i {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.collapse-btn i {
+  transition: transform 0.3s ease;
+}
+
+.close-arrow-btn {
+  display: none;
   position: absolute;
   top: 1rem;
   left: 1rem;
-  font-size: 20px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-divider);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  background: none;
-  border: none;
-  color: var(--color-text-primary);
-  display: none;
+  z-index: 1100;
 }
 
-.sidebar .close-arrow-btn:hover {
-  color: var(--color-error-text);
+.close-arrow-btn:hover {
   background: var(--color-input-focus);
-  border-radius: 8px;
 }
 
-.sidebar .collapse-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  font-size: 20px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: var(--color-text-primary);
-  display: none;
-}
 
-.sidebar .collapse-btn:hover {
-  background: var(--color-input-focus);
-  border-radius: 8px;
-}
+
 
 .sidebar.collapsed {
   width: 40px;
   max-width: 40px;
   justify-content: center;
 }
-
-.sidebar.collapsed .user-info {
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .menu-item span,
+.sidebar.collapsed .divider {
   display: none;
 }
-
-.sidebar.collapsed .menu-item span {
-  display: none;
-}
-
 .sidebar.collapsed .menu-item {
   justify-content: center;
   text-align: center;
 }
 
-.sidebar.collapsed .divider {
-  display: none;
-}
-
 /* =======================
-   Mobile Styles (<900px)
-   ======================= */
+   Mobile (<900px)
+======================= */
 @media (max-width: 899px) {
   .app-wrapper {
-    justify-content: flex-start;  /* content flows normally */
-    padding: 0;                   /* remove side padding */
+    justify-content: flex-start;
+    padding: 0;
   }
 
   .main-content {
-    width: 100%;                  /* take full width */
-    max-width: 100%;              /* override max-width limit */
-    margin: 0;                    /* remove auto centering */
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 
   .app-header {
-    padding-left: 0; 
+    padding-left: 0;
     padding-right: 0;
   }
-
 
   .burger-menu {
     display: block;
   }
-  
+
   #sidebar {
     right: -100%;
     width: 80%;
     max-width: 320px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-    .app-wrapper {
-    justify-content: flex-start; /* content flows normally on small screens */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  }
-
   #sidebar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none;
   }
-  
   #sidebar.open {
     right: 0;
   }
@@ -350,8 +338,8 @@ img {
 }
 
 /* =======================
-   Desktop / Wide Screens (>=900px)
-   ======================= */
+   Desktop (>=900px)
+======================= */
 @media (min-width: 900px) {
   .burger-menu {
     display: none;
@@ -363,38 +351,36 @@ img {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    justify-content: flex-start; /* or just remove this line */
+    justify-content: flex-start;
   }
 
   #sidebar {
     position: relative;
-    flex: 0 0 35%; /* sidebar takes ~35% of width */
+    flex: 0 0 35%;
     max-width: 400px;
     height: 100vh;
     right: auto !important;
     overflow-y: auto;
     box-shadow: -4px 0 20px var(--);
     order: 1;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-
   #sidebar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none;
   }
 
   .main-content {
-    flex: 1; /* take remaining space */
+    flex: 1;
     height: 100vh;
     overflow-y: auto;
-    margin: 0; /* remove old margin */
-    padding: 0; /* remove any padding */
+    margin: 0;
+    padding: 0;
     order: 0;
     display: flex;
     flex-direction: column;
     scrollbar-gutter: stable;
   }
-
   .main-content::-webkit-scrollbar {
     display: block;
   }
@@ -402,11 +388,26 @@ img {
   .sidebar .close-btn {
     display: none;
   }
+
+  .profile-wrapper,
+  .edit-profile-wrapper,
+  .main-content,
+  #page-content {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  body, html, #app {
+    background: var(--color-bg);
+  }
 }
 
+
 /* =======================
-   Extra Wide Screens (>=1200px)
-   ======================= */
+   Extra Wide (>=1200px)
+======================= */
 @media (min-width: 1200px) {
   #sidebar {
     width: 20%;
@@ -417,54 +418,49 @@ img {
   .content-wrapper {
     display: flex;
     flex-direction: row;
-    flex: 1; /* Take remaining space in main-content */
-    overflow: hidden; /* Isolate scrolling to child elements */
+    flex: 1;
+    overflow: hidden;
   }
 
   #messages-panel {
     display: flex;
-    flex: 1 1 40%; /* Allow panel to grow and shrink, with a basis of 40% */
-    max-width: none; /* Remove the max-width constraint */
-    overflow-y: auto; /* Show scrollbar only when needed */
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE 10+ */
+    flex: 1 1 40%;
+    max-width: none;
+    overflow-y: auto;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
     border-right: 3px solid var(--color-input-focus);
   }
-
   #messages-panel::-webkit-scrollbar {
-    width: 0px !important;
-    background: transparent !important; /* Chrome/Safari/Webkit */
-  }
-
-  #messages-panel::-webkit-scrollbar-thumb {
-    background: transparent !important;
-  }
-
-  #messages-panel::-webkit-scrollbar-track {
+    width: 0 !important;
     background: transparent !important;
   }
 
   #page-content {
-    flex: 1 1 60%; /* Allow content to grow and shrink, with a basis of 60% */
+    flex: 1 1 60%;
     overflow-y: auto;
-    scrollbar-width: auto;
-    -ms-overflow-style: auto;
     scrollbar-gutter: stable both-edges;
-    margin: 0; /* Remove any margin causing white space */
-    padding: 0; /* Remove any padding causing white space */
+    margin: 0;
+    padding: 0;
   }
-
   #page-content::-webkit-scrollbar {
     display: block;
   }
 
-  /* Hide message navigation on wide screens when message panel is open */
   .messages-header,
   .messages-search,
   .active-friends {
     display: none;
   }
 }
+
+
+
+
+
+
+
+
 
 
 /* ======================
@@ -526,6 +522,8 @@ img {
     display: flex;
   }
 }
+
+
 
 
 .sidebar-content {
@@ -908,6 +906,9 @@ button.primary:hover {
   display: flex;
   flex-direction: column;
 }
+
+
+
 
 /* =======================
    Feed Post Styles

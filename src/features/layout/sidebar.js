@@ -12,8 +12,7 @@ export function createSidebar(container, pageContentEl, renderers) {
   }
 
   container.innerHTML = `
-    <button class="close-arrow-btn" id="sidebar-close-arrow-btn" aria-label="Close sidebar"><i data-lucide="arrow-left"></i></button>
-    <button class="collapse-btn" id="sidebar-collapse-btn" aria-label="Collapse sidebar"><i data-lucide="chevron-left"></i></button>
+    <button class="collapse-btn" id="sidebar-collapse-btn" aria-label="Toggle sidebar"><i data-lucide="chevron-left"></i></button>
     <div class="sidebar-content">
       <div class="user-info" aria-label="User information" tabindex="0">
         <img src="${currentUser.avatar || '/assets/images/profile-placeholder.png'}" alt="Profile Avatar" class="sidebar-avatar">
@@ -62,7 +61,6 @@ export function createSidebar(container, pageContentEl, renderers) {
   });
 
   const burger = document.getElementById("burger-menu");
-  const closeBtn = document.getElementById("sidebar-close-arrow-btn");
   const collapseBtn = document.getElementById("sidebar-collapse-btn");
   const mainContent = document.querySelector(".main-content");
 
@@ -97,13 +95,14 @@ export function createSidebar(container, pageContentEl, renderers) {
       // Mobile Layout: Sliding overlay menu
       closeSidebar();
 
-      collapseBtn.style.display = "none";
+      collapseBtn.style.display = "block";
+      collapseBtn.innerHTML = '<i data-lucide="arrow-left"></i>';
+      collapseBtn.onclick = closeSidebar;
+      container.classList.remove("collapsed");
+      isCollapsed = false;
 
       if (burger) {
         burger.onclick = openSidebar;
-      }
-      if (closeBtn) {
-        closeBtn.onclick = closeSidebar;
       }
 
       // Close on outside click
@@ -120,14 +119,12 @@ export function createSidebar(container, pageContentEl, renderers) {
       if (burger) {
         burger.onclick = null;
       }
-      if (closeBtn) {
-        closeBtn.onclick = null;
-      }
 
       container.style.right = "0";
 
-      if (screenWidth >= 1200) {
-        collapseBtn.style.display = "block";
+      collapseBtn.style.display = "flex";
+      collapseBtn.onclick = () => {
+        isCollapsed = !isCollapsed;
         if (isCollapsed) {
           container.classList.add("collapsed");
           collapseBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
@@ -136,10 +133,18 @@ export function createSidebar(container, pageContentEl, renderers) {
           collapseBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
         }
         createIcons({ icons, attrs: { 'stroke-width': 2 } });
+      };
+      container.style.right = "0";
+      container.classList.remove("open");
+
+      if (isCollapsed) {
+        container.classList.add("collapsed");
       } else {
-        collapseBtn.style.display = "none";
         container.classList.remove("collapsed");
       }
+
+      createIcons({ icons, attrs: { 'stroke-width': 2 } });
+
     }
   };
 
@@ -155,6 +160,16 @@ export function createSidebar(container, pageContentEl, renderers) {
         item.removeAttribute('aria-current');
       }
     });
+
+    // Hide Messages button on wide screens since messages panel is always open
+    const messagesBtn = document.getElementById("nav-messages");
+    if (messagesBtn) {
+      if (window.innerWidth >= 1200) {
+        messagesBtn.style.display = 'none';
+      } else {
+        messagesBtn.style.display = '';
+      }
+    }
   }
 
   // Attach navigation listeners for the sidebar menu
@@ -202,6 +217,18 @@ export function createSidebar(container, pageContentEl, renderers) {
     updateSidebarActive(e.detail.active);
   });
 
+  // Handle window resize to update messages button visibility
+  window.addEventListener('resize', () => {
+    updateSidebarActive(currentActive);
+    // If resizing to wide screen while on messages page, navigate to home to avoid duplication
+    if (window.innerWidth >= 1200 && currentActive === 'messages') {
+      navigate('home');
+    }
+  });
+
+  // Initial application of hiding logic
+  updateSidebarActive(currentActive);
+
   // Function to update user info in sidebar
   function updateUserInfo() {
     const updatedUser = JSON.parse(localStorage.getItem("myapp_currentUser"));
@@ -223,15 +250,4 @@ export function createSidebar(container, pageContentEl, renderers) {
 
   // Initial layout application
   applyLayout();
-  collapseBtn.addEventListener("click", () => {
-    isCollapsed = !isCollapsed;
-    if (isCollapsed) {
-      container.classList.add("collapsed");
-      collapseBtn.innerHTML = '<i data-lucide="chevron-right"></i>';
-    } else {
-      container.classList.remove("collapsed");
-      collapseBtn.innerHTML = '<i data-lucide="chevron-left"></i>';
-    }
-    createIcons({ icons, attrs: { 'stroke-width': 2 } });
-  });
 }

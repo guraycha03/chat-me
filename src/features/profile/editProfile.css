@@ -136,37 +136,10 @@ textarea:focus {
   color: var(--color-button-text);
 }
 
-/* =======================
-   Interest Badges
-   ======================= */
-#interests-badges-edit {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
 
-.interest-badge {
-  background: var(--color-input-bg);
-  color: var(--color-text-primary);
-  padding: 0.4rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  cursor: default;
-  transition: background 0.2s, color 0.2s;
-}
 
-.interest-badge.selected {
-  background: var(--color-underline);
-  color: var(--color-card-bg);
-  cursor: pointer;
-}
 
-.interest-badge.selected:hover {
-  background: var(--button-hover);
-}
+
 
 /* =======================
    Buttons

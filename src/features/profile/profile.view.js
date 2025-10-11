@@ -105,11 +105,15 @@ export function renderProfile(container, person) {
         renderEditProfile(container, userData, renderView)
       );
 
-    // ✅ Back button to go home
+    // ✅ Back button navigation
     const backBtn = container.querySelector("#back-to-home");
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        window.location.href = "/"; // redirect to homepage
+        if (userData.id === getCurrentUser()?.id) {
+          navigate('home');
+        } else {
+          navigate('friends');
+        }
       });
     }
   }
