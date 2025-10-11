@@ -681,6 +681,18 @@ img {
   color: #c94f42;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* =======================
    Auth Page Styles
    ======================= */
@@ -936,6 +948,13 @@ button.primary:hover {
 
 
 
+
+
+
+
+
+
+
 /* ======================
    Bottom Navigation Bar
    ====================== */
@@ -972,9 +991,6 @@ button.primary:hover {
 }
 
 
-
-
-
 .bottom-nav {
   position: fixed;
 }
@@ -983,11 +999,6 @@ button.primary:hover {
   position: relative;
   z-index: 1; /* sits above indicator */
 }
-
-
-
-
-
 
 
 
@@ -1057,8 +1068,15 @@ button.primary:hover {
   padding: 8px 16px;
 }
 
-/* Create button oblong style */
 
+
+
+
+
+
+
+
+/* Create button oblong style */
 
 .create-btn {
   flex: 0 0 auto;   /* don't stretch */
@@ -1092,6 +1110,15 @@ button.primary:hover {
   stroke: #ffffff;   /* stays white on hover */
   transform: rotate(90deg); /* optional animation */
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1187,6 +1214,83 @@ button i[data-lucide] {
   margin: 0 4px;
 }
 
+/* ==========================
+   Create Story Avatar Fix
+   ========================== */
+.create-story-card {
+  position: relative;
+  width: 100px;
+  height: 150px;
+  flex-shrink: 0;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background: var(--color-card-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* ensures image stays within card */
+  border: 2px dashed var(--color-accent);
+  transition: transform 0.3s ease;
+}
+
+.create-story-card:hover {
+  transform: scale(1.03);
+}
+
+/* Avatar inside create story */
+.create-story-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover; /* ✅ Keeps it consistent regardless of image ratio */
+
+  background: var(--color-card-bg);
+  flex-shrink: 0;
+}
+
+/* Plus icon */
+.plus-icon {
+  position: absolute;
+  bottom: 45px;
+  right: calc(50% - 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  border: 2px solid white;
+  z-index: 2;
+}
+
+/* Create Story text */
+.create-story-text {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 899px) {
+  .create-story-card {
+    width: 120px;
+    height: 180px;
+  }
+
+  .create-story-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .plus-icon {
+    bottom: 55px;
+  }
+}
 
 
 
