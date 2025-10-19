@@ -108,7 +108,7 @@ export const mockFriends = [
         id: "p2",
         type: "image",
         description: " . . . ",
-        image: "/assets/images/posts/kaia-post-1.png",
+        image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1759832141/kaia-post-1_src502.png",
         date: "2025-06-03",
         likes: 300,
         comments: 22,
@@ -321,15 +321,14 @@ export const mockFriends = [
     interests: ["plants", "reading", "home decor", "baking", "journaling"],
     stories: [
       "/assets/images/stories/mira-1.jpg",
-      "/assets/images/stories/mira-2.jpg",
-      "/assets/images/stories/mira-3.jpg",
+   
     ],
     posts: [
       {
         id: "p1",
         type: "image",
         description: "repotted my monstera today 🪴💚",
-        image: "/assets/images/posts/mira-plant-1.jpg",
+        image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1760892403/pexels-samuel-crosland-1328038-2557232_vuqz1j.jpg",
         date: "2025-10-03",
         likes: 175,
         comments: 16,
@@ -344,20 +343,7 @@ export const mockFriends = [
         comments: 8,
         shares: 1,
       },
-       {
-        id: "p3",
-        type: "image",
-        description: "repotted my monstera today 🪴💚",
-        images: [
-          "/assets/images/posts/mira-plants-1.jpg",
-          "/assets/images/posts/mira-plants-2.jpg",
-          "/assets/images/posts/mira-plants-3.jpg"
-        ],
-        date: "2025-10-03",
-        likes: 175,
-        comments: 16,
-        shares: 2,
-      },
+   
     ],
   },
 
@@ -380,7 +366,7 @@ export const mockFriends = [
         id: "p1",
         type: "image",
         description: "when your food looks as good as it tastes",
-        image: "/assets/images/posts/seraphina-post-1.jpg",
+        image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1760891987/seraphina-post-1_ijlg5x.jpg",
         date: "2025-10-03",
         likes: 420,
         comments: 25,
@@ -392,7 +378,7 @@ export const mockFriends = [
         id: "p2",
         type: "image",
         description: "nothing can bring you peace but yourself",
-        image: "/assets/images/posts/seraphina-post-2.jpg",
+        image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1760892254/seraphina-post-2_xbjxtx.jpg",
         date: "2025-10-03",
         likes: 254201,
         comments: 225,

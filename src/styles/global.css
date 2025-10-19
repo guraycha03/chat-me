@@ -1,4 +1,4 @@
-/* =======================
+ /* =======================
    Global CSS File
    Contains resets, variables, and base styles for the entire application.
 */
@@ -45,6 +45,7 @@ html, body, #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -66,6 +67,7 @@ body::-webkit-scrollbar,
 
 /* Non-draggable images */
 img {
+  -webkit-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
   -moz-user-drag: none;
@@ -142,6 +144,7 @@ img {
   font-weight: 700;
   font-size: 22px;
   color: var(--color-text-primary);
+  -webkit-user-select: none;
   user-select: none;
   gap: 8px;
 }
@@ -166,6 +169,7 @@ img {
   font-weight: 700;
   font-size: 22px;
   color: var(--color-text-primary);
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -582,6 +586,7 @@ img {
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
   flex-shrink: 0;
 }
 
@@ -655,6 +660,44 @@ img {
 
 .home-main {
   padding: 2rem;
+}
+
+/* =======================
+   Notifications Page Styles
+   ======================= */
+
+.notifications-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.notifications-illustration {
+  width: 200px;
+  height: auto;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.notifications-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.notifications-description {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 400px;
 }
 
 .cards-container {
@@ -1250,7 +1293,7 @@ button i[data-lucide] {
   height: 60px;
   border-radius: 50%;
   object-fit: cover; /* ✅ Keeps it consistent regardless of image ratio */
-
+  image-rendering: -webkit-optimize-contrast;
   background: var(--color-card-bg);
   flex-shrink: 0;
 }
@@ -1514,18 +1557,19 @@ button i[data-lucide] {
 .people-item:hover { background: rgba(0,0,0,0.03); cursor:pointer; }
 .search-submit-btn {
   background: var(--color-accent);
+  color: white;
   border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
-.search-submit-btn:hover { background-color: #556b4a; }
-.search-submit-btn i { stroke: white; width: 18px; height: 18px; }
+.search-submit-btn:hover {
+  background: var(--color-button-hover);
+  transform: translateY(-1px);
+}
 
 .people-item .avatar-wrap img { width:56px; height:56px; border-radius:50%; }
 .people-info .people-name { font-weight:700; }
@@ -1624,26 +1668,26 @@ button i[data-lucide] {
   display: none;
 }
 
-/* Premium modern search bar */
+/* Minimalistic search bar */
 .people-top .search-wrap {
   background: var(--color-input-bg);
-  border-radius: 24px;
-  padding: 8px 16px;
+  border: 1px solid var(--color-divider);
+  border-radius: 8px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 4px 12px rgba(107, 122, 104, 0.15);
-  transition: box-shadow 0.3s ease;
+  gap: 8px;
+  transition: border-color 0.2s ease;
 }
 
 .people-top .search-wrap:focus-within {
-  box-shadow: 0 0 8px 2px var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .people-top .search-wrap i {
   stroke: var(--color-accent);
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .people-top .search-wrap input {
@@ -1651,10 +1695,9 @@ button i[data-lucide] {
   background: transparent;
   outline: none;
   font-size: 16px;
-  font-weight: 600;
   color: var(--color-text-primary);
   width: 100%;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 
 

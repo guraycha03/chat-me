@@ -10,7 +10,7 @@ export async function renderSearch(container) {
         <div class="search-wrap">
           <i data-lucide="search"></i>
           <input id="search-input" placeholder="Search people" />
-          <button class="search-submit-btn" id="search-btn" title="Search"><i data-lucide="search"></i></button>
+          <button class="search-submit-btn" id="search-btn">Search</button>
         </div>
       </div>
 
