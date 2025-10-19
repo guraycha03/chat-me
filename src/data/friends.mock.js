@@ -60,7 +60,7 @@ export const mockFriends = [
       {
         id: "p1",
         type: "text",
-        text: " .happy birthday to me ",
+        text: "happy birthday to me <3",
         date: "2025-09-30",
         likes: 210,
         comments: 116,
