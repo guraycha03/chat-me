@@ -188,4 +188,18 @@ export function initApp(container) {
       renderPage(e.state.page, e.state.userId);
     }
   });
+
+  // Header hide/show on scroll
+  let lastScrollTop = 0;
+  const mainContent = document.querySelector('.main-content');
+  mainContent.addEventListener('scroll', () => {
+    const header = document.querySelector('.app-header');
+    const scrollTop = mainContent.scrollTop;
+    if (scrollTop > lastScrollTop) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
+    lastScrollTop = scrollTop;
+  });
 }

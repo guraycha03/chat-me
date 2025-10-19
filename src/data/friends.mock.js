@@ -19,7 +19,7 @@ export const mockFriends = [
         {
         id: "p1",
         type: "text",
-        text: " . . . ",
+        text: " hi :)",
         date: "2025-10-02",
         likes: 95,
         comments: 9,
@@ -62,10 +62,10 @@ export const mockFriends = [
       {
         id: "p1",
         type: "text",
-        text: " . . . ",
+        text: " .happy birthday to me ",
         date: "2025-09-30",
         likes: 210,
-        comments: 16,
+        comments: 116,
         shares: 5,
       },
       {
@@ -107,7 +107,7 @@ export const mockFriends = [
       {
         id: "p2",
         type: "image",
-        description: " . . . ",
+        description: "I like it here",
         image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1759832141/kaia-post-1_src502.png",
         date: "2025-06-03",
         likes: 300,
@@ -261,16 +261,13 @@ export const mockFriends = [
     followers: 1980,
     following: 390,
     interests: ["cats", "photography", "movies"],
-    stories: [
-      "/assets/images/stories/rowan-1.png",
-      "/assets/images/stories/rowan-2.png",
-    ],
+   
     posts: [
       {
         id: "p1",
         type: "image",
-        description: "she won’t let me work today 🐱",
-        image: "https://picsum.photos/400/300?random=20",
+        description: " O . o ",
+        image: "/assets/images/posts/rowan-1.jpeg",
         date: "2025-10-02",
         likes: 185,
         comments: 10,
@@ -327,7 +324,7 @@ export const mockFriends = [
       {
         id: "p1",
         type: "image",
-        description: "repotted my monstera today 🪴💚",
+        description: "repotted my monstera today",
         image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1760892403/pexels-samuel-crosland-1328038-2557232_vuqz1j.jpg",
         date: "2025-10-03",
         likes: 175,

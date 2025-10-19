@@ -132,10 +132,15 @@ img {
   padding-left: 0;
   padding-right: 20px;
   background: var(--color-card-bg);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border-bottom: 1px solid #e0e0e0;
   position: sticky;
   top: 0;
   z-index: 900;
+  transition: transform 0.3s ease;
+}
+
+.app-header.hidden {
+  transform: translateY(-100%);
 }
 
 .app-header .logo {
@@ -1681,7 +1686,7 @@ button i[data-lucide] {
 }
 
 .people-top .search-wrap:focus-within {
-  border-color: var(--color-accent);
+  border-color: #007bff;
 }
 
 .people-top .search-wrap i {
