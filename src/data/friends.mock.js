@@ -23,7 +23,7 @@ export const mockFriends = [
         date: "2025-10-02",
         likes: 95,
         comments: 9,
-        shares: 2,
+        shares: 0,
       },
       {
 
@@ -35,9 +35,9 @@ export const mockFriends = [
           "/assets/images/posts/niko-cat-post-2.png"
         ],
         date: "2025-10-01",
-        likes: 120,
-        comments: 14,
-        shares: 3,
+        likes: 1920,
+        comments: 294,
+        shares: 312,
       },
    
       
@@ -161,8 +161,8 @@ export const mockFriends = [
       {
         id: "p1",
         type: "images",
-        text: "classic me",
-        description: "study session… turned into netflix binge 📺",
+        text: "study session . . . turned into netflix binge 📺",
+
         image: "/assets/images/users/sofia-torres.png",
         date: "2025-10-02",
         likes: 95,
@@ -181,22 +181,8 @@ export const mockFriends = [
     followers: 1430,
     following: 530,
     interests: ["music", "basketball", "coding"],
-    stories: [
-      "/assets/images/stories/jace-1.png",
-      "/assets/images/stories/jace-2.png",
-    ],
-    posts: [
-      {
-        id: "p1",
-        type: "image",
-        description: "pickup game today was 🔥",
-        image: "https://picsum.photos/400/300?random=16",
-        date: "2025-09-28",
-        likes: 220,
-        comments: 20,
-        shares: 6,
-      },
-    ],
+ 
+ 
   },
   {
     id: "u8",
@@ -234,16 +220,14 @@ export const mockFriends = [
     followers: 3275,
     following: 740,
     interests: ["coffee", "tech", "indie music"],
-    stories: [
-      "/assets/images/stories/gracie-1.png",
-      "/assets/images/stories/gracie-2.png",
-    ],
+  
     posts: [
       {
         id: "p1",
         type: "image",
         description: "caffeine + code = survival",
-        image: "https://picsum.photos/400/300?random=19",
+        image: "/assets/images/users/gracie-alvarez.png",
+
         date: "2025-09-30",
         likes: 270,
         comments: 17,
