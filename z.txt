@@ -156,18 +156,33 @@ my-social-app/
 
 
 
-design my edit profile page into more modern and interactive and engaging. make it rich in ui and ux, responsive and look premium
 
 
-show a background the same size as my background on profile page so users can see what it will look like as they change bg color
+1. Current Work:
+   - The user requested to add a reset button on the edit profile page that removes added interests and bio, with a confirmation modal before reset, and the reset only applies when "Save Changes" is clicked.
 
-also the profile image, make it circular like letting user see what it will actually appear
+2. Key Technical Concepts:
+   - JavaScript event handling for button clicks
+   - Modal creation and management
+   - Form state management (storing temporary changes)
+   - User confirmation dialogs
+   - DOM manipulation for dynamic UI elements
 
-also on interest
+3. Relevant Files and Code:
+   - src/features/profile/editProfile.js: Main edit profile logic, handles form submission and interests management
+   - src/features/profile/editProfile.css: Styling for the edit profile form
+   - src/utils/notification.js: Utility for showing notices (could be adapted for modal)
 
-make it an input where users can search and the interest badges will appear as its matching the letter being typed and users can now click on the inerest and it will add on there interest after saving all the changes
+4. Problem Solving:
+   - Need to add a reset button that temporarily clears bio and interests
+   - Implement a confirmation modal before applying reset
+   - Ensure reset only takes effect on form submission, not immediately
+   - Store original values to allow cancellation
 
-
-
-
+5. Pending Tasks and Next Steps:
+   - Add reset button to the form actions in editProfile.js
+   - Create a confirmation modal function
+   - Implement temporary reset logic that stores changes but doesn't apply until save
+   - Update CSS for reset button styling
+   - Test the functionality to ensure reset works correctly with confirmation
 

@@ -11,8 +11,6 @@ export const mockFriends = [
     interests: ["gardening", "photography", "journaling", "traveling", "cooking"],
     stories: [
       "/assets/images/posts/niko-story-1.jpg",
-      "/assets/images/stories/niko-2.png",
-      "/assets/images/stories/niko-3.png",
     ],
     posts: [
       
@@ -55,8 +53,8 @@ export const mockFriends = [
     following: 890,
     interests: ["traveling", "cooking", "photography"],
     stories: [
-      "/assets/images/stories/avery-story-1.jpg",
-      "/assets/images/stories/avery-2.jpg",
+      "/assets/images/posts/avery-story-1.jpg",
+   
     ],
     posts: [
       {
@@ -91,8 +89,8 @@ export const mockFriends = [
     following: 450,
     interests: ["running", "fitness", "coffee"],
     stories: [
-      "/assets/images/stories/kaia-post-1.png",
-      "/assets/images/stories/kaia-2.png",
+      "/assets/images/posts/kaia-story-1.jpg",
+      
     ],
     posts: [
       {
@@ -107,7 +105,7 @@ export const mockFriends = [
       {
         id: "p2",
         type: "image",
-        description: "I like it here",
+        description: "coffee date with who",
         image: "https://res.cloudinary.com/dyjd4nbrf/image/upload/v1759832141/kaia-post-1_src502.png",
         date: "2025-06-03",
         likes: 300,
@@ -126,16 +124,16 @@ export const mockFriends = [
     followers: 910,
     following: 64,
     interests: ["foodie", "traveling", "street photography"],
-    stories: [
-      "/assets/images/stories/lucas-1.png",
-      "/assets/images/stories/lucas-2.png",
-    ],
+  
     posts: [
       {
         id: "p1",
         type: "image",
-        description: ". . . ",
-        image: "/assets/images/posts/lucas-post-1.jpg",
+        description: "peaceful hometown ",
+        images: [
+          "/assets/images/posts/lucas-post-1.jpg",
+          "/assets/images/posts/lucas-post-2.jpg"
+        ],
         date: "2025-09-29",
         likes: 180,
         comments: 15,
@@ -153,10 +151,7 @@ export const mockFriends = [
     followers: 2765,
     following: 310,
     interests: ["reading", "anime", "tv series"],
-    stories: [
-      "/assets/images/posts/sofia-post.jpg",
-      "/assets/images/posts/sofia-post.jpg",
-    ],
+
     posts: [
       {
         id: "p1",
@@ -186,29 +181,31 @@ export const mockFriends = [
   },
   {
     id: "u8",
-    name: "Jake Lee",
-    avatar: "/assets/images/users/kim.png",
+    name: "Romel",
+    avatar: "/assets/images/users/romel.png",
     bio: " . . . ",
     online: true,
     birthday: "2002-08-08",
     followers: 2010,
     following: 450,
     interests: ["minimalism", "art", "photography"],
-    stories: [
-      "/assets/images/stories/jaehyun-1.png",
-      "/assets/images/stories/jaehyun-2.png",
-    ],
-    posts: [
-      {
-        id: "p1",
-        type: "text",
-        text: "less is more.",
-        date: "2025-09-27",
-        likes: 140,
-        comments: 11,
-        shares: 1,
-      },
-    ],
+    // stories: [
+    //   "/assets/images/stories/jaehyun-1.png",
+    //   "/assets/images/stories/jaehyun-2.png",
+    // ],
+
+
+    // posts: [
+    //   {
+    //     id: "p1",
+    //     type: "text",
+    //     text: "less is more.",
+    //     date: "2025-09-27",
+    //     likes: 140,
+    //     comments: 11,
+    //     shares: 1,
+    //   },
+    // ],
   },
   {
     id: "u9",
@@ -225,13 +222,25 @@ export const mockFriends = [
       {
         id: "p1",
         type: "image",
-        description: "caffeine + code = survival",
+        description: "🖤",
         image: "/assets/images/users/gracie-alvarez.png",
 
         date: "2025-09-30",
         likes: 270,
-        comments: 17,
+        comments: 47,
         shares: 3,
+      },
+
+      {
+        id: "p1",
+        type: "image",
+        description: "had so much fun last night",
+        image: "/assets/images/posts/gracie-alvarez-2.jpg",
+
+        date: "2024-01-05",
+        likes: 340,
+        comments: 92,
+        shares: 57,
       },
     ],
   },
@@ -269,11 +278,11 @@ export const mockFriends = [
     followers: 3520,
     following: 450,
     interests: ["sleeping", "pets", "coffee"],
-    stories: [
-      "/assets/images/stories/cha-1.png",
-      "/assets/images/stories/cha-2.png",
-      "/assets/images/stories/cha-3.png",
-    ],
+    // stories: [
+    //   "/assets/images/stories/cha-1.png",
+    //   "/assets/images/stories/cha-2.png",
+    //   "/assets/images/stories/cha-3.png",
+    // ],
     posts: [
       {
         id: "p1",
@@ -300,10 +309,10 @@ export const mockFriends = [
     followers: 1620,
     following: 295,
     interests: ["plants", "reading", "home decor", "baking", "journaling"],
-    stories: [
-      "/assets/images/stories/mira-1.jpg",
+    // stories: [
+    //   "/assets/images/posts/mira.jpg",
    
-    ],
+    // ],
     posts: [
       {
         id: "p1",
@@ -339,7 +348,7 @@ export const mockFriends = [
     following: 16,
     interests: ["journaling", "tea lover", "poetry", "writing", "self-care"],
     stories: [
-      "/assets/images/stories/seraphina-story-1.png",
+      "/assets/images/posts/seraphina-story-1.png",
      
     ],
     posts: [
