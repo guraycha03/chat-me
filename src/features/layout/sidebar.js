@@ -28,7 +28,6 @@ export function createSidebar(container, pageContentEl, renderers) {
         <button class="menu-item" id="nav-notifications"><i data-lucide="bell"></i><span>Notifications</span></button>
         <button class="menu-item" id="nav-search"><i data-lucide="search"></i><span>Search</span></button>
         <div class="divider" role="separator"></div>
-        <button class="menu-item" id="nav-profile"><i data-lucide="user"></i><span>Profile</span></button>
         <button class="menu-item" id="nav-settings"><i data-lucide="settings"></i><span>Settings & Privacy</span></button>
         <button class="menu-item" id="nav-help"><i data-lucide="help-circle"></i><span>Help & Support</span></button>
         <button class="menu-item logout" id="nav-logout"><i data-lucide="log-out"></i><span>Log Out</span></button>
@@ -202,10 +201,7 @@ export function createSidebar(container, pageContentEl, renderers) {
     navigate('search');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
   });
-  document.getElementById("nav-profile").addEventListener("click", () => {
-    navigate('profile');
-    if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();
-  });
+
   document.getElementById("nav-settings").addEventListener("click", () => {
     navigate('settings');
     if (window.innerWidth < MOBILE_BREAKPOINT) closeSidebar();

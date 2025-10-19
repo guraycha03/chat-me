@@ -74,8 +74,14 @@ export function renderProfile(container, person) {
           <div class="profile-actions-container">
             ${
               userData.id === getCurrentUser()?.id
-                ? `<button id="edit-profile-btn" class="profile-action-btn"><i data-lucide="pencil"></i>Edit Profile</button>`
-                : `<button id="add-friend-btn" class="profile-action-btn primary"><i data-lucide="user-plus"></i>Add Friend</button>`
+                ? `<button id="create-story-btn" class="profile-action-btn primary"><i data-lucide="plus-circle"></i>Create Story</button>
+                   <button id="edit-profile-btn" class="profile-action-btn secondary"><i data-lucide="pencil"></i>Edit Profile</button>`
+                : (() => {
+                    const currentUser = getCurrentUser();
+                    const isRequested = currentUser?.pendingRequests?.includes(userData.id);
+                    return `<button id="add-friend-btn" class="profile-action-btn primary ${isRequested ? 'cancel' : ''}"><i data-lucide="user-plus"></i>${isRequested ? 'Cancel' : 'Add Friend'}</button>
+                   <button id="message-btn" class="profile-action-btn secondary"><i data-lucide="message-circle"></i>Message</button>`;
+                  })()
             }
           </div>
         </div>
@@ -142,6 +148,51 @@ export function renderProfile(container, person) {
           }
           document.body.removeChild(input);
         });
+      });
+    }
+
+    // Create Story button
+    const createStoryBtn = container.querySelector("#create-story-btn");
+    if (createStoryBtn) {
+      createStoryBtn.addEventListener("click", () => {
+        // Placeholder: Navigate to create story or show modal
+        console.log("Create Story clicked");
+        showNotice("Create Story feature coming soon!");
+      });
+    }
+
+    // Add Friend button
+    const addFriendBtn = container.querySelector("#add-friend-btn");
+    if (addFriendBtn) {
+      addFriendBtn.addEventListener("click", () => {
+        const currentUser = getCurrentUser();
+        if (!currentUser) return;
+
+        const isRequested = currentUser.pendingRequests?.includes(userData.id);
+        if (isRequested) {
+          // Cancel request
+          currentUser.pendingRequests = currentUser.pendingRequests.filter(id => id !== userData.id);
+          updateUser(currentUser);
+          showNotice(`Friend request cancelled for ${userData.name}`);
+          renderView(); // Re-render to update button state
+        } else {
+          // Send request
+          currentUser.pendingRequests = currentUser.pendingRequests || [];
+          currentUser.pendingRequests.push(userData.id);
+          updateUser(currentUser);
+          showNotice(`Friend request sent to ${userData.name}`);
+          renderView(); // Re-render to update button state
+        }
+      });
+    }
+
+    // Message button
+    const messageBtn = container.querySelector("#message-btn");
+    if (messageBtn) {
+      messageBtn.addEventListener("click", () => {
+        // Placeholder: Navigate to messages with this user
+        console.log("Message clicked for user:", userData.name);
+        showNotice("Messaging feature coming soon!");
       });
     }
   }

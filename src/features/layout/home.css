@@ -65,6 +65,7 @@
   object-fit: cover;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  image-rendering: pixelated;
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
@@ -237,4 +238,23 @@
     top: 80px;
     font-size: 10px;
   }
+}
+
+/* Text Post Styles */
+.text-post-card {
+  padding: 16px;
+  border-radius: 12px;
+  margin: 8px 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.text-content {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
