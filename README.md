@@ -54,13 +54,3 @@ chat-me is a simple social media web app built with Vite and JavaScript. It prov
 MIT
 
 ---
-
-Feel free to contribute or suggest new features!
-
-
-
-can you make it that when i click or tap the add friend button it become state of Cancel
-
-so its either Add friend or Cancel
-
-cancel is when i clicked add friend and after clicking cancel it goes back to add friend, just like on fb button
