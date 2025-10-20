@@ -19,6 +19,7 @@ chat-me is a simple social media web app built with Vite and JavaScript. It prov
   - View your own profile with your posts and activity
   - View other users’ profiles and their posts
   - Edit your profile information
+  - Synced Add Friend button
 
 - **Data Handling**
   - All data is stored and managed using localStorage
